@@ -1,24 +1,43 @@
-import React from 'react'
+import React, { useState } from 'react'
+// import ShopHeader from './Components/ShopHeader'
+import ProductsDb from '../JSON/default-data'
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
+import ProductCard from '../Components/ProductCard';
+import useStyles from '../Styles/ShopStyle';
 
 export default function Shop() {
-    return (
-        <div style = {{width:'1000px', minHeight:'100vh',display:'flex', alignItems:'center'}}>
-            <Grid style={{ backgroundColor: 'yellow' }} container spacing={2}>
-                <Grid style={{ border: '1px solid black' }} item xs={1} md={1}>
-                    <div>Ori</div>
-                </Grid>
-                <Grid style={{ border: '1px solid black' }} item xs={3} md={1}>
-                    <div>Kenar</div>
-                </Grid>
-                <Grid style={{ border: '1px solid black' }} item xs={1} md={1}>
-                    <div>Moshe</div>
-                </Grid>
-                <Grid style={{ border: '1px solid black' }} item xs={1} md={1}>
-                    <div>David</div>
-                </Grid>
+    let cartProducts=JSON.parse(localStorage.getItem("cartProducts"))||[]
 
-            </Grid>
+    const AddToCart=(index)=>{ 
+        let product=productsList.filter(prod=>index===prod.index)
+        product=product[0]
+        let cartIndex = cartProducts.findIndex(prod=>index===prod.index)
+        if(cartIndex !== -1)
+            cartProducts[cartIndex].qty++
+        else{
+            product.qty++
+            cartProducts = [...cartProducts,product]
+        }
+        localStorage.setItem("cartProducts",JSON.stringify(cartProducts))
+       }
+     let productsList=JSON.parse(localStorage.getItem("products"))||[]
+     const productsCard=productsList.map(prod=><Grid key={prod.index} xs={12} sm={6} md={4} item><ProductCard  product={prod} AddToCart={AddToCart} /></Grid>)
+
+    return (
+        <div>
+            <div className='header'>
+            ffffffff
+            </div>
+            
+    <Container>
+        <Grid container>{productsCard}</Grid>
+    </Container>
+                
+            
         </div>
     )
 }
