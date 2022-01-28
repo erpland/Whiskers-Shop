@@ -9,11 +9,11 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Link } from "react-router-dom";
 import ModalComp from './ModalComp';
 
-export default function Navbar() {
+export default function Navbar(props) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const navUrls = ['Home', 'Shop', 'Login', 'Register']
-    const navItems = navUrls.map(item => <Grid key={item} item md={1} lg={0.5}>
+    const navItems = navUrls.map(item => <Grid key={item} item  style={{paddingRight:10}}>
         <Link underline='none' to={'/' + item}>{item}</Link>
     </Grid>)
  
@@ -27,12 +27,12 @@ export default function Navbar() {
 
                     {navItems}
 
-                    <Grid item md={0.5}>
+                    <Grid item md={1}>
                         <ShoppingCartIcon style={{cursor:'pointer'}} onClick={()=>setOpen(true)} />
                     </Grid>
 
                 </Grid>
-                <ModalComp open = {open} setOpen={setOpen} />
+                <ModalComp isLoggedIn={props.isLoggedIn} buyCart={props.buyCart} totalQty={props.totalQty} totalPrice={props.totalPrice} removeItemFromCart={props.removeItemFromCart} cart={props.cart} open = {open} setOpen={setOpen} />
             </Toolbar>
         </AppBar>
     )

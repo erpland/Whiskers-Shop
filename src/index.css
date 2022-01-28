@@ -11,6 +11,12 @@ body {
   align-items: center;
   width: 100%;
 }
+a{
+  text-decoration: none;
+}
+a:hover{
+  filter: brightness(30%);
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

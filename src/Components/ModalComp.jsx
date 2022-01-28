@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import useStyles from '../Styles/CartStyle.js';
 import Button from '@mui/material/Button';
-
+import { useNavigate } from 'react-router-dom';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -19,37 +19,27 @@ const style = {
 };
 
 export default function ModalComp(props) {
-  let totalAmount = 0;
-  const [products, setProducts] = useState([])
-  const [totalQty, setTotalQty] = useState(0)
-  const [totalPrice, setTotalPrice] = useState(0)
-  let { open, setOpen } = props
+  const navigate = useNavigate();
+  let { open, setOpen, cart, totalQty, totalPrice, buyCart, isLoggedIn } = props
   const handleClose = () => setOpen(false);
-  
-  const RemoveItemFromCart = (index) => {
-    let cartArrProd=products
-    cartArrProd=cartArrProd.filter(prod=>prod.index!==index)
-    setProducts(cartArrProd)
-    setTotalQty(prev=>prev-1)
-    localStorage.setItem("cartProducts",JSON.stringify(cartArrProd))
-  }
-  useEffect(() => {
-    let cart = JSON.parse(localStorage.getItem("cartProducts")) || []
-    if (cart.length !== 0) {
-      var total = cart.map(prod => prod.price)
-      var qty = cart.map(prod => prod.qty)
-      qty = qty.reduce((prev, current) => { return prev + current })
-      total = total.reduce((prev, current) => { return prev + current })
-      setTotalQty(qty)
-      setTotalPrice(total)
+  const order = () => {
+    if (isLoggedIn){
+      cart.length !== 0 && buyCart()
+      setOpen(false)
     }
-    setProducts(cart)
-  }, [open])
+    else {
+      setOpen(false)
+      navigate('/login')
+    }
+
+  }
+
+
 
   const classes = useStyles();
 
-  let cartItems = products.map(prod => <div key={prod.index} className={classes.product}>
-    <p onClick={() => RemoveItemFromCart(prod.index)}>X</p>
+  let cartItems = cart.map(prod => <div key={prod.index} className={classes.product}>
+    <p onClick={() => props.removeItemFromCart(prod.index)}>X</p>
     <p>{prod.brand} {prod.name}</p>
     <p>{prod.qty}</p>
     <p>{prod.price.toFixed(2)}$</p>
@@ -87,7 +77,7 @@ export default function ModalComp(props) {
               <p>{totalPrice.toFixed(2)}$</p>
             </div>
             <div className={classes.cartBtns}>
-              <Button variant="contained">Buy All</Button>
+              <Button onClick={order} variant="contained">Buy All</Button>
             </div>
           </div>
         </Box>
