@@ -1,0 +1,9 @@
+-- Modal Comp = change name to cart
+
+-- Shop - carousel
+-- Cart - Save Local?
+-- Admin - create page
+
+
+-- Profile - show order + components
+-- Login - show Error

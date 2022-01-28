@@ -18,8 +18,13 @@ export default function Login(props) {
     const onSubmit = data => {
         let userList = props.users
         let currentUser = userList.filter((user) => user.email === data.email && user.password === data.password)
-        props.setUser(currentUser[0])
+       if(currentUser.length !== 0){
+       props.setUser(currentUser[0])
         navigate('/profile')
+       }
+       
+
+       
     };
     return (
         <Container maxWidth={false} className={classes.container}>
