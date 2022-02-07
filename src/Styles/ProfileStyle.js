@@ -12,6 +12,9 @@ const useStyles = makeStyles(theme =>({
     // display:'grid !important',
     // gridTemplateColumns:'30% 70%'
   },
+  userTitle:{
+    textTransform: 'capitalize',
+  },
   profileDetails:{
     textAlign:'left',
     width:'max-content',

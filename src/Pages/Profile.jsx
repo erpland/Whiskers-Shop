@@ -7,12 +7,14 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Container from '@mui/material/Container';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import useStyles from '../Styles/ProfileStyle';
+import Order from '../Components/Order';
 
-export default function Profile() {
+export default function Profile(props) {
     const classes = useStyles();
+    let orders = props.orders.map((order, index)=><Order key={index} index={index+1} order={order}/>)
     return (
         <Container className={classes.container} maxWidth={"xl"}>
-            <Typography variant='h2'>Hi Username</Typography>
+            <Typography variant='h2' className={classes.userTitle}>Hi {props.currentUser.firstName} {props.currentUser.lastName}!</Typography>
             {/* <div className={classes.profileDetails}>
                 <Typography variant='h5'><b>First Name:</b> Ori</Typography>
                 <Typography variant='h5'><b>Last Name:</b> Winboim</Typography>
@@ -22,75 +24,9 @@ export default function Profile() {
             </div> */}
 
             <div className={classes.orders}>
-                <Typography variant='h3'>Your Orders</Typography>
+                <Typography variant='h3'>Your Orders:</Typography>
                 <div>
-                    <Accordion>
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel1a-content"
-                            id="panel1a-header"
-                        >
-                            <Typography>Order #1</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails className={classes.orderAccordion}>
-
-                            <div className={classes.orderDetails}>
-                                <div className={classes.product}>
-                                    <p style={{ fontWeight: 'bold' }}>Item</p>
-                                    <p style={{ fontWeight: 'bold' }}>QTY</p>
-                                    <p style={{ fontWeight: 'bold' }}>Price</p>
-                                </div>
-
-
-
-                                <div className={classes.product}>
-                                    <p >Glenmornagie</p>
-                                    <p >2</p>
-                                    <p >3</p>
-                                    <img src="../shop/ardbeg-an-oa-ps.jpg" alt="" />
-                                </div>
-                                <div className={classes.product}>
-                                    <p >Glenmornagie</p>
-                                    <p >2</p>
-                                    <p >3</p>
-                                    <img src="../shop/ardbeg-an-oa-ps.jpg" alt="" />
-                                </div>
-                                <div className={classes.product}>
-                                    <p >Glenmornagie</p>
-                                    <p >2</p>
-                                    <p >3</p>
-                                    <img src="../shop/ardbeg-an-oa-ps.jpg" alt="" />
-                                </div>
-
-
-
-
-
-                                <div className={classes.product}>
-                                    <p><b>TOTAL:</b></p>
-                                    <p>5</p>
-                                    <p>120$</p>
-                                    <div className={classes.shipped}>
-                                        <LocalShippingIcon color='success' sx={{ fontSize: '40px' }} />
-                                        <Typography color='success' variant='p'>Order Shipped</Typography>
-                                    </div>
-                                </div>
-                            </div>
-                        </AccordionDetails>
-                    </Accordion>
-                    <Accordion>
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel2a-content"
-                            id="panel2a-header"
-                        >
-                            <Typography>Accordion 2</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-
-                        </AccordionDetails>
-                    </Accordion>
-
+                    {orders}
                 </div>
             </div>
         </Container>

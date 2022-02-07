@@ -13,6 +13,8 @@ export default function Register(props) {
     const classes = useStyles();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
+        console.log(data)
+        data={...data, orders:[]}
         props.addUser(data)
         navigate('/login')
     };
@@ -22,7 +24,7 @@ export default function Register(props) {
         label:'First Name',
         type:'text',
         error:errors?.firstName, 
-        pattern:/^[a-zA-Z]{2,20}$/i,
+        pattern:/^[a-zA-Z ]{2,20}$/i,
         message:'English Letters Between 2-20',
         errors:errors.firstName?.message
     },
@@ -33,7 +35,7 @@ export default function Register(props) {
         label:'Last Name',
         type:'text',
         error:errors?.lastName,
-        pattern:/^[a-zA-Z]{2,30}$/i,
+        pattern:/^[a-zA-Z ]{2,30}$/i,
         message:'English Letters Between 2-30',
         errors:errors.lastName?.message
     },

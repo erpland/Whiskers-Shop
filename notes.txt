@@ -1,9 +1,17 @@
--- Modal Comp = change name to cart
+
 
 -- Shop - carousel
 -- Cart - Save Local?
--- Admin - create page
 
 
--- Profile - show order + components
--- Login - show Error
+
+
+
+
+
+7/2
+--(profile route to shop if not connected)
+-- Admin - ProductsList + editModal, Stats, Graph?
+-- Shop - Store
+-- Something Special??
+-- CSS

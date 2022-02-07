@@ -17,7 +17,32 @@ const useStyles = makeStyles(theme => ({
     width: '370px',
     maxHeight:'500px',
     display: 'grid',
+    gridTemplateRows:'repeat(6, 1fr)'
     
+  },
+  loginForm: {
+    
+    padding:20,
+    marginTop:'50px',
+    borderRadius:'20px',
+    background:'rgba(220, 220, 220, 1)',
+    boxShadow: '2px 0px 10px 1px #eee',
+    width: '370px',
+    maxHeight:'500px',
+    display: 'grid',
+    gridTemplateRows:'1.5fr 1fr 1fr 0.5fr 1fr 0.5fr'
+    
+  },
+  loginError:{
+    color:'red',
+   
+  },
+  button:{
+    height:'50px'
+  },
+  link:{
+    alignSelf:'end',
+    gridRow:'6'
   }
 }));
 

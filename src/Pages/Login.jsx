@@ -9,27 +9,36 @@ import Typography from '@mui/material/Typography';
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import { Email } from '@mui/icons-material';
+import { useState } from 'react';
 
 export default function Login(props) {
 
+    const [isValid, setIsValid] = useState(true)
     const navigate = useNavigate();
     const classes = useStyles();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
         let userList = props.users
+        if(data.email === 'admin' && data.password === 'admin123'){
+            navigate('/admin')
+        }
         let currentUser = userList.filter((user) => user.email === data.email && user.password === data.password)
-       if(currentUser.length !== 0){
-       props.setUser(currentUser[0])
-        navigate('/profile')
-       }
-       
+        if (currentUser.length !== 0) {
+            props.setUser(currentUser[0])
+            navigate('/profile')
+        }
+        else {
+            setIsValid(false)
+        }
 
-       
+
+
+
     };
     return (
         <Container maxWidth={false} className={classes.container}>
             <CssBaseline />
-            <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
+            <form onSubmit={handleSubmit(onSubmit)} className={classes.loginForm}>
                 <Typography variant='h3'>Login</Typography>
 
                 <TextField variant='standard' label='Email'
@@ -47,11 +56,9 @@ export default function Login(props) {
                     {...register('password', {
                         required: 'Required Field',
                     })} />
-
-
-
-                <Button variant='contained' type="submit">Login</Button>
-                <Typography variant='small'>Dont Have An Account?
+                <Button className={classes.button} variant='contained' type="submit">Login</Button>
+                {!isValid && <p className={classes.loginError}>User Not Found, Check Your Fields</p>}
+                <Typography className={classes.link} variant='small'>Dont Have An Account?
                     <Link underline='none' to={'/register'}>Sign Up</Link>
                 </Typography>
             </form>
