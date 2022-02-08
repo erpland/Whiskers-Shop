@@ -29,7 +29,17 @@ cartBtns:{
     display:'flex',
     justifyContent:'flex-end',
     alignSelf:'flex-end'
+},
+cartIcon:
+{
+    position:'relative',
+    '&$small':{
+        position:'absolute',
+        top:0,
+        right:0,
+    },
 }
+
 }));
 
 export default useStyles

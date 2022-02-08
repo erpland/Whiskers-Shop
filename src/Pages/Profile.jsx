@@ -15,13 +15,6 @@ export default function Profile(props) {
     return (
         <Container className={classes.container} maxWidth={"xl"}>
             <Typography variant='h2' className={classes.userTitle}>Hi {props.currentUser.firstName} {props.currentUser.lastName}!</Typography>
-            {/* <div className={classes.profileDetails}>
-                <Typography variant='h5'><b>First Name:</b> Ori</Typography>
-                <Typography variant='h5'><b>Last Name:</b> Winboim</Typography>
-                <Typography variant='h5'><b>Email: </b>kofe@kofe.com</Typography>
-
-
-            </div> */}
 
             <div className={classes.orders}>
                 <Typography variant='h3'>Your Orders:</Typography>

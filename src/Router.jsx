@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Navbar from './Components/Navbar'
 import Admin from './Pages/Admin'
-import EditProduct from './Pages/EditProduct'
 import ItemPage from './Pages/ItemPage'
 import Login from './Pages/Login'
 import Profile from './Pages/Profile'
@@ -37,17 +36,17 @@ export default function Router() {
         localStorage.setItem("users", JSON.stringify(users))
     }, [users])
 
-    const addToCart = (index) => {
+    const addToCart = (index, qty=1) => {
         let cartItems
         let product = Object.assign({}, products[index])
         let cartProduct = cart.filter(item => item.index === index)
 
         if (cartProduct.length === 0) {
-            product.qty = 1
+            product.qty = 1 * qty
             cartItems = [...cart, product]
         }
         else {
-            cartProduct[0].qty++
+            cartProduct[0].qty = cartProduct[0].qty + qty
             cartItems = [...cart]
         }
         setCart(cartItems)
@@ -82,11 +81,21 @@ export default function Router() {
             setTotalPrice(0)
         }
     }, [orders])
+    useEffect(()=>{
+        localStorage.setItem("products", JSON.stringify(products))
+    },[products])
 
     const buyCart = () => {
         let order = cart
         setOrders([...orders, order])
         
+    }
+    const updateProductPrice=(product)=>{
+        console.log()
+        let index = products.indexOf(product);
+        products[index] = product
+        setProducts([...products])
+
     }
     return (
 
@@ -97,9 +106,8 @@ export default function Router() {
                 <Route path="/register" element={<Register addUser={addUser} />} />
                 <Route path="/login" element={<Login users={users} setUser={(user) => setCurrentUser(user)} />} />
                 {currentUser !== undefined && <Route path="/profile" element={<Profile orders={orders} currentUser = {currentUser}/>} />}
-                <Route path="/edit-product" element={<EditProduct />} />
-                <Route path="/admin" element={<Admin products = {products} users= {users}/>} />
-                <Route path="/item" element={<ItemPage />} />
+                <Route path="/admin" element={<Admin products = {products} updateProductPrice={(product)=>updateProductPrice(product)} users= {users}/>} />
+                <Route path="/item" element={<ItemPage  addToCart={addToCart}/>} />
             </Routes>
         </BrowserRouter>
 

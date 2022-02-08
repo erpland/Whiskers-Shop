@@ -7,12 +7,20 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import ItemDetails from '../Components/ItemDetails'
+import { useState } from 'react';
 
 export default function ItemPage(props) {
     const { state } = useLocation();
     let item = state
-    let { brand, name, region, age, price, sale_price, type, country, abv, qty, img, description } = item;
+    let { brand, name, region, index, age, price, sale_price, type, country, abv, qty, img, description } = item;
     const classes = useStyles();
+    const [amount, setAmount] = useState(0)
+    const addToCart = () => {
+        if (amount > 0) {
+            qty=amount
+            props.addToCart(index,amount)
+        }
+    }
     return (
         <Container className={classes.container} maxWidth={"md"}>
             <img src={img} alt={name} />
@@ -23,8 +31,8 @@ export default function ItemPage(props) {
             </div>
             <div className={classes.buyInfo}>
                 <Typography variant='h5'>Quantity</Typography>
-                <TextField  variant='outlined' type='number'defaultValue={0} inputProps={{min:0}} > </TextField>
-                <Button variant='contained'>Add To Cart</Button>
+                <TextField onChange={(e) => setAmount(Number(e.target.value))} variant='outlined' type='number' defaultValue={0} inputProps={{ min: 0 }} > </TextField>
+                <Button onClick={addToCart} variant='contained'>Add To Cart</Button>
                 <Typography variant='small'>Free delivery when you spend £99.00</Typography>
                 <hr />
                 <div>
@@ -38,7 +46,7 @@ export default function ItemPage(props) {
 
 
             </div>
-           <ItemDetails item={item}/>
+            <ItemDetails item={item} />
 
         </Container>
     )

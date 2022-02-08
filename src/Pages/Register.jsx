@@ -13,7 +13,6 @@ export default function Register(props) {
     const classes = useStyles();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
-        console.log(data)
         data={...data, orders:[]}
         props.addUser(data)
         navigate('/login')

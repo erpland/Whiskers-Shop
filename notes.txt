@@ -1,17 +1,12 @@
 
 
--- Shop - carousel
 -- Cart - Save Local?
-
-
-
-
-
 
 
 7/2
 --(profile route to shop if not connected)
--- Admin - ProductsList + editModal, Stats, Graph?
--- Shop - Store
+-- Admin -  Stats, Graph?
+-- Shop - sort
 -- Something Special??
 -- CSS
+

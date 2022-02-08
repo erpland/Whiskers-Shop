@@ -17,17 +17,18 @@ const useStyles = makeStyles(theme => ({
   },
 
   users: {
-
+    minHeight:'80vh'
   },
   table: {
     boxShadow: '-2px 0 20px 10px #eee',
     borderRadius: 20,
-    padding: 20
+    padding: 20,
+    height:'60vh',
+    overflowY:'auto'
   },
   userDetails: {
     border: '1px solid #eee',
     display: 'grid',
-    gridTemplateColumns: 'repeat(5, 1fr)',
     '& $p': {
       fontWeight: 'bold'
     },
@@ -35,10 +36,27 @@ const useStyles = makeStyles(theme => ({
   row: {
     border: '1px solid #eee',
     display: 'grid',
-    gridTemplateColumns: 'repeat(5, 1fr)',
+  
+    '& $img':{
+      width:80,
+    },
     '&:$hover': {
       backgroundColor: 'rgba(100,100,100, 0.1);'
-    }
+    },
+    '& $b':{
+      cursor:'pointer',
+      '&:$hover':{
+        color:'#aaa'
+      }
+    },
+  },
+  userRowGrid:{
+    
+    gridTemplateColumns: 'repeat(5, 1fr)',
+  },
+  productRowGrid:{
+    alignItems:'center',
+    gridTemplateColumns: ' 30px 90px repeat(5, 1fr)',
   },
   modalTitle: {
     paddingBottom:20,
