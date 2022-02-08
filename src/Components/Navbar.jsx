@@ -8,6 +8,7 @@ import useStyles from '../Styles/NavbarStyle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Link } from "react-router-dom";
 import Cart from './Cart';
+import { fontSize } from '@mui/system';
 
 export default function Navbar(props) {
   const classes = useStyles();
@@ -17,7 +18,7 @@ export default function Navbar(props) {
     <AppBar color='' position='static'>
       <CssBaseline />
       <Toolbar>
-        <Typography variant='h4'>Whiksers</Typography>
+        <Typography variant='h4'>Whiskers</Typography>
         <Grid container direction='row' alignItems='center' justifyContent='flex-end' spacing={1}>
 
           <Grid item style={{ paddingRight: 10 }}>
@@ -42,7 +43,7 @@ export default function Navbar(props) {
 
           <Grid item md={1}>
             <div className={classes.cartIcon}>
-              <ShoppingCartIcon style={{ cursor: 'pointer' }} onClick={() => setOpen(true)} />
+              <ShoppingCartIcon style={{ cursor: 'pointer', color:'#3f50b5'}}  onClick={() => setOpen(true)} />
               <small>{props.totalQty}</small>
             </div>
           </Grid>

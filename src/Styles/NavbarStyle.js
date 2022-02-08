@@ -32,11 +32,15 @@ cartBtns:{
 },
 cartIcon:
 {
+    width:'min-content',
     position:'relative',
-    '&$small':{
+    '& $small':{
+        fontWeight:'bold',
+        backgroundColor:'white',
+        borderRadius:'50%',
         position:'absolute',
-        top:0,
-        right:0,
+        top:'-30%',
+        left:'100%',
     },
 }
 
