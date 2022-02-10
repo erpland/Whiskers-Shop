@@ -19,6 +19,12 @@ const useStyles = makeStyles(theme => ({
   users: {
     minHeight:'80vh'
   },
+  product: {
+    minHeight:'80vh'
+  },
+  addProduct: {
+    minHeight:'80vh'
+  },
   table: {
     boxShadow: '-2px 0 20px 10px #eee',
     borderRadius: 20,
@@ -63,7 +69,20 @@ const useStyles = makeStyles(theme => ({
     marginBottom:30,
     textTransform: 'capitalize',
     borderBottom:'1px solid #ccc'
-  }
+  },
+  textboxs:{
+    padding:30,
+    display:'grid',
+    gridTemplateColumns:'1fr 1fr'
+  },
+  textbox:{
+    width:'80% !important'
+  },
+  selects:{
+    padding:'30px',
+    display:'grid',
+    gridTemplateColumns:'repeat(5, 1fr)'
+  },
 }));
 
 export default useStyles

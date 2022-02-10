@@ -63,7 +63,9 @@ export default function Cart(props) {
 
             </div>
             <div className={classes.cartItems}>
+              
               <p style={{ fontWeight: 'bold' }}>Item</p>
+             
               <p style={{ fontWeight: 'bold' }}>QTY</p>
               <p style={{ fontWeight: 'bold' }}>Price</p>
 
@@ -72,7 +74,9 @@ export default function Cart(props) {
             </div>
 
             <div className={classes.cartTotal}>
+              
               <p>TOTAL:</p>
+              <b></b>
               <p>{totalQty}</p>
               <p>{totalPrice.toFixed(2)}$</p>
             </div>

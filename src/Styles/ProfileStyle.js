@@ -3,17 +3,21 @@ import { makeStyles } from '@mui/styles';
 const useStyles = makeStyles(theme =>({
   container:{
     width:'100%',
-    justifyContent:'space-around',
-    alignItems:'center',
-    flexDirection:'column',
+    // justifyContent:'space-evenly',
+    // alignItems:'center',
+    // flexDirection:'column',
     // marginTop:100,
     minHeight:'100vh',
-    display:'flex !important',
+    // display:'flex !important',
     // display:'grid !important',
     // gridTemplateColumns:'30% 70%'
   },
   userTitle:{
     textTransform: 'capitalize',
+    marginTop:'10% !important'
+  },
+  orders:{
+    marginTop:'6% !important'
   },
   profileDetails:{
     textAlign:'left',

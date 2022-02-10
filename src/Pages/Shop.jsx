@@ -12,36 +12,33 @@ import ShopHeader from '../Components/ShopHeader'
 export default function Shop(props) {
     const [count, setCount] = useState(0)
     const timeout = useRef(null);
-    
+
     let productsList = props.products
     const productsCard = productsList.map(prod => <Grid key={prod.index} xs={12} sm={6} md={4} item><ProductCard product={prod} addToCart={props.addToCart} /></Grid>)
-    
+
     useEffect(() => {
         resetTimeout();
-        timeout.current = setTimeout(
-            () =>
-                setCount((prevCount) =>
-                    prevCount === productsList.length - 1 ? 0 : prevCount + 1
-                ),
-            3000
-        );
+        timeout.current = setTimeout(() =>
+            setCount((prevCount) => prevCount === productsList.length - 1 ? 0 : prevCount + 1
+            ), 6000
+        )
         return () => {
             resetTimeout();
-        };
-    }, [count]);
+        }
+    }, [count])
 
     const resetTimeout = () => {
         if (timeout.current) {
             clearTimeout(timeout.current);
         }
     }
-
+    
 
 
     return (
         <div>
 
-            <ShopHeader setCount={(id) => setCount(id)} product={productsList[count]} />
+            <ShopHeader count={count} setCount={(id) => setCount(id)} length product={productsList[count]} />
 
             <Container maxWidth='xl' sx={{ marginTop: 5 }}>
                 <Grid container spacing={4}>

@@ -9,7 +9,7 @@ import useStyles from '../Styles/ProfileStyle';
 
 export default function Order(props) {
   const classes = useStyles();
-  let {order,index} = props
+  let {order,index,orderInfo} = props
   let qtySum=order.reduce((prev, current) => { return prev + current.qty },0)
   let priceSum=order.reduce((prev, current) => { return (prev + current.price) * current.qty },0)
   let orderProduct = order.map((product,index)=>          
@@ -28,7 +28,8 @@ export default function Order(props) {
         aria-controls="panel1a-content"
         id="panel1a-header">
 
-        <Typography>Order #{index}</Typography>
+        {/* <Typography>Order #{index}</Typography> */}
+        <Typography variant='h5'>{orderInfo.date}</Typography>
       </AccordionSummary>
       <AccordionDetails className={classes.orderAccordion}>
 

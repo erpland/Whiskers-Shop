@@ -8,7 +8,6 @@ import useStyles from '../Styles/NavbarStyle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Link } from "react-router-dom";
 import Cart from './Cart';
-import { fontSize } from '@mui/system';
 
 export default function Navbar(props) {
   const classes = useStyles();
@@ -21,23 +20,23 @@ export default function Navbar(props) {
         <Typography variant='h4'>Whiskers</Typography>
         <Grid container direction='row' alignItems='center' justifyContent='flex-end' spacing={1}>
 
-          <Grid item style={{ paddingRight: 10 }}>
+          <Grid item style={{ paddingRight: 20 }}>
             <Link underline='none' to={'/home'}>{'Home'}</Link>
           </Grid>
-          <Grid item style={{ paddingRight: 10 }}>
+          <Grid item style={{ paddingRight: 20 }}>
             <Link underline='none' to={'/shop'}>{'Shop'}</Link>
           </Grid>
-          {!props.isLoggedIn && <Grid item style={{ paddingRight: 10 }}>
+          {!props.isLoggedIn && <Grid item style={{ paddingRight: 20 }}>
             <Link underline='none' to={'/login'}>{'Login'}</Link>
           </Grid>}
-          {!props.isLoggedIn && <Grid item style={{ paddingRight: 10 }}>
+          {!props.isLoggedIn && <Grid item style={{ paddingRight: 20 }}>
             <Link underline='none' to={'/register'}>{'Register'}</Link>
           </Grid>}
-          {props.isLoggedIn && <Grid item style={{ paddingRight: 10 }}>
+          {props.isLoggedIn && <Grid item style={{ paddingRight: 20 }}>
             <Link underline='none' to={'/profile'}>{'Profile'}</Link>
           </Grid>}
-          {props.isLoggedIn && <Grid item style={{ paddingRight: 10 }}>
-            <Link onClick={props.logOut} underline='none' to={'/Home'}>{'Logout'}</Link>
+          {props.isLoggedIn && <Grid item style={{ paddingRight: 20 }}>
+            <Link onClick={props.logOut} underline='none' to={'/shop'}>{'Logout'}</Link>
           </Grid>}
 
 

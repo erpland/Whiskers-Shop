@@ -1,12 +1,19 @@
 
 
--- Cart - Save Local?
+-- (Cart - Save Local?)
 
 
 7/2
---(profile route to shop if not connected)
--- Admin -  Stats, Graph?
--- Shop - sort
+
 -- Something Special??
 -- CSS
 
+
+
+10/2
+-- Shop - sort
+-- Admin -  Stats, Graph?
+-- item Page radar chart
+
+
+-- (clear selects in admin)

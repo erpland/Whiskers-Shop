@@ -1,20 +1,18 @@
-import React from 'react'
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
+import React, { useEffect } from 'react'
 import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Container from '@mui/material/Container';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import useStyles from '../Styles/ProfileStyle';
 import Order from '../Components/Order';
-
+import { useNavigate, Redirect } from 'react-router-dom';
 export default function Profile(props) {
+    const navigate = useNavigate();
     const classes = useStyles();
-    let orders = props.orders.map((order, index)=><Order key={index} index={index+1} order={order}/>)
+
+    let orders = props.orders.map((order, index) => <Order key={index} orderInfo={props.ordersInfo[index]} index={index + 1} order={order} />)
+    console.log('bbb')
     return (
         <Container className={classes.container} maxWidth={"xl"}>
-            <Typography variant='h2' className={classes.userTitle}>Hi {props.currentUser.firstName} {props.currentUser.lastName}!</Typography>
+            <Typography variant='h2' className={classes.userTitle}>Welcome {props.currentUser.firstName} {props.currentUser.lastName}!</Typography>
 
             <div className={classes.orders}>
                 <Typography variant='h3'>Your Orders:</Typography>

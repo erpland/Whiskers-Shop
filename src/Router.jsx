@@ -22,6 +22,7 @@ export default function Router() {
     const [products, setProducts] = useState(JSON.parse(localStorage.getItem("products")) || [])
     const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")) || [])
     const [orders, setOrders] = useState([])
+    const [ordersInfo, setOrdersInfo] = useState([])
     const [users, setUsers] = useState(JSON.parse(localStorage.getItem("users")) || [])
     const [totalQty, setTotalQty] = useState(0)
     const [totalPrice, setTotalPrice] = useState(0)
@@ -31,12 +32,11 @@ export default function Router() {
         setUsers([...users, user])
     }
 
-
     useEffect(() => {
         localStorage.setItem("users", JSON.stringify(users))
     }, [users])
 
-    const addToCart = (index, qty=1) => {
+    const addToCart = (index, qty = 1) => {
         let cartItems
         let product = Object.assign({}, products[index])
         let cartProduct = cart.filter(item => item.index === index)
@@ -72,7 +72,7 @@ export default function Router() {
     useEffect(() => {
         if (currentUser) {
             localStorage.setItem("cart", JSON.stringify([]))
-            let updatedUser = { ...currentUser, orders: [...orders] }
+            let updatedUser = { ...currentUser, orders: [...orders],ordersInfo: [...ordersInfo]}
             setCurrentUser(updatedUser)
             let updatedUsers = users.map(user => user.email === currentUser.email ? updatedUser : user)
             setUsers(updatedUsers)
@@ -81,33 +81,45 @@ export default function Router() {
             setTotalPrice(0)
         }
     }, [orders])
-    useEffect(()=>{
+    useEffect(() => {
         localStorage.setItem("products", JSON.stringify(products))
-    },[products])
+    }, [products])
 
     const buyCart = () => {
         let order = cart
         setOrders([...orders, order])
-        
+        setOrdersInfo([...ordersInfo, { date: new Date().toLocaleString() + "" }])
     }
-    const updateProductPrice=(product)=>{
+    const updateProductPrice = (product) => {
         console.log()
         let index = products.indexOf(product);
         products[index] = product
         setProducts([...products])
 
     }
+    const addProduct = (product) => {
+        setProducts([...products, product])
+    }
+    const deleteProduct = (index) => {
+        let tempProducts = products.filter(prod => prod.index !== index)
+        setProducts(tempProducts)
+    }
+    const userLogin = (user)=>{
+        setOrders([...user.orders])
+        setOrdersInfo([...user.ordersInfo])
+        setCurrentUser(user)
+    }
     return (
 
         <BrowserRouter>
-            <Navbar isLoggedIn={currentUser !== undefined} logOut={()=>setCurrentUser()} buyCart={buyCart} totalQty={totalQty} totalPrice={totalPrice} cart={cart} removeItemFromCart={removeItemFromCart} />
+            <Navbar isLoggedIn={currentUser !== undefined} logOut={() => setCurrentUser()} buyCart={buyCart} totalQty={totalQty} totalPrice={totalPrice} cart={cart} removeItemFromCart={removeItemFromCart} />
             <Routes>
                 <Route path="/shop" element={<Shop addToCart={addToCart} products={products} style={{ display: 'flex', alignItems: 'center' }} />} />
                 <Route path="/register" element={<Register addUser={addUser} />} />
-                <Route path="/login" element={<Login users={users} setUser={(user) => setCurrentUser(user)} />} />
-                {currentUser !== undefined && <Route path="/profile" element={<Profile orders={orders} currentUser = {currentUser}/>} />}
-                <Route path="/admin" element={<Admin products = {products} updateProductPrice={(product)=>updateProductPrice(product)} users= {users}/>} />
-                <Route path="/item" element={<ItemPage  addToCart={addToCart}/>} />
+                <Route path="/login" element={<Login users={users} setUser={(user) => userLogin(user)} />} />
+                {currentUser !== undefined && <Route path="/profile" element={<Profile orders={orders} ordersInfo={ordersInfo} currentUser={currentUser} />} />}
+                <Route path="/admin" element={<Admin products={products} deleteProduct={(index) => deleteProduct(index)} addProduct={addProduct} updateProductPrice={(product) => updateProductPrice(product)} users={users} />} />
+                <Route path="/item" element={<ItemPage addToCart={addToCart} />} />
             </Routes>
         </BrowserRouter>
 

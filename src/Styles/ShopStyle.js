@@ -1,3 +1,4 @@
+import { keyframes } from '@emotion/react';
 import { makeStyles } from '@mui/styles';
 const useStyles = makeStyles(theme => ({
   ProductCard: {
@@ -19,7 +20,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
   ProductInfo: {
-    zIndex:'2',
+    zIndex: '2',
     padding: 5,
     width: '100%',
     display: 'grid',
@@ -36,27 +37,38 @@ const useStyles = makeStyles(theme => ({
   shopHeader: {
     overflow: 'hidden',
     width: '100%',
-    background: 'rgb(238,238,238)',
-    background: 'radial-gradient(circle, rgba(238,238,238,1) 0%, rgba(204,204,204,1) 100%)',
-    Height: '600px',
+    backgroundColor: 'rgb(238,238,238)',
+    // background: 'radial-gradient(circle, rgba(248,248,248,1) 0%, rgba(240,240,240,1) 100%)',
+    height: '700px',
     display: 'flex !important',
     marginBottom: 20,
     boxShadow: '1px 0 20px 2px #eee'
   },
   headerContainer: {
+
     display: 'grid',
     gridTemplateColumns: '45% 10% 45%',
-    gridTemplateRows: 'auto,50px',
+    gridTemplateRows: 'auto 50px',
     width: '100%',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+
   },
+  '@keyframes fadeIn': {
+    'from': { opacity: 0 },
+    'to': { opacity: 0 },
+  },
+  fade: { animation: '$fadeIn 1s' },
+
   headerImg: {
+    marginTop: 50,
     maxHeight: '600px',
     width: '100%',
     display: 'flex',
+    flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-end',
+    position: 'relative',
 
     '& $img': {
       mixBlendMode: 'multiply',
@@ -65,6 +77,7 @@ const useStyles = makeStyles(theme => ({
       zIndex: '5',
       cursor: 'pointer',
       transition: 'transform 1s',
+
       '&:$hover': {
         transform: 'scale(1.1)'
       }
@@ -77,13 +90,17 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center'
   },
   verticalLine: {
-    borderLeft: '1px solid #ccc',
-    height: '300px',
-    width: 1
+    borderLeft: '2px solid #ccc',
+    height: '250px',
+    width: 1,
+    zIndex: 2,
+    position: 'relative'
   },
 
   headerRight: {
-    position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
     marginLeft: '50px',
   },
   headerText: {
@@ -93,18 +110,28 @@ const useStyles = makeStyles(theme => ({
   },
 
   shape: {
-    borderRadius: '50px',
-    top: '50%',
-    left: '20%',
-    transform: 'translate(-50%, -50%) rotate(45deg)',
-    minHeight: '300px',
-    minWidth: '300px',
-    backgroundColor: '#ccc',
-    position: 'absolute',
-    zIndex: 1,
+    // borderRadius: '50%',
+    // top: 0,
+    // left: '25%',
+    // transform: 'translate(-50%, 0%) rotate(-45deg)',
+    background: 'rgb(170, 170, 170)',
+    borderRadius:'20px',
+    // background: 'linear-gradient(90deg, rgba(170, 170, 170, 1) 50%, rgba(170, 170, 170, 0) 100%)',
+    height: '2px',
+    // paddingTop:10,
+    marginRight: 10,
+    width: '20%',
+    display: 'inline-block',
+    // backgroundColor: '#eee',
+    // borderBottom: '2px solid #aaa',
+    // background: 'rgb(186, 22, 22)',
+    // background: 'linear-gradient(90deg, rgba(186, 22, 22, 1) 0%, rgba(233, 85, 85, 1) 51%, rgba(201, 33, 33, 1) 100%)',
+    // position: 'absolute',
+    zIndex: 999,
   },
   btnContainer: {
-    alignSelf: 'flex-start',
+    paddingBottom:30,
+    alignSelf: 'flex-end',
     gridColumn: '1/4', width: '100%',
     display: 'flex',
     justifyContent: 'center',
@@ -113,8 +140,8 @@ const useStyles = makeStyles(theme => ({
   },
   carouselBtn: {
     cursor: 'pointer',
-    width: 20,
-    height: 20,
+    width: 15,
+    height: 15,
     backgroundColor: '#aaa',
     display: 'block',
     borderRadius: '50%',
