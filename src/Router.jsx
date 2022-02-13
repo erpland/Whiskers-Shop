@@ -8,6 +8,7 @@ import Profile from './Pages/Profile'
 import Register from './Pages/Register'
 import Shop from './Pages/Shop'
 import ProductsDb from './JSON/default-data'
+import Footer from './Components/Footer'
 
 
 
@@ -27,6 +28,7 @@ export default function Router() {
     const [totalQty, setTotalQty] = useState(0)
     const [totalPrice, setTotalPrice] = useState(0)
     const [currentUser, setCurrentUser] = useState()
+    const [isAdmin,setIsAdmin] = useState(false)
 
     const addUser = (user) => {
         setUsers([...users, user])
@@ -72,7 +74,7 @@ export default function Router() {
     useEffect(() => {
         if (currentUser) {
             localStorage.setItem("cart", JSON.stringify([]))
-            let updatedUser = { ...currentUser, orders: [...orders],ordersInfo: [...ordersInfo]}
+            let updatedUser = { ...currentUser, orders: [...orders], ordersInfo: [...ordersInfo] }
             setCurrentUser(updatedUser)
             let updatedUsers = users.map(user => user.email === currentUser.email ? updatedUser : user)
             setUsers(updatedUsers)
@@ -104,7 +106,7 @@ export default function Router() {
         let tempProducts = products.filter(prod => prod.index !== index)
         setProducts(tempProducts)
     }
-    const userLogin = (user)=>{
+    const userLogin = (user) => {
         setOrders([...user.orders])
         setOrdersInfo([...user.ordersInfo])
         setCurrentUser(user)
@@ -112,15 +114,16 @@ export default function Router() {
     return (
 
         <BrowserRouter>
-            <Navbar isLoggedIn={currentUser !== undefined} logOut={() => setCurrentUser()} buyCart={buyCart} totalQty={totalQty} totalPrice={totalPrice} cart={cart} removeItemFromCart={removeItemFromCart} />
+            {!isAdmin && <Navbar isLoggedIn={currentUser !== undefined} logOut={() => setCurrentUser()} buyCart={buyCart} totalQty={totalQty} totalPrice={totalPrice} cart={cart} removeItemFromCart={removeItemFromCart} />}
             <Routes>
                 <Route path="/shop" element={<Shop addToCart={addToCart} products={products} style={{ display: 'flex', alignItems: 'center' }} />} />
                 <Route path="/register" element={<Register addUser={addUser} />} />
-                <Route path="/login" element={<Login users={users} setUser={(user) => userLogin(user)} />} />
+                <Route path="/login" element={<Login users={users} setUser={(user) => userLogin(user)} setIsAdmin={(value)=>setIsAdmin(value)} isAdmin={isAdmin} />} />
                 {currentUser !== undefined && <Route path="/profile" element={<Profile orders={orders} ordersInfo={ordersInfo} currentUser={currentUser} />} />}
                 <Route path="/admin" element={<Admin products={products} deleteProduct={(index) => deleteProduct(index)} addProduct={addProduct} updateProductPrice={(product) => updateProductPrice(product)} users={users} />} />
                 <Route path="/item" element={<ItemPage addToCart={addToCart} />} />
             </Routes>
+            <Footer />
         </BrowserRouter>
 
     )

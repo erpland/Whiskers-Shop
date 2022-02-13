@@ -1,360 +1,104 @@
-import React, { useState } from 'react'
-import Container from '@mui/material/Container';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
-import { useForm } from 'react-hook-form';
 import useStyles from '../Styles/AdminStyle';
+import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
+import { useState } from 'react';
+import SalesChart from '../Components/SalesChart';
+import AdminOrderRow from '../Components/AdminOrdersRow'
 import AdminModal from '../Components/AdminModal';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
+// import TypeOrders from './Components/TypeOrders';
+
+
+
+
 
 export default function Admin(props) {
-    const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
-    const [data, setData] = useState()
-    // const [isUpdate, setIsUpdate] = useState('none')
-    const [region, setRegion] = useState('Other')
-    const [type, setType] = useState('Single Malt')
-    const [country, setCountry] = useState('Scotland')
-    const [sweet, setSweet] = useState(1)
-    const [floral, setFloral] = useState(1)
-    const [fruit, setFruit] = useState(1)
-    const [body, setBody] = useState(1)
-    const [richness, setRichness] = useState(1)
-    const [smoke, setSmoke] = useState(1)
-    const [wine, setWine] = useState(1)
-    let { products, users } = props
+  const classes = useStyles(props);
+  let { products, users } = props
+  const [open, setOpen] = useState(false);
+  const [data, setData] = useState()
+  const[orderInfo,setOrderInfo]=useState()
 
-    const handleChange = (event) => {
-        switch (event.target.name) {
-            case 'region':
-                if (country !== 'Scotland') { break; }
-                setRegion(event.target.value);
-                break
-            case 'type':
-                setType(event.target.value)
-                break;
-            case 'country':
-                if (event.target.name !== 'Scotland') {
-                    setRegion('Other')
-                }
-                setCountry(event.target.value)
-                break;
-            case 'sweet':
-                setSweet(event.target.value)
-                break;
-            case 'floral':
-                setFloral(event.target.value)
-                break;
-            case 'fruit':
-                setFruit(event.target.value)
-                break;
-            case 'body':
-                setBody(event.target.value)
-                break;
-            case 'richness':
-                setRichness(event.target.value)
-                break;
-            case 'smoke':
-                setSmoke(event.target.value)
-                break;
-            case 'wine':
-                setWine(event.target.value)
-                break;
-            default:
-                break;
-        }
-    };
+  let totalOrdersAmount = users.map(user=>user.orders.length).reduce((prev,current)=>{ return prev + current},0)
 
-    const { register, handleSubmit, reset, formState: { errors } } = useForm();
-    const onSubmit = data => {
-        data.abv = Number(data.abv)
-        data.price = Number(data.price)
-        data.age += data.age !== '' ? 'yo' : 'No Age Statement'
-        data = { ...data, index: products.length, qty: 0 }
-        props.addProduct(data)
-        alert('Product Added Successfully')
-        reset()
-    };
-
-    const textFieldsJson = [
-        {
-            name: 'brand',
-            label: 'Brand',
-            type: 'text',
-            error: errors?.brand,
-            pattern: /^[a-zA-Z ]{2,20}$/i,
-            message: 'English Letters Between 2-20',
-            errors: errors.brand?.message
-        },
-
-        {
-            name: 'name',
-            label: 'Name',
-            type: 'text',
-            error: errors?.name,
-            pattern: /^[a-zA-Z ]{2,30}$/i,
-            message: 'English Letters Between 2-30',
-            errors: errors.name?.message
-        },
+  let allOrders = users.map(user=>user.orders).flat()
+  let allOrdersDates = users.map(user=>user.ordersInfo).flat()
 
 
-        {
-            name: 'age',
-            label: 'Age',
-            type: 'text',
-            error: errors?.age,
-            pattern: /^[1-9][0-9]*$/i,
-            message: 'Age Must Be Above 0',
-            errors: errors.age?.message
-        },
+  let productList = products.map(product =>
+    <div className={classes.productRow}>
+      <p>{product.brand}</p>
+      <p>{product.name}</p>
+      <p>{product.price}$</p>
+      <img src={product.img} alt="" />
+    </div>)
 
+  let userOrderList = users.map((user, index) => <AdminOrderRow key={index} user={user}
+    setData={(data) => setData(data)} setOpen={(open) => setOpen(open)} setOrderInfo={(info)=>setOrderInfo(info)} />)
 
-        {
-            name: 'abv',
-            label: 'ABV',
-            type: 'text',
-            error: errors?.abv,
-            pattern: /^[4-9][0-9]*$/i,
-            message: 'abv Must Be Above 40',
-            errors: errors.abv?.message
-        },
-        {
-            name: 'price',
-            label: 'Price',
-            type: 'text',
-            error: errors?.price,
-            pattern: /^[1-9][0-9]*$/i,
-            message: 'Price Must Be Above 1',
-            errors: errors.price?.message
-        },
-        {
-            name: 'img',
-            label: 'Img',
-            type: 'text',
-            error: errors?.img,
-            pattern: /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i,
-            message: 'Illegal Image Suffix',
-            errors: errors.img?.message
-        },
+  return (
+    <div style={{ backgroundColor: '#F1F2F6', }}>
 
-    ]
-    const selectFieldsJson = [
-        {
-            label: 'Country',
-            name: 'country',
-            value: country,
-            menuItems: ['Scotland', 'Ireland', 'Japan', 'USA']
-        },
-        {
-            label: 'Region',
-            name: 'region',
-            value: region,
-            menuItems: ['Other', 'Campbeltown', 'Highlands', 'Islands', 'Islay', 'Lowland', 'Speyside']
-        },
-        {
-            label: 'Type',
-            name: 'type',
-            value: type,
-            menuItems: ['Single Malt', 'Blend', 'Bourbon', 'Rye']
-        },
-        {
-            label: 'Sweet',
-            name: 'sweet',
-            value: sweet,
-            menuItems: [1, 2, 3, 4, 5]
-        },
-        {
-            label: 'Floral',
-            name: 'floral',
-            value: floral,
-            menuItems: [1, 2, 3, 4, 5]
-        },
-        {
-            label: 'Fruit',
-            name: 'fruit',
-            value: fruit,
-            menuItems: [1, 2, 3, 4, 5]
-        },
-        {
-            label: 'Body',
-            name: 'body',
-            value: body,
-            menuItems: [1, 2, 3, 4, 5]
-        },
-        {
-            label: 'Richness',
-            name: 'richness',
-            value: richness,
-            menuItems: [1, 2, 3, 4, 5]
-        },
-        {
-            label: 'Smoke',
-            name: 'smoke',
-            value: smoke,
-            menuItems: [1, 2, 3, 4, 5]
-        },
-        {
-            label: 'Wine',
-            name: 'wine',
-            value: wine,
-            menuItems: [1, 2, 3, 4, 5]
-        },
-
-
-    ]
-
-    const userClick = (user) => {
-        setData(user)
-        setOpen(true)
-    }
-    const updatePrice = (product, index) => {
-
-        let small = document.getElementById(`${index}`)
-        let text = document.getElementById(`text${index}`)
-        small.style = 'visibility: visible'
-        if (Number(text.defaultValue) !== product.price && product.price > 0) {
-            small.innerHTML = "Success"
-            small.style = 'color:green'
-            props.updateProductPrice(product)
-        }
-        else {
-            small.innerHTML = "Failed"
-            small.style = 'color:red'
-        }
-        setTimeout(() => small.style = 'visibility: hidden', 3000)
-
-    }
-    let userRow = users.map((user, index) =>
-        <div key={index} className={`${classes.row} ${classes.userRowGrid}`}>
-            <p>{user.email}</p>
-            <p>{user.firstName}</p>
-            <p>{user.lastName}</p>
-            <p>{user.orders.length}</p>
-            <Button onClick={() => userClick(user)}>Show More</Button>
-        </div>)
-
-    let productRow = products.map((product, index) =>
-        <div key={index} className={`${classes.row} ${classes.productRowGrid}`} >
-            <b onClick={() => props.deleteProduct(product.index)}>X</b>
-            <img src={product.img} alt="product" />
-            <p>{product.brand}</p>
-            <p>{product.name}</p>
-            <p>{product.type}</p>
-            <div>
-                <TextField
-                    id={`text${index}`}
-                    variant="standard"
-                    defaultValue={product.price}
-                    type="number"
-                    InputProps={{ inputProps: { min: 1 } }}
-                    onChange={(e) => { product.price = Number(e.target.value) }}
-                />
-                <small style={{ visibility: 'hidden' }} id={index}>succses</small>
+      <Container maxWidth="xl">
+        <div className={classes.container}>
+          <Typography mt={3} borderBottom={'1px solid #ccc'} variant="h4" color="initial">Dashboard</Typography>
+          <div className={classes.basicsContainer}>
+            <div className={classes.basicsBox}>
+              <Typography variant="h5" color="initial">Orders</Typography>
+              -----
+              <div className={classes.basicsBoxText} >
+                <Typography variant="h3" color="initial">{totalOrdersAmount}</Typography>
+                <Typography variant="p" color="initial">new orders</Typography>
+              </div>
             </div>
-            <Button sx={{ height: '40px' }} onClick={() => updatePrice(product, index)}>Update Price</Button>
-        </div>)
-    const textFields = textFieldsJson.map((input) =>
-        <TextField className={classes.textbox} key={input.name} variant='standard' label={input.label}
-            fullWidth type={input.type} autoComplete={input.name}
-            error={!!input.error}
-            helperText={input.error ? input.errors : null}
-            {...register(input.name, {
-                required: input.name !== 'age' ? 'Required Field' : '',
-                pattern: {
-                    value: input.pattern, message: input.message
-                }
-            })} />)
+            <div className={classes.basicsBox}>
+              <Typography variant="h5" color="initial">Users</Typography>
+              -----
+              <div className={classes.basicsBoxText} >
+                <Typography variant="h3" color="initial">{users.length}</Typography>
+                <Typography variant="p" color="initial">Total Users</Typography>
+              </div>
+            </div>
+            <div className={classes.basicsBox}>
+              <Typography variant="h5" color="initial">Products</Typography>
+              -----
+              <div className={classes.basicsBoxText} >
+                <Typography variant="h3" color="initial">{products.length}</Typography>
+                <Typography variant="p" color="initial">Total Products</Typography>
+              </div>
+            </div>
+          </div>
 
-    const selectFields = selectFieldsJson.map((input) =>
-        <div key={input.name}>
-            <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                {input.name}
-            </InputLabel>
-            <Select
-                label={input.label}
-                labelId={input.name}
-                id={input.name}
-                name={input.name}
-                value={input.value}
-                {...register(input.name, {
-                    setValueAs: value => isNaN(Number(value)) ? value : Number(value),
-                })}
-                onChange={handleChange}
-            >
-                {input.menuItems.map((item, index) => <MenuItem key={index} value={item}>
-                    {item}
-                </MenuItem>)}
-            </Select>
+          <div className={classes.statsContainer}>
+            <div className={classes.statsLeft}>
+              <div className={classes.statsProducts}>
+                <Typography variant="p" color="initial"><b>Orders</b></Typography>
+                <div style={{ borderTopLeftRadius: 10, borderTopRightRadius: 10, marginTop: 10 }} className={classes.productRow}>
+                  <p><b>Name</b></p>
+                  <p><b>Date</b></p>
+                  <p><b>Qty</b></p>
+                  <p><b>Total Price</b></p>
+                </div>
+                <div className={classes.productTable}>
+                  {userOrderList}
+                </div>
+
+              </div>
+
+            </div>
+            <div className={classes.statsRight}>
+              <div className={classes.rightGraph}>
+                <Typography sx={{ pl: '30px' }} variant="p" color="initial">
+                  <b>Last 7 Days Orders</b></Typography>
+                <SalesChart orders={allOrders} dates={allOrdersDates}/>
+              </div>
+            </div>
+          </div>
+
         </div>
-    )
-    return (
-
-        <Container className={classes.container} maxWidth={'lg'}>
-            <h1>Dashbord</h1>
-            <div className={classes.stats}>
-
-            </div>
-
-            <div className={classes.users}>
-                <h2>Users</h2>
-                <div className={classes.table}>
-                    <div className={`${classes.userDetails} ${classes.userRowGrid}`}>
-                        <p>Email</p>
-                        <p>First Name</p>
-                        <p>Last Name</p>
-                        <p>Order Amount</p>
-                        <p>View Orders</p>
-                    </div>
-                    {userRow}
-                </div>
-            </div>
-
-            <div className={classes.products}>
-                <h2>Products</h2>
-                <div className={classes.table}>
-                    <div className={`${classes.userDetails} ${classes.productRowGrid}`}>
-                        <p></p>
-                        <p>Image</p>
-                        <p>Brand</p>
-                        <p>Name</p>
-                        <p>Type</p>
-                        <p>Price</p>
-                        <p>Change Price</p>
-                    </div>
-                    {productRow}
-                </div>
-            </div>
-            <div className={classes.addProduct}>
-                <h2>Add Product</h2>
-                <div className={classes.table}>
-                    <form className={classes.addProductForm} onSubmit={handleSubmit(onSubmit)}>
-                        <div className={classes.textboxs}>
-                            {textFields}
-                        </div>
-                        <div className={classes.selects}>
-                        {selectFields}
-                        </div>
-                        <TextField rows={10}
-                            fullWidth
-                            multiline
-                            id="description"
-                            {...register('description', {
-                                required: 'Required Field',
-                                // pattern: {
-                                //     value: /^[\d]+$/i, message: ''
-                                // }
-                            })}
-                            label="Description"
-                            variant="outlined" />
-                        <Button variant='contained' type="submit">Add Product</Button>
-                    </form>
-                </div>
-            </div>
-            {data && <AdminModal open={open} setOpen={setOpen} data={data} />}
-        </Container>
-    );
+      </Container>
+      {data && <AdminModal open={open} setOpen={setOpen} data={data} orderInfo={orderInfo} />}
+    </div>
+  );
 }
+
+

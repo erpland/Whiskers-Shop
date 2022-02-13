@@ -8,13 +8,15 @@ import Grid from '@mui/material/Grid';
 import ProductCard from '../Components/ProductCard';
 import useStyles from '../Styles/ShopStyle';
 import ShopHeader from '../Components/ShopHeader'
+import SortAndFilter from '../Components/SortAndFilter';
 
 export default function Shop(props) {
+    let productsList = props.products
     const [count, setCount] = useState(0)
+    const [sortedProducts, setSortedProducts] = useState(productsList)
     const timeout = useRef(null);
 
-    let productsList = props.products
-    const productsCard = productsList.map(prod => <Grid key={prod.index} xs={12} sm={6} md={4} item><ProductCard product={prod} addToCart={props.addToCart} /></Grid>)
+    const productsCard = sortedProducts.map(prod => <Grid key={prod.index} xs={12} sm={6} md={4} item><ProductCard product={prod} addToCart={props.addToCart} /></Grid>)
 
     useEffect(() => {
         resetTimeout();
@@ -41,6 +43,7 @@ export default function Shop(props) {
             <ShopHeader count={count} setCount={(id) => setCount(id)} length product={productsList[count]} />
 
             <Container maxWidth='xl' sx={{ marginTop: 5 }}>
+                <SortAndFilter products={sortedProducts} originalProducts={props.products} setSortedProducts={(products)=>setSortedProducts(products)}/>
                 <Grid container spacing={4}>
                     {productsCard}
                 </Grid>

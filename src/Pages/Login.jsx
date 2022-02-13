@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import { Email } from '@mui/icons-material';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 export default function Login(props) {
 
@@ -20,7 +21,8 @@ export default function Login(props) {
     const onSubmit = data => {
         let userList = props.users
         if(data.email === 'admin' && data.password === 'admin123'){
-            navigate('/admin')
+            props.setIsAdmin(true)
+            
         }
         let currentUser = userList.filter((user) => user.email === data.email && user.password === data.password)
         if (currentUser.length !== 0) {
@@ -30,11 +32,12 @@ export default function Login(props) {
         else {
             setIsValid(false)
         }
+    };   
+    useEffect(() => {
+        if(props.isAdmin)
+            navigate('/admin')   
+    }, [props.isAdmin,navigate])
 
-
-
-
-    };
     return (
         <Container maxWidth={false} className={classes.container}>
             <CssBaseline />

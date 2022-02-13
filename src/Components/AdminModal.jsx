@@ -24,12 +24,11 @@ const style = {
 };
 
 export default function AdminModal(props) {
-  let { open, setOpen, data } = props
-
+  let { open, setOpen, data, orderInfo } = props
   const handleClose = () => setOpen(false);
 
   const classes = useStyles();
-  let dataMap = data.orders.map((order, index) => <Order key={index} index={index + 1} order={order} />)
+  // let dataMap = data.orders.map((order, index) => <Order key={index} index={index + 1} order={order} />)
   return (
     <div>
       <Modal
@@ -42,7 +41,7 @@ export default function AdminModal(props) {
           <span onClick={handleClose} className={classes.closeBtn}>X</span>
           <h1 className={classes.modalTitle}>{data.firstName} {data.lastName} Orders</h1>
           <div>
-            {dataMap}
+            <Order order={data} orderInfo={orderInfo} />
           </div>
         </Box>
       </Modal>

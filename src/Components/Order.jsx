@@ -9,10 +9,10 @@ import useStyles from '../Styles/ProfileStyle';
 
 export default function Order(props) {
   const classes = useStyles();
-  let {order,index,orderInfo} = props
+  let {order,orderInfo} = props
   let qtySum=order.reduce((prev, current) => { return prev + current.qty },0)
   let priceSum=order.reduce((prev, current) => { return (prev + current.price) * current.qty },0)
-  let orderProduct = order.map((product,index)=>          
+  let orderProduct = order.map((product,index)=>           
   <div key={index} className={classes.product}>
     <p >{product.brand} {product.name}</p>
     <p >{product.qty}</p>

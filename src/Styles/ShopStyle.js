@@ -1,5 +1,5 @@
-import { keyframes } from '@emotion/react';
 import { makeStyles } from '@mui/styles';
+import { fontSize } from '@mui/system';
 const useStyles = makeStyles(theme => ({
   ProductCard: {
     minHeight: '380px',
@@ -115,7 +115,7 @@ const useStyles = makeStyles(theme => ({
     // left: '25%',
     // transform: 'translate(-50%, 0%) rotate(-45deg)',
     background: 'rgb(170, 170, 170)',
-    borderRadius:'20px',
+    borderRadius: '20px',
     // background: 'linear-gradient(90deg, rgba(170, 170, 170, 1) 50%, rgba(170, 170, 170, 0) 100%)',
     height: '2px',
     // paddingTop:10,
@@ -130,7 +130,7 @@ const useStyles = makeStyles(theme => ({
     zIndex: 999,
   },
   btnContainer: {
-    paddingBottom:30,
+    paddingBottom: 30,
     alignSelf: 'flex-end',
     gridColumn: '1/4', width: '100%',
     display: 'flex',
@@ -150,8 +150,33 @@ const useStyles = makeStyles(theme => ({
       filter: 'brightness(50%)',
       backgroundColor: 'white'
     },
+  },
 
-  }
+  filterContainer: {
+    display: 'grid',
+    gridTemplateColumns: '4fr 2.5fr',
+    // border:'1px solid #ccc',
+    marginBottom:50
+  },
+  selects: {
+    display:'flex',
+    justifyContent:'space-between'
+
+  },
+  sorts: {
+    display:'flex',
+    justifyContent:'flex-end',
+    '& $i': {
+      color: '#555',
+      fontSize: 35,
+      padding:10,
+      cursor:'pointer',
+      '&:hover': {
+        color: '#000'
+      },
+    },
+
+  },
 }));
 
 export default useStyles

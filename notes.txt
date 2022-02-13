@@ -11,9 +11,11 @@
 
 
 10/2
--- Shop - sort
 -- Admin -  Stats, Graph?
 -- item Page radar chart
 
+13/2
+-- sort with filter
+-- change admin from true to false
 
 -- (clear selects in admin)
