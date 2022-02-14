@@ -10,45 +10,48 @@ import {
 
 var d = new Date();
 const daysNames = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"]
-console.log(daysNames[d.getDay()]);
+
 
 
 
 export default function SalesChart(props) {
   let { orders, dates } = props
-  let today = new Date();
-  let dd = today.getDate();
-  let mm = today.getMonth()
-  let yyyy = today.getFullYear();
-  today = mm + '/' + dd + '/' + yyyy;
+  
+ 
+
   const calcOrders = (day) => {
-    console.log(new Date (dates[4].date).getMonth() === mm)
-    // dates.filter((date,index)=> date.)
+    let d = new Date();
+    d.setDate(d.getDate() - day);
+
+    let orders = dates.filter(date =>
+      new Date(date.date).getMonth() === d.getMonth() && new Date(date.date).getDate() === d.getDate() &&
+      new Date(date.date).getFullYear() === d.getFullYear())
+    return orders.reduce((prev, current) => { return prev + current.totalPrice }, 0)
   }
   const data = [
     {
       name: daysNames[(d.getDay() + 1) % 7],
-      sales: 1,
+      sales: calcOrders(6),
     },
     {
       name: daysNames[(d.getDay() + 2) % 7],
-      sales: 2,
+      sales: calcOrders(5),
     },
     {
       name: daysNames[(d.getDay() + 3) % 7],
-      sales: 3,
+      sales: calcOrders(4),
     },
     {
       name: daysNames[(d.getDay() + 4) % 7],
-      sales: 4,
+      sales: calcOrders(3),
     },
     {
       name: daysNames[(d.getDay() + 5) % 7],
-      sales: 5,
+      sales: calcOrders(2),
     },
     {
       name: daysNames[(d.getDay() + 6) % 7],
-      sales: 1,
+      sales: calcOrders(1),
     },
     {
       name: "Today",

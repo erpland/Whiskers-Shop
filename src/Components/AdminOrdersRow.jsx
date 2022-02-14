@@ -12,7 +12,7 @@ export default function AdminOrdersRow(props) {
     props.setOpen(true)
 }
   let orders = user.orders.map((order,index) =>
-    <div key={index} className={classes.productRow} >
+    <div key={index} className={classes.orderRow} >
       <p>{user.firstName}</p>
       {<p>{user.ordersInfo[index].date}</p>}
       <p>{order.reduce((prev, current) => { return prev + current.qty }, 0)}</p>

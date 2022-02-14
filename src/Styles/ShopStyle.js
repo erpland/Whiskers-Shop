@@ -11,7 +11,8 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'center',
     '& $img': {
-      width: '100%',
+      // width: '100%',
+      height:'400px',
       cursor: 'pointer',
       transition: 'transform 1s',
       '&:$hover': {
@@ -38,7 +39,6 @@ const useStyles = makeStyles(theme => ({
     overflow: 'hidden',
     width: '100%',
     backgroundColor: 'rgb(238,238,238)',
-    // background: 'radial-gradient(circle, rgba(248,248,248,1) 0%, rgba(240,240,240,1) 100%)',
     height: '700px',
     display: 'flex !important',
     marginBottom: 20,
@@ -110,23 +110,12 @@ const useStyles = makeStyles(theme => ({
   },
 
   shape: {
-    // borderRadius: '50%',
-    // top: 0,
-    // left: '25%',
-    // transform: 'translate(-50%, 0%) rotate(-45deg)',
     background: 'rgb(170, 170, 170)',
     borderRadius: '20px',
-    // background: 'linear-gradient(90deg, rgba(170, 170, 170, 1) 50%, rgba(170, 170, 170, 0) 100%)',
     height: '2px',
-    // paddingTop:10,
     marginRight: 10,
     width: '20%',
     display: 'inline-block',
-    // backgroundColor: '#eee',
-    // borderBottom: '2px solid #aaa',
-    // background: 'rgb(186, 22, 22)',
-    // background: 'linear-gradient(90deg, rgba(186, 22, 22, 1) 0%, rgba(233, 85, 85, 1) 51%, rgba(201, 33, 33, 1) 100%)',
-    // position: 'absolute',
     zIndex: 999,
   },
   btnContainer: {
@@ -155,7 +144,6 @@ const useStyles = makeStyles(theme => ({
   filterContainer: {
     display: 'grid',
     gridTemplateColumns: '4fr 2.5fr',
-    // border:'1px solid #ccc',
     marginBottom:50
   },
   selects: {

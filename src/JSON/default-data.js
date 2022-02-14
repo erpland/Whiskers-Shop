@@ -65,7 +65,7 @@ const defaultProducts = [
         'body':4,
         'richness':4,
         'smoke':4,
-        'wine':0,
+        'wine':1,
 
     },
     {
@@ -81,7 +81,6 @@ const defaultProducts = [
         "qty": 0,
         "img": `../shop/the-macallan-rare-cask.jpg`,
         "description": `A much sought-after single malt Scotch whisky with the massive peat-smoke that's typical of southern Islay - but also offering richness and a dryness that turns it into a truly interesting tipple. The 16 year old has truly become a benchmark Islay dram from the Lagavulin distillery.
-
         If you're looking for a food pairing for this beauty, try intensely flavoured salty blue cheeses, which complement the intense, peat rich, sweet and salty character of this Lagavulin wonderfully.`,
         "index": 3,
         'sweet':3,

@@ -31,7 +31,7 @@ export default function ItemDetails(props) {
             </tr>
             <tr>
                 <td>ABV</td>
-                <td>{item.abv}$</td>
+                <td>{item.abv}%</td>
             </tr>
             <tr>
                 <td>Age Statement</td>

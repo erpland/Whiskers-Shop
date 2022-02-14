@@ -51,6 +51,11 @@ const useStyles = makeStyles(theme =>({
       }
     }
   },
+  tasteChart:{
+    marginTop:20,
+    textAlign:'left',
+    gridColumn:'1/3'
+  },
 
 }));
 

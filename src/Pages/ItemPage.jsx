@@ -8,6 +8,7 @@ import Button from '@mui/material/Button';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import ItemDetails from '../Components/ItemDetails'
 import { useState } from 'react';
+import TasteChart from '../Components/TasteChart';
 
 export default function ItemPage(props) {
     const { state } = useLocation();
@@ -17,8 +18,8 @@ export default function ItemPage(props) {
     const [amount, setAmount] = useState(0)
     const addToCart = () => {
         if (amount > 0) {
-            qty=amount
-            props.addToCart(index,amount)
+            qty = amount
+            props.addToCart(index, amount)
         }
     }
     return (
@@ -26,7 +27,7 @@ export default function ItemPage(props) {
             <img src={img} alt={name} />
             <div className={classes.itemHeadline}>
                 <Typography variant='h3'>{brand} {name}</Typography>
-                <Typography variant='p'>{abv}abv / {region}</Typography>
+                <Typography variant='p'>{abv} abv / {region}</Typography>
                 <Typography variant='h5'>{price}$</Typography>
             </div>
             <div className={classes.buyInfo}>
@@ -47,7 +48,10 @@ export default function ItemPage(props) {
 
             </div>
             <ItemDetails item={item} />
-
+            <div className={classes.tasteChart}>
+            <Typography variant='h4' sx={{borderBottom:'1px solid #ccc'}}>{brand} {name} Taste Chart</Typography>
+                <TasteChart item={item} />
+            </div>
         </Container>
     )
 }

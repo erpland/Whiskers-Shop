@@ -29,11 +29,15 @@ export default function Router() {
     const [totalPrice, setTotalPrice] = useState(0)
     const [currentUser, setCurrentUser] = useState()
     const [isAdmin,setIsAdmin] = useState(false)
-
+    
     const addUser = (user) => {
         setUsers([...users, user])
     }
-
+    const deleteUser=(index)=>{
+        let newUserArr=[...users]
+        newUserArr.splice(index,1)
+        setUsers(newUserArr)
+    }
     useEffect(() => {
         localStorage.setItem("users", JSON.stringify(users))
     }, [users])
@@ -90,7 +94,7 @@ export default function Router() {
     const buyCart = () => {
         let order = cart
         setOrders([...orders, order])
-        setOrdersInfo([...ordersInfo, { date: new Date().toLocaleString() + "" }])
+        setOrdersInfo([...ordersInfo, { date: new Date().toLocaleString() + "",totalPrice:totalPrice },])
     }
     const updateProductPrice = (product) => {
         console.log()
@@ -120,7 +124,7 @@ export default function Router() {
                 <Route path="/register" element={<Register addUser={addUser} />} />
                 <Route path="/login" element={<Login users={users} setUser={(user) => userLogin(user)} setIsAdmin={(value)=>setIsAdmin(value)} isAdmin={isAdmin} />} />
                 {currentUser !== undefined && <Route path="/profile" element={<Profile orders={orders} ordersInfo={ordersInfo} currentUser={currentUser} />} />}
-                <Route path="/admin" element={<Admin products={products} deleteProduct={(index) => deleteProduct(index)} addProduct={addProduct} updateProductPrice={(product) => updateProductPrice(product)} users={users} />} />
+                <Route path="/admin" element={<Admin deleteUser={deleteUser} products={products} deleteProduct={(index) => deleteProduct(index)} addProduct={addProduct} updateProductPrice={(product) => updateProductPrice(product)} users={users} />} />
                 <Route path="/item" element={<ItemPage addToCart={addToCart} />} />
             </Routes>
             <Footer />

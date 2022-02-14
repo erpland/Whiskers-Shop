@@ -33,19 +33,19 @@ const useStyles = makeStyles(theme => ({
   statsContainer: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
-    gridTemplateRows: '1fr 1fr',
+    // gridTemplateRows: '1fr 1fr',
     gap: '10%',
     width: '100%',
     justifyItems: 'space-evenly'
   },
   statsLeft: {
-    height:'60vh',
+    height: '60vh',
     display: 'grid',
     gridTemplateRows: '1fr',
     gap: 30,
 
   },
-  statsProducts: {
+  statsOrders: {
     borderRadius: 10,
     backgroundColor: '#fff',
     padding: '20px 30px',
@@ -53,11 +53,11 @@ const useStyles = makeStyles(theme => ({
     width: '90%',
     boxShadow: '-2px 0px 20px 3px #ccc'
   },
-  productTable: {
+  orderTable: {
     overflow: 'auto',
     maxHeight: '40vh'
   },
-  productRow: {
+  orderRow: {
     display: 'grid',
     gridTemplateColumns: '1fr 1.7fr 0.5fr 1fr 1fr',
     alignItems: 'center',
@@ -96,12 +96,87 @@ const useStyles = makeStyles(theme => ({
     boxShadow: '-2px 0px 20px 3px #ccc',
   },
   rightGraph: {
-    height:'100%',
+    height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    gap:30
+    gap: 30
+  },
+
+  productsContainer: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: '10%',
+    width: '100%',
+    justifyItems: 'space-evenly'
+  },
+  productsList: {
+    boxShadow: '-2px 0px 20px 3px #ccc',
+    borderRadius: 10,
+    padding: 10,
+    backgroundColor: '#fff',
+    height: '70vh',
+  },
+  productsTable: {
+    overflow: 'auto',
+    maxHeight: '55vh'
+  },
+  productRowGrid: {
+    display: 'grid',
+    alignItems: 'center',
+    gridTemplateColumns: ' 30px 90px repeat(5, 1fr)',
+    '& $img': {
+      width: 80,
+    },
+  },
+  addProduct: {
+    padding: '10px 20px',
+    boxShadow: '-2px 0px 20px 3px #ccc',
+    borderRadius: 10,
+    // padding: 10,
+    backgroundColor: '#fff',
+    height: '70vh',
+  },
+  addProductTable: {},
+  addProductForm: {
+    display: 'grid',
+    gridTemplateRows: '2fr 2fr auto 100px'
 
   },
+  textboxs: {
+    paddingBottom: 20,
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr 1fr',
+    columnGap: 40
+  },
+  selects: {
+    paddingBottom: 20,
+    display: 'grid',
+    gridTemplateColumns: 'repeat(5, 1fr)'
+  },
+
+  usersContainer: {
+  },
+  usersList: {
+    boxShadow: '-2px 0px 20px 3px #ccc',
+    borderRadius: 10,
+    padding: 10,
+    backgroundColor: '#fff',
+    height: '70vh',
+  },
+  usersTable: {},
+  userRow: {
+    display: 'grid',
+    alignItems: 'center',
+    gridTemplateColumns: '30px 2fr 1fr 1fr 1fr 1fr 1.5fr',
+    '& $span': {
+      cursor:'pointer',
+      '&:hover':{
+        color:'#aaa'
+      },
+    },
+  },
+
+
 
 }));
 export default useStyles
