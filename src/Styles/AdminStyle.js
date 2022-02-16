@@ -7,55 +7,56 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     gap: 60,
   },
+  headline:{
+    marginTop:40,
+    width:'100%',
+    display:'flex',
+    alignItems:'center',
+    justifyContent:'space-between'
+  },
   basicsContainer: {
-    width: '100%',
+    // width: 'inherit',
     display: 'grid',
     gridTemplateColumns: 'repeat(3, 30%)',
-    justifyItems: 'center',
-    gap: '3%'
+    justifyContent: 'space-between',
+    // gap: '6%'
+    height:'150px'
   },
   basicsBox: {
     borderRadius: 10,
     backgroundColor: '#fff',
     padding: 25,
-    width: '90%',
     height: 100,
     boxShadow: '-2px 0px 20px 3px #ccc',
     display: 'grid',
-    gridTemplateColumns: '70% 30%',
-    alignItems: 'center'
+    gridTemplateColumns: '50% 50%',
+    alignItems: 'center',
   },
   basicsBoxText: {
     gridColumn: '2',
-    gridRow: '1/3'
   },
 
   statsContainer: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
-    // gridTemplateRows: '1fr 1fr',
     gap: '10%',
     width: '100%',
     justifyItems: 'space-evenly'
   },
   statsLeft: {
-    height: '60vh',
+    height: '580px',
     display: 'grid',
     gridTemplateRows: '1fr',
-    gap: 30,
-
   },
   statsOrders: {
     borderRadius: 10,
     backgroundColor: '#fff',
-    padding: '20px 30px',
-    height: '55vh',
-    width: '90%',
+    padding: '20px 20px',
     boxShadow: '-2px 0px 20px 3px #ccc'
   },
   orderTable: {
     overflow: 'auto',
-    maxHeight: '40vh'
+    maxHeight: '420px'
   },
   orderRow: {
     display: 'grid',
@@ -68,38 +69,24 @@ const useStyles = makeStyles(theme => ({
       margin: 0
     },
     '& $img': {
-      // width:80,
       height: 40,
       objectFit: 'cover'
     }
   },
-  statsStats: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: 30,
-  },
-  statsBox: {
-    borderRadius: 10,
-    backgroundColor: '#fff',
-    padding: 10,
-    height: '20vh',
-    width: '90%',
-    boxShadow: '-2px 0px 20px 3px #ccc'
-  },
   statsRight: {
-    paddingRight: 20,
     borderRadius: 10,
     backgroundColor: '#fff',
-    padding: '20px 0',
-    height: '55vh',
-    width: '90%',
+    height: '580px',
     boxShadow: '-2px 0px 20px 3px #ccc',
   },
+  rightGraphWrapper:{
+    padding: '20px 20px',
+  },
   rightGraph: {
+    marginTop:50,
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    gap: 30
   },
 
   productsContainer: {
@@ -114,27 +101,33 @@ const useStyles = makeStyles(theme => ({
     borderRadius: 10,
     padding: 10,
     backgroundColor: '#fff',
-    height: '70vh',
+    height: '680px',
   },
   productsTable: {
     overflow: 'auto',
-    maxHeight: '55vh'
+    maxHeight: '580px'
   },
   productRowGrid: {
     display: 'grid',
     alignItems: 'center',
-    gridTemplateColumns: ' 30px 90px repeat(5, 1fr)',
+    border: '1px solid #eee',
+    gridTemplateColumns: ' 30px 80px 1fr 1fr 1fr 60px 1fr',
     '& $img': {
-      width: 80,
+      width: 70,
     },
+    '& $span':{
+      cursor:'pointer',
+      '&:hover':{
+        color:'#777'
+      }
+    }
   },
   addProduct: {
     padding: '10px 20px',
     boxShadow: '-2px 0px 20px 3px #ccc',
     borderRadius: 10,
-    // padding: 10,
     backgroundColor: '#fff',
-    height: '70vh',
+    height: '680px',
   },
   addProductTable: {},
   addProductForm: {
@@ -143,6 +136,7 @@ const useStyles = makeStyles(theme => ({
 
   },
   textboxs: {
+    marginTop:10,
     paddingBottom: 20,
     display: 'grid',
     gridTemplateColumns: '1fr 1fr 1fr',
@@ -161,13 +155,20 @@ const useStyles = makeStyles(theme => ({
     borderRadius: 10,
     padding: 10,
     backgroundColor: '#fff',
-    height: '70vh',
+    height: '600px',
   },
-  usersTable: {},
+  usersTable: {
+    padding:'5px 20px',
+    height:500,
+    overflowY:'auto'
+  },
   userRow: {
     display: 'grid',
     alignItems: 'center',
     gridTemplateColumns: '30px 2fr 1fr 1fr 1fr 1fr 1.5fr',
+    border: '1px solid #eee',
+    padding: 5,
+    
     '& $span': {
       cursor:'pointer',
       '&:hover':{
@@ -175,8 +176,5 @@ const useStyles = makeStyles(theme => ({
       },
     },
   },
-
-
-
 }));
 export default useStyles

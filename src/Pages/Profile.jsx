@@ -9,17 +9,18 @@ export default function Profile(props) {
     const classes = useStyles();
 
     let orders = props.orders.map((order, index) => <Order key={index} orderInfo={props.ordersInfo[index]} index={index + 1} order={order} />)
-    console.log('bbb')
     return (
+        <div style={{backgroundColor:'#F1F2F6'}}>
         <Container className={classes.container} maxWidth={"xl"}>
-            <Typography variant='h2' className={classes.userTitle}>Welcome {props.currentUser.firstName} {props.currentUser.lastName}!</Typography>
+            <Typography variant='h2' borderBottom={'1px solid #ccc'} mb={10} className={classes.userTitle}>Welcome {props.currentUser.firstName} {props.currentUser.lastName}!</Typography>
 
             <div className={classes.orders}>
-                <Typography variant='h3'>Your Orders:</Typography>
+                <Typography mb={3} align={'left'} variant='h3'>Your Orders:</Typography>
                 <div>
                     {orders}
                 </div>
             </div>
         </Container>
+        </div>
     )
 }

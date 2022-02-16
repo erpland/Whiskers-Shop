@@ -15,35 +15,21 @@ export default function Shop(props) {
     const [count, setCount] = useState(0)
     const [sortedProducts, setSortedProducts] = useState(productsList)
     const timeout = useRef(null);
-
+    const classes = useStyles(props);
     const productsCard = sortedProducts.map(prod => <Grid key={prod.index} xs={12} sm={6} md={4} item><ProductCard product={prod} addToCart={props.addToCart} /></Grid>)
 
-    useEffect(() => {
-        resetTimeout();
-        timeout.current = setTimeout(() =>
-            setCount((prevCount) => prevCount === productsList.length - 1 ? 0 : prevCount + 1
-            ), 6000
-        )
-        return () => {
-            resetTimeout();
-        }
-    }, [count])
-
-    const resetTimeout = () => {
-        if (timeout.current) {
-            clearTimeout(timeout.current);
-        }
-    }
+    
     
 
 
     return (
-        <div>
+        <div className={classes.shopContainer}>
 
-            <ShopHeader count={count} setCount={(id) => setCount(id)} length product={productsList[count]} />
+            <ShopHeader count={count} setCount={(id) => setCount(id)} products={props.mostPopProducts} />
 
-            <Container maxWidth='xl' sx={{ marginTop: 5 }}>
+            <Container maxWidth='xl' sx={{ marginTop: 5, minHeight:'30vh' }}>
                 <SortAndFilter products={sortedProducts} originalProducts={props.products} setSortedProducts={(products)=>setSortedProducts(products)}/>
+                { sortedProducts.length === 0 ? <h2>No Items Found...</h2>: null}
                 <Grid container spacing={4}>
                     {productsCard}
                 </Grid>

@@ -22,7 +22,7 @@ export default function Login(props) {
         let userList = props.users
         if(data.email === 'admin' && data.password === 'admin123'){
             props.setIsAdmin(true)
-            
+            localStorage.setItem('isAdmin',true)
         }
         let currentUser = userList.filter((user) => user.email === data.email && user.password === data.password)
         if (currentUser.length !== 0) {
@@ -62,7 +62,7 @@ export default function Login(props) {
                 <Button className={classes.button} variant='contained' type="submit">Login</Button>
                 {!isValid && <p className={classes.loginError}>User Not Found, Check Your Fields</p>}
                 <Typography className={classes.link} variant='small'>Dont Have An Account?
-                    <Link underline='none' to={'/register'}>Sign Up</Link>
+                    <Link underline='none' to={'/register'} style={{color:'purple', fontWeight:'bold'}}> Sign Up</Link>
                 </Typography>
             </form>
         </Container>

@@ -2,22 +2,17 @@ import { BrightnessMediumTwoTone } from '@mui/icons-material';
 import { makeStyles } from '@mui/styles';
 const useStyles = makeStyles(theme =>({
   container:{
+    
     width:'100%',
-    // justifyContent:'space-evenly',
-    // alignItems:'center',
-    // flexDirection:'column',
-    // marginTop:100,
     minHeight:'100vh',
-    // display:'flex !important',
-    // display:'grid !important',
-    // gridTemplateColumns:'30% 70%'
+    paddingTop:80,
   },
   userTitle:{
     textTransform: 'capitalize',
-    marginTop:'10% !important'
+    // marginTop:'10% !important'
   },
   orders:{
-    marginTop:'6% !important'
+    marginTop:'50px !important'
   },
   profileDetails:{
     textAlign:'left',

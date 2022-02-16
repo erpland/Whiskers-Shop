@@ -81,9 +81,9 @@ export default function Register(props) {
             <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
                 <Typography variant = 'h3'>Sign Up</Typography>
                 {inputs}
-                <Button variant='contained' type="submit">Signup</Button>
+                <Button variant='contained' sx={{height:'40px',alignSelf:'center'}} type="submit">Signup</Button>
                 <Typography variant = 'small'>Already Have An Account?
-                <Link underline='none' to={'/login'}>Login</Link>
+                <Link underline='none' to={'/login'} style={{color:'purple', fontWeight:'bold'}}> Login</Link>
                  </Typography>
             </form>
         </Container>

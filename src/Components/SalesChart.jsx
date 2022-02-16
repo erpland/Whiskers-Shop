@@ -61,12 +61,12 @@ export default function SalesChart(props) {
   return (
     <div>
       <AreaChart
-        width={600}
+        width={610}
         height={450}
         data={data}
         margin={{
           top: 10,
-          right: 30,
+          right: 0,
           left: 0,
           bottom: 0
         }}

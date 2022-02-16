@@ -1,7 +1,6 @@
 import React from 'react'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField';
-import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import useStyles from '../Styles/AdminStyle';
 
@@ -30,7 +29,7 @@ const classes = useStyles();
 let products = props.products
   let productRow = products.map((product, index) =>
     <div key={index} className={`${classes.row} ${classes.productRowGrid}`} >
-      <b onClick={() => props.deleteProduct(product.index)}>X</b>
+      <span onClick={() => props.deleteProduct(product.index)}><b>X</b></span>
       <img src={product.img} alt="product" />
       <p>{product.brand}</p>
       <p>{product.name}</p>
@@ -46,20 +45,20 @@ let products = props.products
         />
         <small style={{ visibility: 'hidden' }} id={index}>succses</small>
       </div>
-      <Button sx={{ height: '40px' }} onClick={() => updatePrice(product, index)}>Update Price</Button>
+      <Button sx={{ height: '40px' }} onClick={() => updatePrice(product, index)}>Update</Button>
     </div>)
   return (
     <div className={classes.productsList}>
-      <h2>Products</h2>
+     <Typography variant="h5" align='left' fontWeight={'bold'} borderBottom={'1px solid #ccc'} padding={1} color="initial">Products</Typography>
       <div className={classes.productsTable}>
         <div className={classes.productRowGrid}>
           <p></p>
-          <p>Image</p>
-          <p>Brand</p>
-          <p>Name</p>
-          <p>Type</p>
-          <p>Price</p>
-          <p>Change Price</p>
+          <p><b>Image</b></p>
+          <p><b>Brand</b></p>
+          <p><b>Name</b></p>
+          <p><b>Type</b></p>
+          <p><b>Price</b></p>
+          <p><b>Update Price</b></p>
         </div>
         {productRow}
       </div>

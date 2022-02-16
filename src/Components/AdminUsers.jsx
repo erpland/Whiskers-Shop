@@ -1,6 +1,7 @@
 import React from 'react'
 import useStyles from '../Styles/AdminStyle';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography'
 export default function AdminUsers(props) {
     let users=props.users
     const classes = useStyles();
@@ -17,8 +18,8 @@ export default function AdminUsers(props) {
         <p>{user.email}</p>
         <p>{user.firstName}</p>
         <p>{user.lastName}</p>
-        <p>{user.orders.length}</p>
-        <p>{user.orders.map(a=>a.reduce((p, c)=>{return p + c.price * c.qty},0)).reduce((a,b)=>{return a+b},0).toFixed(2)}</p>
+        <p>{user.orders.map(a=>a.reduce((p, c)=>{return p + c.qty},0)).reduce((p, c)=>{return p + c},0)}</p>
+        <p>{user.orders.map(a=>a.reduce((p, c)=>{return p + c.price * c.qty},0)).reduce((a,b)=>{return a+b},0).toFixed(2)}$</p>
         <Button onClick={() => userClick(user)}>Show More</Button>
     </div>)
 
@@ -27,7 +28,7 @@ export default function AdminUsers(props) {
 
   return (
     <div className={classes.usersList}>
-    <h2>Users</h2>
+         <Typography variant="h5" align='left' fontWeight={'bold'} borderBottom={'1px solid #ccc'} padding={1} color="initial">Users</Typography>
     <div className={classes.usersTable}>
         <div className={classes.userRow}>
             <p></p>

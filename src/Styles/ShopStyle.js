@@ -1,6 +1,10 @@
 import { makeStyles } from '@mui/styles';
 import { fontSize } from '@mui/system';
 const useStyles = makeStyles(theme => ({
+  shopContainer:{
+    marginBottom:50,
+    marginTop:7,
+  },
   ProductCard: {
     minHeight: '380px',
     padding: 10,
@@ -40,12 +44,11 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     backgroundColor: 'rgb(238,238,238)',
     height: '700px',
-    display: 'flex !important',
-    marginBottom: 20,
+    display: 'grid !important',
+    marginBottom: 100,
     boxShadow: '1px 0 20px 2px #eee'
   },
   headerContainer: {
-
     display: 'grid',
     gridTemplateColumns: '45% 10% 45%',
     gridTemplateRows: 'auto 50px',

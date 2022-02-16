@@ -10,7 +10,7 @@ export default function ProductCard(props) {
   const {img,brand,name,price,index} = props.product
   return (
     <div className={classes.ProductCard}>
-      <img onClick={()=>navigate('/item',{state:props.product})} src={img} alt={name} />
+      <img src={img} alt={name} onClick={()=>navigate('/item', {state:props.product})}/>
       <div className={classes.ProductInfo}>
         <Typography sx={{fontSize:16,fontWeight:'bold'}} variant='p'>{brand} {name}</Typography>
         <Typography sx={{fontWeight:'light'}} variant='p'>{price}$</Typography>

@@ -20,11 +20,9 @@ export default function Navbar(props) {
         <Typography variant='h4'>Whiskers</Typography>
         <Grid container direction='row' alignItems='center' justifyContent='flex-end' spacing={1}>
 
+        
           <Grid item style={{ paddingRight: 20 }}>
-            <Link underline='none' to={'/home'}>{'Home'}</Link>
-          </Grid>
-          <Grid item style={{ paddingRight: 20 }}>
-            <Link underline='none' to={'/shop'}>{'Shop'}</Link>
+            <Link underline='none' to={'/'}>{'Shop'}</Link>
           </Grid>
           {!props.isLoggedIn && <Grid item style={{ paddingRight: 20 }}>
             <Link underline='none' to={'/login'}>{'Login'}</Link>
@@ -36,7 +34,7 @@ export default function Navbar(props) {
             <Link underline='none' to={'/profile'}>{'Profile'}</Link>
           </Grid>}
           {props.isLoggedIn && <Grid item style={{ paddingRight: 20 }}>
-            <Link onClick={props.logOut} underline='none' to={'/shop'}>{'Logout'}</Link>
+            <Link onClick={props.logOut} underline='none' to={'/'}>{'Logout'}</Link>
           </Grid>}
 
 

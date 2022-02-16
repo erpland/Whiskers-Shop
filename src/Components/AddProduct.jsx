@@ -7,6 +7,7 @@ import useStyles from '../Styles/AdminStyle';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import Typography from '@mui/material/Typography'
 export default function AddProduct(props) {
 
     let { products, users } = props
@@ -226,8 +227,7 @@ export default function AddProduct(props) {
     )
     return (
         <div className={classes.addProduct}>
-            <h2>Add Product</h2>
-            {/* <div className={classes.addProductTable}> */}
+            <Typography variant="h5" align='left' fontWeight={'bold'} borderBottom={'1px solid #ccc'} padding={1} color="initial">Add Product</Typography>
             <form className={classes.addProductForm} onSubmit={handleSubmit(onSubmit)}>
                 <div className={classes.textboxs}>
                     {textFields}
@@ -238,6 +238,8 @@ export default function AddProduct(props) {
                 <TextField rows={5}
                     fullWidth
                     multiline
+                    error={!!errors?.description}
+                    helperText={errors.description ? errors.img?.message : null}
                     id="description"
                     {...register('description', {
                         required: 'Required Field',
@@ -247,7 +249,7 @@ export default function AddProduct(props) {
                     })}
                     label="Description"
                     variant="outlined" />
-                <Button sx={{height:50, alignSelf:'center'}} variant='contained' type="submit">Add Product</Button>
+                <Button sx={{ height: 50, alignSelf: 'center' }} variant='contained' type="submit">Add Product</Button>
             </form>
         </div>
         // </div>

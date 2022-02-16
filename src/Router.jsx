@@ -7,28 +7,36 @@ import Login from './Pages/Login'
 import Profile from './Pages/Profile'
 import Register from './Pages/Register'
 import Shop from './Pages/Shop'
-import ProductsDb from './JSON/default-data'
+import ProductsDb,{defaultUsers} from './JSON/default-data'
 import Footer from './Components/Footer'
+import {mostPopular} from './JS/Functions'
 
 
 
 
 
 export default function Router() {
-
+    const AMOUNT_OF_POPULAR_PRODUCTS = 5
     if (!JSON.parse(localStorage.getItem("products"))) {
         localStorage.setItem("products", JSON.stringify(ProductsDb))
     }
-
+    if (!JSON.parse(localStorage.getItem("users"))) {
+        localStorage.setItem("users", JSON.stringify(defaultUsers))
+    }
+    if (!JSON.parse(localStorage.getItem("isAdmin"))) {
+        localStorage.setItem("isAdmin", JSON.stringify(false))
+    }
+    
     const [products, setProducts] = useState(JSON.parse(localStorage.getItem("products")) || [])
-    const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")) || [])
+    const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")) || [])///<----local check
     const [orders, setOrders] = useState([])
     const [ordersInfo, setOrdersInfo] = useState([])
     const [users, setUsers] = useState(JSON.parse(localStorage.getItem("users")) || [])
     const [totalQty, setTotalQty] = useState(0)
     const [totalPrice, setTotalPrice] = useState(0)
     const [currentUser, setCurrentUser] = useState()
-    const [isAdmin,setIsAdmin] = useState(false)
+    const [isAdmin,setIsAdmin] = useState(JSON.parse(localStorage.getItem("isAdmin")))
+    const [mostPopProducts,setMostPopProducts] = useState(mostPopular(users,AMOUNT_OF_POPULAR_PRODUCTS))
     
     const addUser = (user) => {
         setUsers([...users, user])
@@ -85,7 +93,9 @@ export default function Router() {
             setCart([])
             setTotalQty(0)
             setTotalPrice(0)
+            setMostPopProducts(mostPopular(updatedUsers,AMOUNT_OF_POPULAR_PRODUCTS))
         }
+
     }, [orders])
     useEffect(() => {
         localStorage.setItem("products", JSON.stringify(products))
@@ -115,16 +125,17 @@ export default function Router() {
         setOrdersInfo([...user.ordersInfo])
         setCurrentUser(user)
     }
+    
     return (
 
         <BrowserRouter>
             {!isAdmin && <Navbar isLoggedIn={currentUser !== undefined} logOut={() => setCurrentUser()} buyCart={buyCart} totalQty={totalQty} totalPrice={totalPrice} cart={cart} removeItemFromCart={removeItemFromCart} />}
             <Routes>
-                <Route path="/shop" element={<Shop addToCart={addToCart} products={products} style={{ display: 'flex', alignItems: 'center' }} />} />
+                <Route path="/" element={<Shop addToCart={addToCart} mostPopProducts={mostPopProducts} products={products} style={{ display: 'flex', alignItems: 'center' }} />} />
                 <Route path="/register" element={<Register addUser={addUser} />} />
                 <Route path="/login" element={<Login users={users} setUser={(user) => userLogin(user)} setIsAdmin={(value)=>setIsAdmin(value)} isAdmin={isAdmin} />} />
                 {currentUser !== undefined && <Route path="/profile" element={<Profile orders={orders} ordersInfo={ordersInfo} currentUser={currentUser} />} />}
-                <Route path="/admin" element={<Admin deleteUser={deleteUser} products={products} deleteProduct={(index) => deleteProduct(index)} addProduct={addProduct} updateProductPrice={(product) => updateProductPrice(product)} users={users} />} />
+                {isAdmin && <Route path="/admin" element={<Admin setIsAdmin={(v)=>setIsAdmin(v)} deleteUser={deleteUser} products={products} deleteProduct={(index) => deleteProduct(index)} addProduct={addProduct} updateProductPrice={(product) => updateProductPrice(product)} users={users} />} />}
                 <Route path="/item" element={<ItemPage addToCart={addToCart} />} />
             </Routes>
             <Footer />
