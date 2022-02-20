@@ -34,8 +34,6 @@ export default function Cart(props) {
 
   }
 
-
-
   const classes = useStyles();
 
   let cartItems = cart.map(prod => <div key={prod.index} className={classes.product}>
@@ -65,7 +63,6 @@ export default function Cart(props) {
             <div className={classes.cartItems}>
               
               <p style={{ fontWeight: 'bold' }}>Item</p>
-             
               <p style={{ fontWeight: 'bold' }}>QTY</p>
               <p style={{ fontWeight: 'bold' }}>Price</p>
 

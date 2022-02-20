@@ -11,8 +11,8 @@ import Cart from './Cart';
 
 export default function Navbar(props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-
+  const [open, setOpen] = useState(false);
+  //מתבצעת בדיקה האם המשתמש קיים משתמש מחובר או לא, הצגה של התחברות/התנקות בהתאם
   return (
     <AppBar color='' position='static'>
       <CssBaseline />
@@ -20,7 +20,7 @@ export default function Navbar(props) {
         <Typography variant='h4'>Whiskers</Typography>
         <Grid container direction='row' alignItems='center' justifyContent='flex-end' spacing={1}>
 
-        
+       
           <Grid item style={{ paddingRight: 20 }}>
             <Link underline='none' to={'/'}>{'Shop'}</Link>
           </Grid>

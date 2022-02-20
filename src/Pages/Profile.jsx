@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import useStyles from '../Styles/ProfileStyle';
 import Order from '../Components/Order';
-import { useNavigate, Redirect } from 'react-router-dom';
-export default function Profile(props) {
-    const navigate = useNavigate();
-    const classes = useStyles();
 
+export default function Profile(props) {
+    const classes = useStyles();
+    
+    //כל הזמנה ממופה לאקורדיון נפרד
     let orders = props.orders.map((order, index) => <Order key={index} orderInfo={props.ordersInfo[index]} index={index + 1} order={order} />)
     return (
         <div style={{backgroundColor:'#F1F2F6'}}>

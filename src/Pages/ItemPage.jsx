@@ -1,7 +1,7 @@
 import React from 'react'
 import Container from '@mui/material/Container';
 import useStyles from '../Styles/ItemStyle';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -11,14 +11,15 @@ import { useState } from 'react';
 import TasteChart from '../Components/TasteChart';
 
 export default function ItemPage(props) {
-    const { state } = useLocation();
-    let item = state
-    let { brand, name, region, index, age, price, sale_price, type, country, abv, qty, img, description } = item;
     const classes = useStyles();
+    const { state } = useLocation();
     const [amount, setAmount] = useState(0)
+
+    let item = state
+    let { brand, name, region, index, price, abv, img, description } = item;
+  
     const addToCart = () => {
         if (amount > 0) {
-            qty = amount
             props.addToCart(index, amount)
         }
     }

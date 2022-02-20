@@ -16,63 +16,98 @@ import {mostPopular} from './JS/Functions'
 
 
 export default function Router() {
-    const AMOUNT_OF_POPULAR_PRODUCTS = 5
-    if (!JSON.parse(localStorage.getItem("products"))) {
+    const AMOUNT_OF_POPULAR_PRODUCTS = 6 // מספר המוצרים שנרצה להציג בקרוסלת הפופולרים
+    if (!JSON.parse(localStorage.getItem("products"))) { // אם אין מוצרים יצירת מוצרים דיפולטיבים
         localStorage.setItem("products", JSON.stringify(ProductsDb))
     }
-    if (!JSON.parse(localStorage.getItem("users"))) {
+    if (!JSON.parse(localStorage.getItem("users"))) {// אם אין יוזרים יצירת יוזרים דיפולטיבים
         localStorage.setItem("users", JSON.stringify(defaultUsers))
     }
-    if (!JSON.parse(localStorage.getItem("isAdmin"))) {
+    if (!JSON.parse(localStorage.getItem("isAdmin"))) { // אם אין תכונת אדמין נאתחל אותו כשקר
         localStorage.setItem("isAdmin", JSON.stringify(false))
     }
     
-    const [products, setProducts] = useState(JSON.parse(localStorage.getItem("products")) || [])
-    const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")) || [])///<----local check
-    const [orders, setOrders] = useState([])
-    const [ordersInfo, setOrdersInfo] = useState([])
-    const [users, setUsers] = useState(JSON.parse(localStorage.getItem("users")) || [])
-    const [totalQty, setTotalQty] = useState(0)
-    const [totalPrice, setTotalPrice] = useState(0)
-    const [currentUser, setCurrentUser] = useState()
-    const [isAdmin,setIsAdmin] = useState(JSON.parse(localStorage.getItem("isAdmin")))
-    const [mostPopProducts,setMostPopProducts] = useState(mostPopular(users,AMOUNT_OF_POPULAR_PRODUCTS))
+    const [users, setUsers] = useState(JSON.parse(localStorage.getItem("users")) || [])//סטייט של רשימת המשתשים
+    const [products, setProducts] = useState(JSON.parse(localStorage.getItem("products")) || [])//סטייט מוצרים
+    const [mostPopProducts,setMostPopProducts] = useState(mostPopular(users,AMOUNT_OF_POPULAR_PRODUCTS))//רשימת מוצרים פופולריים-מאותחל על ידי פונקציה
+    const [isAdmin,setIsAdmin] = useState(JSON.parse(localStorage.getItem("isAdmin")))//סטייט בוליאני המציין האם אדמין מחובר/לא
+    const [currentUser, setCurrentUser] = useState()//משתמש נוכחי אם מחובר
+    const [cart, setCart] = useState([])//עגלה נוכחית
+    const [orders, setOrders] = useState([])//הזמנה של יוזר מסויים
+    const [ordersInfo, setOrdersInfo] = useState([])//פירוט על הזמנה של יוזר מסויים-תאריך וכו
+    const [totalQty, setTotalQty] = useState(0)//סטייט של כמות כוללת של מוצרים בעגלה נוכחית
+    const [totalPrice, setTotalPrice] = useState(0)//סטייט של סכום כולל של מוצרים בעגלה נוכחית
     
+    //פונקציה להוספת מוצר למערך קיים
     const addUser = (user) => {
         setUsers([...users, user])
     }
+    //מחיקת משתמש ממערך משתמשים על פי אינדקס שמגיע מלמטה
     const deleteUser=(index)=>{
         let newUserArr=[...users]
         newUserArr.splice(index,1)
         setUsers(newUserArr)
     }
+    //קניית עגלה נוכחית והוספת שדה תאריך נוכחי לקנייה
+    const buyCart = () => {
+        let order = cart
+        setOrders([...orders, order])
+        setOrdersInfo([...ordersInfo, { date: new Date().toLocaleString() + "",totalPrice:totalPrice },])
+    }
+    //עדכון מחיר על פי מוצר מסויים שמגיע מלמטה-ע"י מציאת אינדקס נוכחי של מוצר
+    const updateProductPrice = (product) => {
+        let index = products.indexOf(product);
+        products[index] = product // דריסת המוצר במוצר המעודכן שקבילנו מלמטה
+        setProducts([...products])
+
+    }
+    //הוספת מוצר חדש למערך המוצרים הקיים
+    const addProduct = (product) => {
+        setProducts([...products, product])
+    }
+    // מחיקת מוצר ממערך המוצרים-ע"י פילטור על פי אינדקס שמגיע מלמטה 
+    const deleteProduct = (index) => {
+        let tempProducts = products.filter(prod => prod.index !== index)
+        setProducts(tempProducts)
+    }
+    //פונקציה לטיפול בהתחברות משתמש-נעדכן את הסטייטים בהתאם
+    const userLogin = (user) => {
+        setOrders([...user.orders])
+        setOrdersInfo([...user.ordersInfo])
+        setCurrentUser(user)
+    }
+    //פונקציה להוספת מוצר לעגלה, מקבלת אינדקס וכמות
+    const addToCart = (index, qty = 1) => {
+        let cartItems
+        let product = Object.assign({}, products[index]) // העתקת הערך ולא הרפרנס של הפרודקט כדי לא לדרוס את הכמות המוקרית
+        let cartProduct = cart.filter(item => item.index === index) // תפיסת המוצר אם קיים בעגלה
+
+        if (cartProduct.length === 0) {// אם המערך ריק כלמר שהמוצר לא קיים בעגלה כבר ולכן נכניס ממנו את הכמות הרצוייה
+            product.qty = 1 * qty
+            cartItems = [...cart, product]
+        }
+        else {//אחרת נעדכן את הכמות על פי הכמות שנשלחה למוצר הספציפי
+            cartProduct[0].qty = cartProduct[0].qty + qty
+            cartItems = [...cart]
+        }
+        //לאחר כל הבדיקות והעידכונים הרלוונטים נעדכן את הסטייט
+        setCart(cartItems)
+    }
+    //מחיקת מוצר מן העגלה-על פי אינדקס נשלח
+    const removeItemFromCart = (index) => {
+        let newCart = cart.filter((item) => item.index !== index)
+        console.log(newCart)
+        setCart(newCart)
+    }
+    //כל שינוי במערך משתמשים יגרור עדכון בלוקאל
     useEffect(() => {
         localStorage.setItem("users", JSON.stringify(users))
     }, [users])
 
-    const addToCart = (index, qty = 1) => {
-        let cartItems
-        let product = Object.assign({}, products[index])
-        let cartProduct = cart.filter(item => item.index === index)
 
-        if (cartProduct.length === 0) {
-            product.qty = 1 * qty
-            cartItems = [...cart, product]
-        }
-        else {
-            cartProduct[0].qty = cartProduct[0].qty + qty
-            cartItems = [...cart]
-        }
-        setCart(cartItems)
-    }
-
-    const removeItemFromCart = (index) => {
-        let newCart = cart.filter((item) => item.index !== index)
-        setCart(newCart)
-    }
-
+    //כל שינוי בעגלת הקניות יגרור עדכון סטייטים-כמות ומחיר כולל של העגלה
     useEffect(() => {
-        if (cart.length !== 0) {
+        if (cart.length !== 0) {//כדי שלא יכנס לכאן פעם הראשונה כשהעגלה ריקה
             var total = cart.map(prod => prod.price * prod.qty)
             var qty = cart.map(prod => prod.qty)
             qty = qty.reduce((prev, current) => { return prev + current })
@@ -80,51 +115,38 @@ export default function Router() {
             setTotalQty(qty)
             setTotalPrice(total)
         }
+        else{
+            setTotalQty(0)
+            setTotalPrice(0)
+        }   
 
     }, [cart])
-
+    //כל שינוי בהזמנה נוכחית יגרור עדכון סטייטים-קניית עגלה
     useEffect(() => {
-        if (currentUser) {
-            localStorage.setItem("cart", JSON.stringify([]))
+        if (currentUser) {//מוכרח להיות משתמש מחובר כדי לקנות
+            // localStorage.setItem("cart", JSON.stringify([]))
+            //עדכון ההזמנות במשתמש הנוכחי
+            //ההזמנה עצמה התעדכנה בסטייטים על ידי פונקצית קניית העגלה
             let updatedUser = { ...currentUser, orders: [...orders], ordersInfo: [...ordersInfo] }
             setCurrentUser(updatedUser)
+            //לאחר שעידכנו את היוזר הנוכחי נעדכן את מערך המשתמשים
             let updatedUsers = users.map(user => user.email === currentUser.email ? updatedUser : user)
             setUsers(updatedUsers)
+            //איפוס סטייטים
             setCart([])
             setTotalQty(0)
             setTotalPrice(0)
+            //עידכון המוצרים הפופולרים
             setMostPopProducts(mostPopular(updatedUsers,AMOUNT_OF_POPULAR_PRODUCTS))
         }
 
     }, [orders])
+    // עדכון מוצרים בלוקאל בכל שינוי במערך המוצרים המקורי
     useEffect(() => {
         localStorage.setItem("products", JSON.stringify(products))
     }, [products])
 
-    const buyCart = () => {
-        let order = cart
-        setOrders([...orders, order])
-        setOrdersInfo([...ordersInfo, { date: new Date().toLocaleString() + "",totalPrice:totalPrice },])
-    }
-    const updateProductPrice = (product) => {
-        console.log()
-        let index = products.indexOf(product);
-        products[index] = product
-        setProducts([...products])
 
-    }
-    const addProduct = (product) => {
-        setProducts([...products, product])
-    }
-    const deleteProduct = (index) => {
-        let tempProducts = products.filter(prod => prod.index !== index)
-        setProducts(tempProducts)
-    }
-    const userLogin = (user) => {
-        setOrders([...user.orders])
-        setOrdersInfo([...user.ordersInfo])
-        setCurrentUser(user)
-    }
     
     return (
 

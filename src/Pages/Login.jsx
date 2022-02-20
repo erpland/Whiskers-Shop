@@ -8,31 +8,37 @@ import useStyles from '../Styles/UserStyle';
 import Typography from '@mui/material/Typography';
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
-import { Email } from '@mui/icons-material';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
 export default function Login(props) {
-
-    const [isValid, setIsValid] = useState(true)
-    const navigate = useNavigate();
     const classes = useStyles();
+    const navigate = useNavigate();
+    const [isValid, setIsValid] = useState(true) //סטייט בולאני לטובת אימות אם המשתמש אינו קיים במערך נציג הודעה לפי הסטייט הזה
+
     const { register, handleSubmit, formState: { errors } } = useForm();
+
     const onSubmit = data => {
         let userList = props.users
+        //בדיקה האם המשתמש הוא אדמין נעביר אותו לדף אדמין ישר
         if(data.email === 'admin' && data.password === 'admin123'){
-            props.setIsAdmin(true)
-            localStorage.setItem('isAdmin',true)
+            props.setIsAdmin(true)//מעדכנים את הסטייט אצל האבא שאדמין התחבר
+            localStorage.setItem('isAdmin',true) // שמירה בלוקל לטובת מניעת התנתקות בעת רענון
         }
+        //פילטור מערך המשתמשים לפי המשתמש שהוכנס
         let currentUser = userList.filter((user) => user.email === data.email && user.password === data.password)
+        //אם מערך הפילטור מלא כלמר שהמשתמש תקין לכן נכניס אותו למערכת ונעביר אותו לדף פרופיל
         if (currentUser.length !== 0) {
             props.setUser(currentUser[0])
             navigate('/profile')
         }
+        //אם הגענו לכאן כלמר שהמשתמש שהוכנס אינו קיים ולכן נשנה את הסטייט שיגרום להצגת הודעה בהתאם
         else {
             setIsValid(false)
         }
-    };   
+    };
+    //אם לא השתמשנו ביוז אפקט להעביר לדף אדמין הוא צעק עלינו
+    //לשאול את ניר מדוע
     useEffect(() => {
         if(props.isAdmin)
             navigate('/admin')   

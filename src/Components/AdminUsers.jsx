@@ -3,15 +3,16 @@ import useStyles from '../Styles/AdminStyle';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography'
 export default function AdminUsers(props) {
-    let users=props.users
     const classes = useStyles();
-    console.log(users)
+    let users=props.users
+
     const userClick = (user) => {
         props.setData(user.orders)
         props.setOrderInfo(user.ordersInfo)
         props.setOpen(true)
     }
-  
+  //מיפוי היוזרים, וסכימת כמות המוצרים והתשלומים של כל יוזר
+  //סוכמים כל הזמנה של יוזר בנפרד ומהמערך שיצא נסכום את כולו
     let userRow = users.map((user, index) =>
     <div key={index} className={`${classes.userRow} ${classes.userRowGrid}`}>
         <p><span onClick={()=>props.deleteUser(index)}>X</span></p>
@@ -35,7 +36,7 @@ export default function AdminUsers(props) {
             <p><b>Email</b></p>
             <p><b>First Name</b></p>
             <p><b>Last Name</b></p>
-            <p><b>Orders Amount</b></p>
+            <p><b>Total Items</b></p>
             <p><b>Total Spent</b></p>
             <p><b>View Orders</b></p>
         </div>

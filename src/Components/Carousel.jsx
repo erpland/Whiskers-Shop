@@ -2,10 +2,11 @@ import React from 'react'
 import Typography from '@mui/material/Typography'
 import useStyles from '../Styles/ShopStyle';
 import { useNavigate } from 'react-router-dom';
+
 export default function Carousel(props) {
+  const classes = useStyles(props);
+  const navigate = useNavigate();
     let { brand, name, img, price } = props.product
-    const classes = useStyles(props);
-    const navigate = useNavigate();
   return (
     <div style={{display:'contents'}}>
       <div className={classes.headerImg}>

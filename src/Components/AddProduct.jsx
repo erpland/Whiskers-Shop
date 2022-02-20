@@ -9,8 +9,11 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Typography from '@mui/material/Typography'
 export default function AddProduct(props) {
+    const classes = useStyles();
 
-    let { products, users } = props
+    let { products } = props
+    
+    //סטייטים לשינוי הבחירה
     const [region, setRegion] = useState('Other')
     const [type, setType] = useState('Single Malt')
     const [country, setCountry] = useState('Scotland')
@@ -21,20 +24,22 @@ export default function AddProduct(props) {
     const [richness, setRichness] = useState(1)
     const [smoke, setSmoke] = useState(1)
     const [wine, setWine] = useState(1)
-    const classes = useStyles();
+
+
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const onSubmit = data => {
-        data.abv = Number(data.abv)
-        data.price = Number(data.price)
-        data.age += data.age !== '' ? 'yo' : 'No Age Statement'
-        data = { ...data, index: products.length, qty: 0 }
+        data.abv = Number(data.abv)//המרה ממחרוזת למספר
+        data.price = Number(data.price)//המרה ממחרוזת למספר
+        data.age += data.age !== '' ? 'yo' : 'No Age Statement' // אם גיל לא סופק נספק את ערך ברירת המחדל
+        data = { ...data, index: products.length, qty: 0 } // הוספת השדות אינדקס וכמות למוצר שיצרנו
         props.addProduct(data)
         alert('Product Added Successfully')
-        reset()
+        reset() // איפוס השדות בטופס
     };
+    //פונקצייה לשינוי ערך בסלקטים
     const handleChange = (event) => {
         switch (event.target.name) {
-            case 'region':
+            case 'region': //שנוי הסלקט הזה יכול להיות רק אם המדינה היא סקוטלנד
                 if (country !== 'Scotland') { break; }
                 setRegion(event.target.value);
                 break
@@ -43,7 +48,7 @@ export default function AddProduct(props) {
                 break;
             case 'country':
                 if (event.target.name !== 'Scotland') {
-                    setRegion('Other')
+                    setRegion('Other') // אם המדינה אינה סקוטלנד נקבע את האזור כ'אחר
                 }
                 setCountry(event.target.value)
                 break;
@@ -72,6 +77,7 @@ export default function AddProduct(props) {
                 break;
         }
     };
+    //גייסון לכל הטקסט פילדים כולל ולידציה במידת הצורך
     const textFieldsJson = [
         {
             name: 'brand',
@@ -106,7 +112,7 @@ export default function AddProduct(props) {
             type: 'text',
             error: errors?.abv,
             pattern: /^[4-9][0-9]*$/i,
-            message: 'abv Must Be Above 40',
+            message: 'ABV Must Be Between 40-100',
             errors: errors.abv?.message
         },
         {
@@ -129,6 +135,7 @@ export default function AddProduct(props) {
         },
 
     ]
+    //גייסון של כל הסלקטים
     const selectFieldsJson = [
         {
             label: 'Country',
@@ -191,13 +198,14 @@ export default function AddProduct(props) {
             menuItems: [1, 2, 3, 4, 5]
         },
     ]
+
     const textFields = textFieldsJson.map((input) =>
         <TextField className={classes.textbox} key={input.name} variant='standard' label={input.label}
             fullWidth type={input.type} autoComplete={input.name}
             error={!!input.error}
             helperText={input.error ? input.errors : null}
             {...register(input.name, {
-                required: input.name !== 'age' ? 'Required Field' : '',
+                required: input.name !== 'age' ? 'Required Field' : '', // השדה היחידי שאינו חובה הוא הגיל לכן הבדיקה
                 pattern: {
                     value: input.pattern, message: input.message
                 }
@@ -216,7 +224,7 @@ export default function AddProduct(props) {
                 value={input.value}
                 {...register(input.name, {
                     setValueAs: value => isNaN(Number(value)) ? value : Number(value),
-                })}
+                })}//התאמת ערך הבחירה למספר ולטקסט בהתאמה
                 onChange={handleChange}
             >
                 {input.menuItems.map((item, index) => <MenuItem key={index} value={item}>
@@ -235,6 +243,7 @@ export default function AddProduct(props) {
                 <div className={classes.selects}>
                     {selectFields}
                 </div>
+
                 <TextField rows={5}
                     fullWidth
                     multiline
@@ -243,12 +252,10 @@ export default function AddProduct(props) {
                     id="description"
                     {...register('description', {
                         required: 'Required Field',
-                        // pattern: {
-                        //     value: /^[\d]+$/i, message: ''
-                        // }
                     })}
                     label="Description"
                     variant="outlined" />
+
                 <Button sx={{ height: 50, alignSelf: 'center' }} variant='contained' type="submit">Add Product</Button>
             </form>
         </div>

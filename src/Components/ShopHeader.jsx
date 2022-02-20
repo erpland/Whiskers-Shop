@@ -1,31 +1,31 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Container from '@mui/material/Container';
 import useStyles from '../Styles/ShopStyle';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import { width } from '@mui/system';
-import { useNavigate } from 'react-router-dom';
 import Carousel from './Carousel';
+
 export default function ShopHeader(props) {
-  const navigate = useNavigate();
-  const [count, setCount] = useState(0)
   const classes = useStyles();
-  const timeout = useRef(null);
-  let products = props.products
+  const [count, setCount] = useState(0) // המיקומים בקרוסלה
+  const timeout = useRef(null); // שמירת הסטייט כרפרנס כדי לא ליצור אותו שוב
+  let products = props.products //מערך המוצרים הפופולרים
+
+  //יצירת הנקודות בתחתית הקרוסלה
+  //משמש לניווט ידני ויחליף צבע גם על כל שינוי אוטמטי של המוצר בקרוסלה
   let indicators = products.map((indicators, index)=>
     <span key = {index} onClick={() => setCount(index)} style={count === index ? { backgroundColor: 'black' } : {}} 
     className={classes.carouselBtn}></span>
     )
+
   useEffect(() => {
-    resetTimeout();
+    resetTimeout();//ביטול טיימר ויצירת הטיימר למוצר הבא
     timeout.current = setTimeout(() =>
       setCount((prevCount) => prevCount === products.length - 1 ? 0 : prevCount + 1
       ), 6000
     )
-    return () => {
+    return () => {//ביטול הטיימר כשהקומפוננטה מתה
       resetTimeout();
     }
-  }, [count])
+  }, [count,products.length])
 
   const resetTimeout = () => {
     if (timeout.current) {

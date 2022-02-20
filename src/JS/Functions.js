@@ -23,6 +23,5 @@ export function mostPopular(users,num){
       }
     }
   }
-  console.log(mostPopularProducts)
   return mostPopularProducts
 }

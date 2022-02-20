@@ -339,11 +339,11 @@ export const defaultUsers = [
         ],
         ordersInfo: [
             {
-                date: "2/9/2022, 1:08:43 PM",
+                date: "2/15/2022, 1:08:43 PM",
                 totalPrice: [defaultProducts[0], defaultProducts[1]].reduce((a, b) => { return a + b.price }, 0)
             },
             {
-                date: "2/10/2022, 12:08:43 PM",
+                date: "2/16/2022, 12:08:43 PM",
                 totalPrice: [defaultProducts[5], defaultProducts[3]].reduce((a, b) => { return a + b.price }, 0)
             }
         ]
@@ -360,15 +360,15 @@ export const defaultUsers = [
         ],
         ordersInfo: [
             {
-                date: "2/11/2022, 1:08:43 PM",
+                date: "2/15/2022, 1:08:43 PM",
                 totalPrice: [defaultProducts[6], defaultProducts[5]].reduce((a, b) => { return a + b.price }, 0)
             },
             {
-                date: "2/12/2022, 12:08:43 PM",
+                date: "2/20/2022, 12:08:43 PM",
                 totalPrice: [defaultProducts[2], defaultProducts[12], defaultProducts[4]].reduce((a, b) => { return a + b.price }, 0)
             },
             {
-                date: "2/13/2022, 12:08:43 PM",
+                date: "2/20/2022, 12:08:43 PM",
                 totalPrice: [defaultProducts[9]].reduce((a, b) => { return a + b.price }, 0)
             }
         ]
@@ -385,15 +385,15 @@ export const defaultUsers = [
         ],
         ordersInfo: [
             {
-                date: "2/12/2022, 11:08:43 PM",
+                date: "2/17/2022, 11:08:43 PM",
                 totalPrice: [defaultProducts[0], defaultProducts[1]].reduce((a, b) => { return a + b.price }, 0)
             },
             {
-                date: "2/14/2022, 8:27:13 AM",
+                date: "2/18/2022, 8:27:13 AM",
                 totalPrice: [defaultProducts[2], defaultProducts[3], defaultProducts[4]].reduce((a, b) => { return a + b.price }, 0)
             },
             {
-                date: "2/14/2022, 3:18:00 PM",
+                date: "2/19/2022, 3:18:00 PM",
                 totalPrice: [defaultProducts[5]].reduce((a, b) => { return a + b.price }, 0)
             }
         ]
@@ -419,11 +419,11 @@ export const defaultUsers = [
         ],
         ordersInfo: [
             {
-                date: "2/11/2022, 3:38:04 PM",
+                date: "2/16/2022, 3:38:04 PM",
                 totalPrice: [defaultProducts[0], defaultProducts[1]].reduce((a, b) => { return a + b.price }, 0)
             },
             {
-                date: "2/13/2022, 6:59:10 PM",
+                date: "2/17/2022, 6:59:10 PM",
                 totalPrice: [defaultProducts[5]].reduce((a, b) => { return a + b.price }, 0)
             }
         ]
@@ -438,11 +438,12 @@ export const defaultUsers = [
         ],
         ordersInfo: [
             {
-                date: "2/14/2022, 7:11:12 PM",
+                date: "2/18/2022, 7:11:12 PM",
                 totalPrice: [defaultProducts[5]].reduce((a, b) => { return a + b.price }, 0)
             }
         ]
     },
+    
 ]
 defaultUsers.map(user => user.orders.map(order => order.map(prod => prod.qty = 1)))
 export default defaultProducts

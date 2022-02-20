@@ -114,6 +114,8 @@ const useStyles = makeStyles(theme => ({
     gridTemplateColumns: ' 30px 80px 1fr 1fr 1fr 60px 1fr',
     '& $img': {
       width: 70,
+      height:70,
+      objectFit:'scale-down'
     },
     '& $span':{
       cursor:'pointer',

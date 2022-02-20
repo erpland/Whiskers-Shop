@@ -8,10 +8,13 @@ import useStyles from '../Styles/UserStyle';
 import Typography from '@mui/material/Typography';
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
+
 export default function Register(props) {
-    const navigate = useNavigate();
     const classes = useStyles();
+    const navigate = useNavigate();
+
     const { register, handleSubmit, formState: { errors } } = useForm();
+    //שימוש ספרייה חיצונית לבדיקת תיקנות כאשר הטופס תקין נייצר אובייקט של משתמש נעלה אותו ונעבור לדף התחברות
     const onSubmit = data => {
         data={...data, orders:[],ordersInfo:[]}
         props.addUser(data)
@@ -27,9 +30,6 @@ export default function Register(props) {
         message:'English Letters Between 2-20',
         errors:errors.firstName?.message
     },
-    
-    
-        
         {name:'lastName',
         label:'Last Name',
         type:'text',
@@ -37,9 +37,7 @@ export default function Register(props) {
         pattern:/^[a-zA-Z ]{2,30}$/i,
         message:'English Letters Between 2-30',
         errors:errors.lastName?.message
-    },
-    
-        
+    },  
         {name:'email',
         label:'Email',
         type:'text',
@@ -47,9 +45,7 @@ export default function Register(props) {
         pattern:/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Za-z]{2,}$/i,
         message:'Invalid Email Format',
         errors:errors.email?.message
-    },
-   
-        
+    },  
         {name:'password',
         label:'Password',
         type:'password',

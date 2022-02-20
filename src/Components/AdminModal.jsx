@@ -24,10 +24,11 @@ const style = {
 };
 
 export default function AdminModal(props) {
+  //המודל מציג או הזמנה בודדת או את כל ההזמנות של המשתמש 
+  //תלוי מאיפה נקרא למודל
+  const classes = useStyles();
   let { open, setOpen, data, orderInfo } = props
   const handleClose = () => setOpen(false);
-  const classes = useStyles();
-
   let dataMap = data.map((order, index) => <Order key={index} index={index + 1} orderInfo={orderInfo[index]} order={data[index]} />)
   return (
     <div>
