@@ -6,11 +6,11 @@ import { useNavigate } from 'react-router-dom';
 export default function Carousel(props) {
   const classes = useStyles(props);
   const navigate = useNavigate();
-    let { BrandName, BottleName, Image, Price } = props.product
+    let { Image,BrandName, BottleName, Price } = props.product
   return (
     <div style={{display:'contents'}}>
       <div className={classes.headerImg}>
-        <Image src={Image} alt="product" onClick={() => navigate('/item', { state: props.product })} />
+        <img src={Image} alt="product" onClick={() => navigate('/item', { state: props.product })} />
       </div>
       <div className={classes.headerCenter}>
         <span className={classes.verticalLine}></span>

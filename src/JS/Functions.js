@@ -3,7 +3,7 @@ import { getTop5 } from "../Data/database";
 export const getTop5Products = async (products) => {
   let data = await getTop5();
   let items = await data.map((code) => {
-    let filterd = products.filter((prod) => prod.Barcode === code.Barcode)[0];
+    let filterd = products.filter((prod) => prod.Barcode === code.Barcode);
     return {
       item: filterd,
       count: code.Amount,

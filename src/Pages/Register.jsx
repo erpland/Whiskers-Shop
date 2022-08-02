@@ -12,17 +12,18 @@ import { useNavigate } from 'react-router-dom';
 export default function Register(props) {
     const classes = useStyles();
     const navigate = useNavigate();
-
+    
     const { register, handleSubmit, formState: { errors } } = useForm();
     //שימוש ספרייה חיצונית לבדיקת תיקנות כאשר הטופס תקין נייצר אובייקט של משתמש נעלה אותו ונעבור לדף התחברות
     const onSubmit = data => {
-        data={...data, orders:[],ordersInfo:[]}
+        data={...data, Orders:[]}
         props.addUser(data)
         navigate('/login')
+      
     };
 
     const inputValues = [
-        {name:'firstName',
+        {name:'FirstName',
         label:'First Name',
         type:'text',
         error:errors?.firstName, 
@@ -30,7 +31,7 @@ export default function Register(props) {
         message:'English Letters Between 2-20',
         errors:errors.firstName?.message
     },
-        {name:'lastName',
+        {name:'LastName',
         label:'Last Name',
         type:'text',
         error:errors?.lastName,
@@ -38,7 +39,7 @@ export default function Register(props) {
         message:'English Letters Between 2-30',
         errors:errors.lastName?.message
     },  
-        {name:'email',
+        {name:'Email',
         label:'Email',
         type:'text',
         error:errors?.email,
@@ -46,7 +47,7 @@ export default function Register(props) {
         message:'Invalid Email Format',
         errors:errors.email?.message
     },  
-        {name:'password',
+        {name:'Password',
         label:'Password',
         type:'password',
         error:errors?.password,

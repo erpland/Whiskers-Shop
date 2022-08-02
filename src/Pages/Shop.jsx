@@ -11,7 +11,6 @@ export default function Shop(props) {
     const classes = useStyles(props);
     let productsList = props.products // רשימת המוצרים המקורית
     const [sortedProducts, setSortedProducts] = useState(productsList) // רשימת המוצרים הממויינת כדי לא לדרוס את המקורית
-    
     const productsCard = sortedProducts.map(prod => <Grid key={prod.Barcode} xs={12} sm={6} md={4} item>
         <ProductCard product={prod} addToCart={props.addToCart} /></Grid>)
 

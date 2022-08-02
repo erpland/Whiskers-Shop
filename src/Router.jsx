@@ -10,9 +10,8 @@ import Shop from "./Pages/Shop";
 import ProductsDb, { defaultUsers } from "./JSON/default-data";
 import Footer from "./Components/Footer";
 import { getTop5Products } from "./JS/Functions";
-import { getAllBottles } from "./Data/database";
-
-import './App.css'
+import { getAllBottles, getTop5,signup } from "./Data/database";
+import "./App.css";
 
 export default function Router() {
   const AMOUNT_OF_POPULAR_PRODUCTS = 6; // מספר המוצרים שנרצה להציג בקרוסלת הפופולרים
@@ -28,11 +27,14 @@ export default function Router() {
     // אם אין תכונת אדמין נאתחל אותו כשקר
     localStorage.setItem("isAdmin", JSON.stringify(false));
   }
+
   useEffect(() => {
     const getData = async () => {
       const bottles = await getAllBottles();
+      const topBottles = await getTop5(bottles);
       if (bottles) {
         setProducts(bottles);
+        setMostPopProducts(topBottles);
         setIsLoader(false);
       }
     };
@@ -46,7 +48,7 @@ export default function Router() {
   // const [mostPopProducts, setMostPopProducts] = useState(
   //   mostPopular(users, AMOUNT_OF_POPULAR_PRODUCTS)
   // ); //רשימת מוצרים פופולריים-מאותחל על ידי פונקציה
-  const [mostPopProducts, setMostPopProducts] = useState(getTop5Products(products))
+  const [mostPopProducts, setMostPopProducts] = useState([]);
 
   const [isAdmin, setIsAdmin] = useState(
     JSON.parse(localStorage.getItem("isAdmin"))
@@ -60,7 +62,8 @@ export default function Router() {
 
   //פונקציה להוספת מוצר למערך קיים
   const addUser = (user) => {
-    setUsers([...users, user]);
+    signup(user)
+    // setUsers([...users, user]);
   };
   //מחיקת משתמש ממערך משתמשים על פי אינדקס שמגיע מלמטה
   const deleteUser = (index) => {
@@ -94,14 +97,14 @@ export default function Router() {
   };
   //פונקציה לטיפול בהתחברות משתמש-נעדכן את הסטייטים בהתאם
   const userLogin = (user) => {
-    setOrders([...user.orders]);
-    setOrdersInfo([...user.ordersInfo]);
+    // setOrders([...user.orders]);
+    // setOrdersInfo([...user.ordersInfo]);
     setCurrentUser(user);
   };
   //פונקציה להוספת מוצר לעגלה, מקבלת אינדקס וכמות
   const addToCart = (Barcode, qty = 1) => {
     let cartItems;
-    let product  = products.filter(prod=>prod.Barcode === Barcode)[0]
+    let product = products.filter((prod) => prod.Barcode === Barcode)[0];
     // let product = Object.assign({}, products[Barcode]); // העתקת הערך ולא הרפרנס של הפרודקט כדי לא לדרוס את הכמות המוקרית
     let cartProduct = cart.filter((item) => item.Barcode === Barcode); // תפיסת המוצר אם קיים בעגלה
 
@@ -170,7 +173,6 @@ export default function Router() {
       setTotalQty(0);
       setTotalPrice(0);
       //עידכון המוצרים הפופולרים
-      setMostPopProducts(getTop5Products(products));
     }
   }, [orders]);
   // עדכון מוצרים בלוקאל בכל שינוי במערך המוצרים המקורי
@@ -191,8 +193,8 @@ export default function Router() {
           removeItemFromCart={removeItemFromCart}
         />
       )}
-      { isLoader && <Loader/>}
-      
+      {isLoader && <Loader />}
+
       <Routes>
         {!isLoader && (
           <Route
@@ -207,8 +209,9 @@ export default function Router() {
             }
           />
         )}
-        
+
         <Route path="/register" element={<Register addUser={addUser} />} />
+
         <Route
           path="/login"
           element={
@@ -254,10 +257,10 @@ export default function Router() {
     </BrowserRouter>
   );
 }
-const Loader = ()=>{
-    return <div style={{height:'100vh'}}>
-        <div className="loader">
-
-        </div>
+const Loader = () => {
+  return (
+    <div style={{ height: "100vh" }}>
+      <div className="loader"></div>
     </div>
-}
+  );
+};
