@@ -6,21 +6,21 @@ import { useNavigate } from 'react-router-dom';
 export default function Carousel(props) {
   const classes = useStyles(props);
   const navigate = useNavigate();
-    let { brand, name, img, price } = props.product
+    let { BrandName, BottleName, Image, Price } = props.product
   return (
     <div style={{display:'contents'}}>
       <div className={classes.headerImg}>
-        <img src={img} alt="product" onClick={() => navigate('/item', { state: props.product })} />
+        <Image src={Image} alt="product" onClick={() => navigate('/item', { state: props.product })} />
       </div>
       <div className={classes.headerCenter}>
         <span className={classes.verticalLine}></span>
       </div>
       <div className={classes.headerRight}>
         <div className={classes.headerText}>
-          <Typography sx={{ fontWeight: 'bold', }} variant='h2'>{brand}</Typography>
-          <Typography sx={{ fontWeight: 'light', }} variant='h3'>{name}</Typography>
+          <Typography sx={{ fontWeight: 'bold', }} variant='h2'>{BrandName}</Typography>
+          <Typography sx={{ fontWeight: 'light', }} variant='h3'>{BottleName}</Typography>
           <div className={classes.shape}></div>
-          <Typography sx={{ fontWeight: 'light' }} variant='h5'>{price}$</Typography>
+          <Typography sx={{ fontWeight: 'light' }} variant='h5'>{Price}$</Typography>
         </div>
       </div>
     </div>

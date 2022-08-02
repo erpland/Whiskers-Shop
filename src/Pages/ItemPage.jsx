@@ -16,20 +16,20 @@ export default function ItemPage(props) {
     const [amount, setAmount] = useState(0)
 
     let item = state
-    let { brand, name, region, index, price, abv, img, description } = item;
+    let { BrandName, BottleName, RegionName, Barcode, Price, ABV, Image, Description } = item;
   
     const addToCart = () => {
         if (amount > 0) {
-            props.addToCart(index, amount)
+            props.addToCart(Barcode, amount)
         }
     }
     return (
         <Container className={classes.container} maxWidth={"md"}>
-            <img src={img} alt={name} />
+            <img src={Image} alt={BrandName} />
             <div className={classes.itemHeadline}>
-                <Typography variant='h3'>{brand} {name}</Typography>
-                <Typography variant='p'>{abv} abv / {region}</Typography>
-                <Typography variant='h5'>{price}$</Typography>
+                <Typography variant='h3'>{BrandName} {BottleName}</Typography>
+                <Typography variant='p'>{ABV} abv / {RegionName}</Typography>
+                <Typography variant='h5'>{Price}$</Typography>
             </div>
             <div className={classes.buyInfo}>
                 <Typography variant='h5'>Quantity</Typography>
@@ -43,14 +43,14 @@ export default function ItemPage(props) {
                 </div>
             </div>
             <div className={classes.description}>
-                <Typography variant='h4'>{brand} {name} Description</Typography>
-                <Typography variant='p'>{description}</Typography>
+                <Typography variant='h4'>{BrandName} {BottleName} Description</Typography>
+                <Typography variant='p'>{Description}</Typography>
 
 
             </div>
             <ItemDetails item={item} />
             <div className={classes.tasteChart}>
-            <Typography variant='h4' sx={{borderBottom:'1px solid #ccc'}}>{brand} {name} Taste Chart</Typography>
+            <Typography variant='h4' sx={{borderBottom:'1px solid #ccc'}}>{BrandName} {BottleName} Taste Chart</Typography>
                 <TasteChart item={item} />
             </div>
         </Container>

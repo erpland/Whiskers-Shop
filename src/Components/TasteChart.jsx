@@ -13,31 +13,31 @@ export default function TasteChart(props) {
   const data = [
     {
       subject: "Sweet",
-      A: item.sweet,
+      A: item.Sweet,
     },
     {
       subject: "Floral",
-      A: item.floral,
+      A: item.Floral,
     },
     {
       subject: "Fruit",
-      A: item.fruit,
+      A: item.Fruit,
     },
     {
       subject: "Body",
-      A: item.body,
+      A: item.Body,
     },
     {
       subject: "Richness",
-      A: item.richness,
+      A: item.Richness,
     },
     {
       subject: "Smoke",
-      A: item.smoke,
+      A: item.Smoke,
     },
     {
       subject: "Wine",
-      A: item.wine,
+      A: item.Wine,
     }
   ];
   return (

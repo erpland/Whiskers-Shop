@@ -15,7 +15,7 @@ export default function ItemDetails(props) {
             </tr>
             <tr>
                 <td>Distillery/Brand</td>
-                <td>{item.brand}</td>
+                <td>{item.BrandName}</td>
             </tr>
             <tr>
                 <td>Classification</td>
@@ -23,19 +23,19 @@ export default function ItemDetails(props) {
             </tr>
             <tr>
                 <td>Region</td>
-                <td>{item.region}</td>
+                <td>{item.RegionName}</td>
             </tr>
             <tr>
                 <td>Style</td>
-                <td>{item.type}</td>
+                <td>{item.TypeDesc}</td>
             </tr>
             <tr>
                 <td>ABV</td>
-                <td>{item.abv}%</td>
+                <td>{item.ABV}%</td>
             </tr>
             <tr>
                 <td>Age Statement</td>
-                <td>{item.age}</td>
+                <td>{item.Age}</td>
             </tr>
         </tbody>
     </table>

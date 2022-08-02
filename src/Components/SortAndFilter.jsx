@@ -30,12 +30,11 @@ export default function SortAndFilter(props) {
     
     let orginalProducts = [...props.originalProducts] // מערך המוצרים המקורי
     let sortedProducts = [...props.products] // מערך מוצרים ממוינים
-    
     //יצירת השדות בתוך הסלקטים לפי המוצרים הקיימים
     //השדות דינמים לפי המוצרים הקיימים
-    let typesMenu = [...new Set([...orginalProducts].map(prod => prod.type))].map((type, index) => <MenuItem key={index} value={type}>{type}</MenuItem>)
-    let brandsMenu = [...new Set([...orginalProducts].map(prod => prod.brand))].map((brand, index) => <MenuItem key={index} value={brand}>{brand}</MenuItem>)
-    let countryMenu = [...new Set([...orginalProducts].map(prod => prod.country))].map((country, index) => <MenuItem key={index} value={country}>{country}</MenuItem>)
+    let typesMenu = [...new Set([...orginalProducts].map(prod => prod.TypeDesc))].map((type, index) => <MenuItem key={index} value={type}>{type}</MenuItem>)
+    let brandsMenu = [...new Set([...orginalProducts].map(prod => prod.BrandName))].map((brand, index) => <MenuItem key={index} value={brand}>{brand}</MenuItem>)
+    let countryMenu = [...new Set([...orginalProducts].map(prod => prod.CountryName))].map((country, index) => <MenuItem key={index} value={country}>{country}</MenuItem>)
     //אין צורך בשדות דינמים לכן הוא קבוע לפי הגייסון
     let abvMenu = abvsJson.map((abv, index) => <MenuItem key={index} value={abv.name}>{abv.name}</MenuItem>)
 
@@ -44,17 +43,17 @@ export default function SortAndFilter(props) {
         sortedProducts = [...orginalProducts]
         
         if (type !== 'All') {
-            sortedProducts = sortedProducts.filter(prod => prod.type === type)
+            sortedProducts = sortedProducts.filter(prod => prod.TypeDesc === type)
         }
 
         if (brand !== 'All') {
-            sortedProducts = sortedProducts.filter(prod => prod.brand === brand)
+            sortedProducts = sortedProducts.filter(prod => prod.BrandName === brand)
         }
         if (abvValues.name !== 'All') {
-            sortedProducts = sortedProducts.filter(prod => prod.abv > abvValues.min && prod.abv <= abvValues.max)
+            sortedProducts = sortedProducts.filter(prod => prod.ABV > abvValues.min && prod.ABV <= abvValues.max)
         }
         if (country !== 'All') {
-            sortedProducts = sortedProducts.filter(prod => prod.country === country)
+            sortedProducts = sortedProducts.filter(prod => prod.CountryName === country)
         }
         props.setSortedProducts(sortedProducts)
 
@@ -132,10 +131,10 @@ export default function SortAndFilter(props) {
 
             </div>
             <div className={classes.sorts}>
-                <i data-name="brand-down" className="fas fa-sort-alpha-down active" onClick={() => props.setSortedProducts(sortedProducts.sort((a, b) => (a.brand > b.brand) ? 1 : -1))}></i>
-                <i data-name="brand-up" className="fas fa-sort-alpha-up" onClick={() => props.setSortedProducts(sortedProducts.sort((a, b) => (a.brand < b.brand) ? 1 : -1))}></i>
-                <i data-name="price-down" className="fas fa-sort-numeric-down" onClick={() => props.setSortedProducts(sortedProducts.sort((a, b) => (a.price - b.price)))}></i>
-                <i data-name="price-up" className="fas fa-sort-numeric-up" onClick={() => props.setSortedProducts(sortedProducts.sort((a, b) => (b.price - a.price)))}></i>
+                <i data-name="brand-down" className="fas fa-sort-alpha-down active" onClick={() => props.setSortedProducts(sortedProducts.sort((a, b) => (a.BrandName > b.BrandName) ? 1 : -1))}></i>
+                <i data-name="brand-up" className="fas fa-sort-alpha-up" onClick={() => props.setSortedProducts(sortedProducts.sort((a, b) => (a.BrandName < b.BrandName) ? 1 : -1))}></i>
+                <i data-name="price-down" className="fas fa-sort-numeric-down" onClick={() => props.setSortedProducts(sortedProducts.sort((a, b) => (a.Price - b.Price)))}></i>
+                <i data-name="price-up" className="fas fa-sort-numeric-up" onClick={() => props.setSortedProducts(sortedProducts.sort((a, b) => (b.Price - a.Price)))}></i>
             </div>
         </div>
     )

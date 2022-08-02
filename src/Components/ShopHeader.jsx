@@ -8,7 +8,7 @@ export default function ShopHeader(props) {
   const [count, setCount] = useState(0) // המיקומים בקרוסלה
   const timeout = useRef(null); // שמירת הסטייט כרפרנס כדי לא ליצור אותו שוב
   let products = props.products //מערך המוצרים הפופולרים
-
+  
   //יצירת הנקודות בתחתית הקרוסלה
   //משמש לניווט ידני ויחליף צבע גם על כל שינוי אוטמטי של המוצר בקרוסלה
   let indicators = products.map((indicators, index)=>
