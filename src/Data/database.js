@@ -79,6 +79,41 @@ export const login = async (user) => {
   if (data.ok) {
     return json;
   }
-  
-  
 };
+export const buyCart  = async (cart)=>{
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-type": "application/json; charset=UTF-8" },
+    redirect: "follow",
+    body: JSON.stringify(cart),
+  };
+  let data = await fetch(SERVER + "/api/User/order", requestOptions);
+  if(data.ok)
+    return true;
+}
+
+export const getAllUsers = async ()=>{
+  const data = await fetch(SERVER + "/api/Admin/users");
+  const json = await data.json();
+  return json
+}
+export const getAllUserOrders = async ()=>{
+  const data = await fetch(SERVER + "/api/Admin/userOrders");
+  const json = await data.json();
+  return json
+}
+export const addProduct = async ()=>{}
+export const removeProduct = async ()=>{}
+export const updateProduct = async (product)=>{
+  console.log(product)
+  const requestOptions = {
+    method: "PUT",
+    // headers: { "Content-type": "application/json; charset=UTF-8" },
+    redirect: "follow",
+  };
+  let data = await fetch(SERVER + "/api/admin/updatebottle/" + product.Barcode + "/?price=" + product.Price, requestOptions);
+  if(data.ok)
+    return true;
+}
+export const deleteUser = async ()=>{}
+

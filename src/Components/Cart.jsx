@@ -36,8 +36,8 @@ export default function Cart(props) {
 
   const classes = useStyles();
 
-  let cartItems = cart.map(prod => <div key={prod.BarCode} className={classes.product}>
-    <p onClick={() => props.removeItemFromCart(prod.BarCode)}>X</p>
+  let cartItems = cart.map(prod => <div key={prod.Barcode} className={classes.product}>
+    <p onClick={() => props.removeItemFromCart(prod.Barcode)}>X</p>
     <p>{prod.BrandName} {prod.BottleName}</p>
     <p>{prod.qty}</p>
     <p>{prod.Price.toFixed(2)}$</p>

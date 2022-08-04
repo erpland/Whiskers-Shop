@@ -34,6 +34,7 @@ const useStyles = makeStyles(theme => ({
   },
   basicsBoxText: {
     gridColumn: '2',
+    textAlign:'center',
   },
 
   statsContainer: {

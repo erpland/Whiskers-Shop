@@ -1,4 +1,5 @@
 import { makeStyles } from '@mui/styles';
+import { textAlign } from '@mui/system';
 const useStyles = makeStyles(theme => ({
   
   container: {
@@ -47,7 +48,8 @@ const useStyles = makeStyles(theme => ({
   },
   link:{
     alignSelf:'end',
-    gridRow:'6'
+    gridRow:'6',
+    textAlign:'center',
   }
 }));
 

@@ -5,19 +5,23 @@ export default function AdminOrdersRow(props) {
   const classes = useStyles();
 
   
-  let user = props.user
-  const userClick = (order,orderInfo) => {
+  let {firstName,lastName,order} = props
+  // console.log(order)
+  // let bottles = order.Items.Bottles
+  // let qty = order.Items.Qty
+  let items = order.Items
+  console.log(items)
+
+  const userClick = (order) => {
     props.setData(order)
-    props.setOrderInfo(orderInfo)
     props.setOpen(true)
 }
-  let orders = user.orders.map((order,index) =>
-    <div key={index} className={classes.orderRow} >
-      <p>{user.firstName}</p>
-      {<p>{user.ordersInfo[index].date}</p>}
-      <p>{order.reduce((prev, current) => { return prev + current.qty }, 0)}</p>
-      <p>{order.reduce((prev, current) => { return (prev + current.price) * current.qty }, 0).toFixed(2)}$</p>
-      <Button onClick={() => userClick(order,user.ordersInfo[index])}>Show More</Button>
+  let orders = (<div className={classes.orderRow} >
+      <p>{firstName}</p>
+      {<p>{order.DateTime}</p>}
+      <p>{items.reduce((prev, current) => { return prev + current.Qty }, 0)}</p>
+      <p>{items.reduce((prev, current,i) => { return (prev + (current.Price * current.Qty)) }, 0).toFixed(2)}$</p>
+      <Button onClick={() => userClick({order,firstName,lastName})}>Show More</Button>
     </div>)
   
   return (

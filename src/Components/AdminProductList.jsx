@@ -12,9 +12,10 @@ export default function AdminProductList(props) {
         let small = document.getElementById(`${index}`)//תפיסת תגית הטקסט מתחתיו
         let text = document.getElementById(`text${index}`)//תפיסת האינפוט עצמו
         small.style = 'visibility: visible'
+        console.log(text)
         //אם הערך הדיפולטיבי כלמר המחיר לפני השינוי של המוצר והמחיר העדכני תקין
         //נציג הודעה מתאימה בצבע ירוק ונעדכן את המוצר
-        if (Number(text.defaultValue) !== product.price && product.price > 0) {
+        if (Number(text.defaultValue) !== product.Price && product.Price > 0) {
             small.innerHTML = "Success"
             small.style = 'color:green'
             props.updateProductPrice(product)
@@ -32,20 +33,20 @@ export default function AdminProductList(props) {
 
 
   let productRow = products.map((product, index) =>
-    <div key={index} className={`${classes.row} ${classes.productRowGrid}`} >
-      <span onClick={() => props.deleteProduct(product.index)}><b>X</b></span>
-      <img src={product.img} alt="product" />
-      <p>{product.brand}</p>
-      <p>{product.name}</p>
-      <p>{product.type}</p>
+    <div key={product.Barcode} className={`${classes.row} ${classes.productRowGrid}`} >
+      <span onClick={() => props.deleteProduct(product.Barcode)}><b>X</b></span>
+      <img src={product.Image} alt="product" />
+      <p>{product.BrandName}</p>
+      <p>{product.BottleName}</p>
+      <p>{product.TypeDesc}</p>
       <div>
         <TextField
           id={`text${index}`}
           variant="standard"
-          defaultValue={product.price}
+          defaultValue={product.Price}
           type="number"
           InputProps={{ inputProps: { min: 1 } }}
-          onChange={(e) => { product.price = Number(e.target.value) }}//תפיסת שינוי טקסט באינפוט עצמו
+          onChange={(e) => { product.Price = Number(e.target.value) }}//תפיסת שינוי טקסט באינפוט עצמו
         />
         <small style={{ visibility: 'hidden' }} id={index}>succses</small>
       </div>

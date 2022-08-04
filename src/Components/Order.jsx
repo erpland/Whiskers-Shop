@@ -9,17 +9,20 @@ import useStyles from '../Styles/ProfileStyle';
 
 export default function Order(props) {
   const classes = useStyles();
-  let {order,orderInfo} = props
+  let {order} = props
+  console.log(order)
+  let items = order.Items
+  console.log(items)
 
-  let qtySum=order.reduce((prev, current) => { return prev + current.qty },0)//סכימת כמות מוצרים בהזמנה
-  let priceSum=order.reduce((prev, current) => { return (prev + current.price) * current.qty },0) // סכימת מחיר כולל בהזמנה
-  
-  let orderProduct = order.map((product,index)=>           
+  let qtySum=items.reduce((prev, current) => { return prev + current.Qty },0)//סכימת כמות מוצרים בהזמנה
+  let priceSum=items.reduce((prev, current) => { return (prev + (current.Price * current.Qty) ) },0) // סכימת מחיר כולל בהזמנה
+
+  let orderProduct = items.map((product,index)=>           
   <div key={index} className={classes.product}>
-    <p >{product.brand} {product.name}</p>
-    <p >{product.qty}</p>
-    <p >{product.price}$</p>
-    <img src={product.img} alt="product" />
+    <p >{product.BrandName} {product.Bottle_Name}</p>
+    <p >{product.Qty}</p>
+    <p >{product.Price}$</p>
+    <img src={product.Image} alt="product" />
   </div>)
   
 
@@ -29,7 +32,7 @@ export default function Order(props) {
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"
         id="panel1a-header">
-        <Typography variant='h5'>{orderInfo.date}</Typography>
+        <Typography variant='h5'>{order.DateTime.slice(0,-9)}</Typography>
       </AccordionSummary>
       <AccordionDetails className={classes.orderAccordion}>
         <div className={classes.orderDetails}>

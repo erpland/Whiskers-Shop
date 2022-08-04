@@ -7,22 +7,20 @@ import Login from "./Pages/Login";
 import Profile from "./Pages/Profile";
 import Register from "./Pages/Register";
 import Shop from "./Pages/Shop";
-import ProductsDb, { defaultUsers } from "./JSON/default-data";
 import Footer from "./Components/Footer";
-import { getTop5Products } from "./JS/Functions";
-import { getAllBottles, getTop5,signup } from "./Data/database";
+import Alert from "@mui/material/Alert";
+import AlertTitle from '@mui/material/AlertTitle';
+import {
+  getAllBottles,
+  getTop5,
+  signup,
+  buyCart as saveOrder,
+  login,
+  updateProduct,
+} from "./Data/database";
 import "./App.css";
 
 export default function Router() {
-  const AMOUNT_OF_POPULAR_PRODUCTS = 6; // מספר המוצרים שנרצה להציג בקרוסלת הפופולרים
-  if (!JSON.parse(localStorage.getItem("products"))) {
-    // אם אין מוצרים יצירת מוצרים דיפולטיבים
-    localStorage.setItem("products", JSON.stringify(ProductsDb));
-  }
-  if (!JSON.parse(localStorage.getItem("users"))) {
-    // אם אין יוזרים יצירת יוזרים דיפולטיבים
-    localStorage.setItem("users", JSON.stringify(defaultUsers));
-  }
   if (!JSON.parse(localStorage.getItem("isAdmin"))) {
     // אם אין תכונת אדמין נאתחל אותו כשקר
     localStorage.setItem("isAdmin", JSON.stringify(false));
@@ -41,15 +39,10 @@ export default function Router() {
     getData();
   }, []);
   const [isLoader, setIsLoader] = useState(true);
-  const [users, setUsers] = useState(
-    JSON.parse(localStorage.getItem("users")) || []
-  ); //סטייט של רשימת המשתשים
+  // ); //סטייט של רשימת המשתשים
   const [products, setProducts] = useState([]); //סטייט מוצרים
-  // const [mostPopProducts, setMostPopProducts] = useState(
-  //   mostPopular(users, AMOUNT_OF_POPULAR_PRODUCTS)
   // ); //רשימת מוצרים פופולריים-מאותחל על ידי פונקציה
   const [mostPopProducts, setMostPopProducts] = useState([]);
-
   const [isAdmin, setIsAdmin] = useState(
     JSON.parse(localStorage.getItem("isAdmin"))
   ); //סטייט בוליאני המציין האם אדמין מחובר/לא
@@ -59,32 +52,78 @@ export default function Router() {
   const [ordersInfo, setOrdersInfo] = useState([]); //פירוט על הזמנה של יוזר מסויים-תאריך וכו
   const [totalQty, setTotalQty] = useState(0); //סטייט של כמות כוללת של מוצרים בעגלה נוכחית
   const [totalPrice, setTotalPrice] = useState(0); //סטייט של סכום כולל של מוצרים בעגלה נוכחית
+  const [cartAlert, setCartAlert] = useState({
+    isShowen: false,
+    type: "",
+    title:"",
+    body: "",
+  });
 
   //פונקציה להוספת מוצר למערך קיים
   const addUser = (user) => {
-    signup(user)
+    signup(user);
     // setUsers([...users, user]);
   };
   //מחיקת משתמש ממערך משתמשים על פי אינדקס שמגיע מלמטה
-  const deleteUser = (index) => {
-    let newUserArr = [...users];
-    newUserArr.splice(index, 1);
-    setUsers(newUserArr);
-  };
+  // const deleteUser = (index) => {
+  //   let newUserArr = [...users];
+  //   newUserArr.splice(index, 1);
+  //   setUsers(newUserArr);
+  // };
   //קניית עגלה נוכחית והוספת שדה תאריך נוכחי לקנייה
-  const buyCart = () => {
-    let order = cart;
-    setOrders([...orders, order]);
-    setOrdersInfo([
-      ...ordersInfo,
-      { date: new Date().toLocaleString() + "", totalPrice: totalPrice },
-    ]);
+  const buyCart = async () => {
+    // let keys = cart.map(prod=>prod.Barcode)
+    // let values = cart.map(prod=>prod.qty)
+    let order = {
+      UserId: currentUser.Id,
+      Items: cart.map((prod) => ({
+        Barcode: prod.Barcode,
+        Bottle_Name: prod.BottleName,
+        BrandCode: prod.BrandCode,
+        BrandName: prod.BrandName,
+        Image: prod.Image,
+        Price: prod.Price,
+        Qty: prod.qty,
+      })),
+      // Items: mapCart(keys,values)
+    };
+
+
+    if (await saveOrder(order)) {
+      setCart([]);
+      let updatedUser = await login({
+        Email: currentUser.Email,
+        Password: currentUser.Password,
+      });
+      setCurrentUser(updatedUser);
+      setCartAlert({isShowen:true, type:'success', title:"Success",body:'Successfuly Ordered Your Cart!'})
+    } else {
+      setCartAlert({isShowen:true, type:'error', title:"Error",body:'There Was an Error Ordering Your Cart... Please Try Again Later.'})
+    }
   };
+
+  // const mapCart = (keys,values) => {
+  //   let obj = {}
+  //   for(let i = 0;i<keys.length;i++){
+  //     obj[keys[i]] = values[i]
+  //   }
+  //   return obj;
+  // };
+  // setOrders([...orders, order]);
+  // setOrdersInfo([
+  //   ...ordersInfo,
+  //   { date: new Date().toLocaleString() + "", totalPrice: totalPrice },
+  // ]);
+
   //עדכון מחיר על פי מוצר מסויים שמגיע מלמטה-ע"י מציאת אינדקס נוכחי של מוצר
-  const updateProductPrice = (product) => {
+  const updateProductPrice = async (product) => {
     let index = products.indexOf(product);
     products[index] = product; // דריסת המוצר במוצר המעודכן שקבילנו מלמטה
     setProducts([...products]);
+    let res = await updateProduct(product);
+    if (!res) {
+      alert("error");
+    }
   };
   //הוספת מוצר חדש למערך המוצרים הקיים
   const addProduct = (product) => {
@@ -121,15 +160,15 @@ export default function Router() {
     setCart(cartItems);
   };
   //מחיקת מוצר מן העגלה-על פי אינדקס נשלח
-  const removeItemFromCart = (index) => {
-    let newCart = cart.filter((item) => item.index !== index);
+  const removeItemFromCart = (barcode) => {
+    let newCart = cart.filter((item) => item.Barcode !== barcode);
     // console.log(newCart);
     setCart(newCart);
   };
   //כל שינוי במערך משתמשים יגרור עדכון בלוקאל
-  useEffect(() => {
-    localStorage.setItem("users", JSON.stringify(users));
-  }, [users]);
+  // useEffect(() => {
+  //   localStorage.setItem("users", JSON.stringify(users));
+  // }, [users]);
 
   //כל שינוי בעגלת הקניות יגרור עדכון סטייטים-כמות ומחיר כולל של העגלה
   useEffect(() => {
@@ -151,34 +190,34 @@ export default function Router() {
     }
   }, [cart]);
   //כל שינוי בהזמנה נוכחית יגרור עדכון סטייטים-קניית עגלה
-  useEffect(() => {
-    if (currentUser) {
-      //מוכרח להיות משתמש מחובר כדי לקנות
-      // localStorage.setItem("cart", JSON.stringify([]))
-      //עדכון ההזמנות במשתמש הנוכחי
-      //ההזמנה עצמה התעדכנה בסטייטים על ידי פונקצית קניית העגלה
-      let updatedUser = {
-        ...currentUser,
-        orders: [...orders],
-        ordersInfo: [...ordersInfo],
-      };
-      setCurrentUser(updatedUser);
-      //לאחר שעידכנו את היוזר הנוכחי נעדכן את מערך המשתמשים
-      let updatedUsers = users.map((user) =>
-        user.email === currentUser.email ? updatedUser : user
-      );
-      setUsers(updatedUsers);
-      //איפוס סטייטים
-      setCart([]);
-      setTotalQty(0);
-      setTotalPrice(0);
-      //עידכון המוצרים הפופולרים
-    }
-  }, [orders]);
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     //מוכרח להיות משתמש מחובר כדי לקנות
+  //     // localStorage.setItem("cart", JSON.stringify([]))
+  //     //עדכון ההזמנות במשתמש הנוכחי
+  //     //ההזמנה עצמה התעדכנה בסטייטים על ידי פונקצית קניית העגלה
+  //     let updatedUser = {
+  //       ...currentUser,
+  //       orders: [...orders],
+  //       ordersInfo: [...ordersInfo],
+  //     };
+  //     setCurrentUser(updatedUser);
+  //     //לאחר שעידכנו את היוזר הנוכחי נעדכן את מערך המשתמשים
+  //     let updatedUsers = users.map((user) =>
+  //       user.email === currentUser.email ? updatedUser : user
+  //     );
+  //     setUsers(updatedUsers);
+  //     //איפוס סטייטים
+  //     setCart([]);
+  //     setTotalQty(0);
+  //     setTotalPrice(0);
+  //     //עידכון המוצרים הפופולרים
+  //   }
+  // }, [orders]);
   // עדכון מוצרים בלוקאל בכל שינוי במערך המוצרים המקורי
-  useEffect(() => {
-    localStorage.setItem("products", JSON.stringify(products));
-  }, [products]);
+  // useEffect(() => {
+  //   localStorage.setItem("products", JSON.stringify(products));
+  // }, [products]);
 
   return (
     <BrowserRouter>
@@ -216,7 +255,7 @@ export default function Router() {
           path="/login"
           element={
             <Login
-              users={users}
+              // users={users}
               setUser={(user) => userLogin(user)}
               setIsAdmin={(value) => setIsAdmin(value)}
               isAdmin={isAdmin}
@@ -226,13 +265,7 @@ export default function Router() {
         {currentUser !== undefined && (
           <Route
             path="/profile"
-            element={
-              <Profile
-                orders={orders}
-                ordersInfo={ordersInfo}
-                currentUser={currentUser}
-              />
-            }
+            element={<Profile currentUser={currentUser} />}
           />
         )}
         {isAdmin && (
@@ -241,12 +274,11 @@ export default function Router() {
             element={
               <Admin
                 setIsAdmin={(v) => setIsAdmin(v)}
-                deleteUser={deleteUser}
                 products={products}
                 deleteProduct={(index) => deleteProduct(index)}
                 addProduct={addProduct}
                 updateProductPrice={(product) => updateProductPrice(product)}
-                users={users}
+                // users={users}
               />
             }
           />
@@ -254,12 +286,22 @@ export default function Router() {
         <Route path="/item" element={<ItemPage addToCart={addToCart} />} />
       </Routes>
       <Footer />
+
+      {cartAlert.isShowen && (
+       <Alert style={{position:'sticky', bottom:0,zIndex:999}}
+       variant="filled"
+       onClose={() => {setCartAlert({...cartAlert,isShowen:false})}}
+       severity={cartAlert.type}>
+       <AlertTitle>{cartAlert.title}</AlertTitle>
+       {cartAlert.body}
+     </Alert>
+      )}
     </BrowserRouter>
   );
 }
 const Loader = () => {
   return (
-    <div style={{ height: "100vh" }}>
+    <div style={{ height: "100vh", position: "relative" }}>
       <div className="loader"></div>
     </div>
   );
