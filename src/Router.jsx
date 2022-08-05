@@ -85,7 +85,6 @@ export default function Router() {
         Price: prod.Price,
         Qty: prod.qty,
       })),
-      // Items: mapCart(keys,values)
     };
 
 

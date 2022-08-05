@@ -19,7 +19,7 @@ export default function AdminUsers(props) {
   let userRow = users.map((user, index) => (
     <div key={index} className={`${classes.userRow} ${classes.userRowGrid}`}>
       <p>
-        <span onClick={() => props.deleteUser(index)}>X</span>
+        {/* <span onClick={() => props.deleteUser(index)}>X</span> */}
       </p>
       <p>{user.UserEmail}</p>
       <p>{user.UserFirstName}</p>

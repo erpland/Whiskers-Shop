@@ -8,6 +8,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Typography from '@mui/material/Typography'
+import {encpsulateBottle} from '../JS/Functions'
 export default function AddProduct(props) {
     const classes = useStyles();
 
@@ -32,7 +33,8 @@ export default function AddProduct(props) {
         data.price = Number(data.price)//המרה ממחרוזת למספר
         data.age += data.age !== '' ? 'yo' : 'No Age Statement' // אם גיל לא סופק נספק את ערך ברירת המחדל
         data = { ...data, index: products.length, qty: 0 } // הוספת השדות אינדקס וכמות למוצר שיצרנו
-        props.addProduct(data)
+        const bottleToAdd  = encpsulateBottle(data,products.length+1)
+        // props.addProduct(data)
         alert('Product Added Successfully')
         reset() // איפוס השדות בטופס
     };

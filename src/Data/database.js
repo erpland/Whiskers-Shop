@@ -102,18 +102,26 @@ export const getAllUserOrders = async ()=>{
   const json = await data.json();
   return json
 }
-export const addProduct = async ()=>{}
-export const removeProduct = async ()=>{}
+export const addProduct = async (product)=>{
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-type": "application/json; charset=UTF-8" },
+    redirect: "follow",
+  };
+  let data = await fetch(SERVER + "/api/admin/addbottle", requestOptions);
+  if(data.ok)
+    return true;
+}
 export const updateProduct = async (product)=>{
-  console.log(product)
   const requestOptions = {
     method: "PUT",
-    // headers: { "Content-type": "application/json; charset=UTF-8" },
     redirect: "follow",
   };
   let data = await fetch(SERVER + "/api/admin/updatebottle/" + product.Barcode + "/?price=" + product.Price, requestOptions);
   if(data.ok)
     return true;
 }
-export const deleteUser = async ()=>{}
 
+
+export const deleteUser = async ()=>{}
+  export const removeProduct = async ()=>{}

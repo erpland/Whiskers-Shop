@@ -34,7 +34,8 @@ export default function AdminProductList(props) {
 
   let productRow = products.map((product, index) =>
     <div key={product.Barcode} className={`${classes.row} ${classes.productRowGrid}`} >
-      <span onClick={() => props.deleteProduct(product.Barcode)}><b>X</b></span>
+      {/* <span onClick={() => props.deleteProduct(product.Barcode)}><b>X</b></span> */}
+      <span></span>
       <img src={product.Image} alt="product" />
       <p>{product.BrandName}</p>
       <p>{product.BottleName}</p>

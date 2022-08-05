@@ -15,7 +15,7 @@ const daysNames = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"]
 export default function SalesChart(props) {
 //שימוש בספרייה חיצונית להצגת המידע כגרף  
   let {dates} = props
-
+  
   const calcOrders = (day) => {
     //שמירת התאריך של היום פחות היום המבוקש
     let orderDate = new Date();
@@ -27,6 +27,7 @@ export default function SalesChart(props) {
     //החזרת הסכימה של מחירי ההזמנות ליום הנוכחי מכל המשתמשים
     return orders.reduce((prev, current) => { return prev + current.totalPrice }, 0)
   }
+
   //גייסון לדאטה של הגרף מתחלק לפי הזמנות השבוע האחרון
   //מתבצע חישוב מודולרי לקבלת ימי השבוע מהיום אחורה
   //שמירת מחיר כולל של כל הזמנות ביום הרצוי על ידי קריאה לפונקצייה

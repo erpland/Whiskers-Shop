@@ -31,7 +31,7 @@ export default function Admin(props) {
   const [data, setData] = useState();
   const [totalOrdersAmount, setTotalOrdersAmount] = useState(0);
   const [totalProfits, setTotalProfits] = useState(0);
-
+  
 
   useEffect(() => {
     const getData = async () => {
@@ -60,13 +60,12 @@ export default function Admin(props) {
     }
   }, [users]);
   
-
-  // let allOrdersDates = users.map((user) => user.ordersInfo).flat();
-  // let totalProfits = allOrdersDates
-  //   .reduce((a, b) => {
-  //     return a + b.totalPrice;
-  //   }, 0)
-  //   .toFixed(2);
+  // console.log(users)
+  let allOrdersDates = users.map((user) => user.UserOrders.map(order=>({
+    date: order.DateTime,
+    totalPrice: order.Items.reduce((a,b)=>{return a+b.Price},0)
+  }))).flat()
+  // console.log(allOrdersDates)
 
   let userOrderList = users.map((user, index) =>
     user.UserOrders.map((order, i) => (
@@ -185,7 +184,7 @@ export default function Admin(props) {
                   Last 7 Days Profit
                 </Typography>
                 <div className={classes.rightGraph}>
-                  {/* <SalesChart dates={allOrdersDates} /> */}
+                  <SalesChart dates={allOrdersDates} />
                 </div>
               </div>
             </div>
@@ -203,7 +202,7 @@ export default function Admin(props) {
           <div className={classes.productsContainer}>
             <AdminProductList
               products={products}
-              deleteProduct={props.deleteProduct}
+              // deleteProduct={props.deleteProduct}
               updateProductPrice={props.updateProductPrice}
             />
             <AddProduct addProduct={props.addProduct} products={products} />

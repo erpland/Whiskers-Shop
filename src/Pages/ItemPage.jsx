@@ -34,7 +34,7 @@ export default function ItemPage(props) {
             <div className={classes.buyInfo}>
                 <Typography variant='h5'>Quantity</Typography>
                 <TextField onChange={(e) => setAmount(Number(e.target.value))} variant='outlined' type='number' defaultValue={0} inputProps={{ min: 0 }} > </TextField>
-                <Button onClick={addToCart} variant='contained'>Add To Cart</Button>
+                <Button onClick={addToCart} sx={{mt:1,mb:1,width:'50%'}} variant='contained'>Add To Cart</Button>
                 <Typography variant='small'>Free delivery when you spend £99.00</Typography>
                 <hr />
                 <div>

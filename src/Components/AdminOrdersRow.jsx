@@ -6,11 +6,7 @@ export default function AdminOrdersRow(props) {
 
   
   let {firstName,lastName,order} = props
-  // console.log(order)
-  // let bottles = order.Items.Bottles
-  // let qty = order.Items.Qty
   let items = order.Items
-  console.log(items)
 
   const userClick = (order) => {
     props.setData(order)
@@ -18,7 +14,7 @@ export default function AdminOrdersRow(props) {
 }
   let orders = (<div className={classes.orderRow} >
       <p>{firstName}</p>
-      {<p>{order.DateTime}</p>}
+      {<p>{order.DateTime.slice(0,-9)}</p>}
       <p>{items.reduce((prev, current) => { return prev + current.Qty }, 0)}</p>
       <p>{items.reduce((prev, current,i) => { return (prev + (current.Price * current.Qty)) }, 0).toFixed(2)}$</p>
       <Button onClick={() => userClick({order,firstName,lastName})}>Show More</Button>
