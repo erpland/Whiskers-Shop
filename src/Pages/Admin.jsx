@@ -12,14 +12,10 @@ import AdminUsers from "../Components/AdminUsers";
 import { useNavigate } from "react-router-dom";
 import AdminHeaders from "../Components/AdminHeaders";
 import { useEffect } from "react";
-// import {  } from "react";
+
 import {
   getAllUsers,
-  getAllUserOrders,
-  addProduct,
-  removeProduct,
-  updateProduct,
-  deleteUser,
+
 } from "../Data/database";
 
 export default function Admin(props) {
@@ -31,8 +27,6 @@ export default function Admin(props) {
   const [data, setData] = useState();
   const [totalOrdersAmount, setTotalOrdersAmount] = useState(0);
   const [totalProfits, setTotalProfits] = useState(0);
-  
-
   useEffect(() => {
     const getData = async () => {
       setUsers(await getAllUsers());
@@ -48,24 +42,29 @@ export default function Admin(props) {
           return prev + current;
         }, 0);
 
-      let totalProfits = users.map((user) => user.UserTotalSpent)
-      .reduce((a, b) => {
-        return a + b;
-      }, 0)
-      .toFixed(2);
-
+      let totalProfits = users
+        .map((user) => user.UserTotalSpent)
+        .reduce((a, b) => {
+          return a + b;
+        }, 0)
+        .toFixed(2);
 
       setTotalOrdersAmount(totalOrders);
-      setTotalProfits(totalProfits)
+      setTotalProfits(totalProfits);
     }
   }, [users]);
-  
-  // console.log(users)
-  let allOrdersDates = users.map((user) => user.UserOrders.map(order=>({
-    date: order.DateTime,
-    totalPrice: order.Items.reduce((a,b)=>{return a+b.Price},0)
-  }))).flat()
-  // console.log(allOrdersDates)
+
+
+  let allOrdersDates = users
+    .map((user) =>
+      user.UserOrders.map((order) => ({
+        date: order.DateTime,
+        totalPrice: order.Items.reduce((a, b) => {
+          return a + b.Price;
+        }, 0),
+      }))
+    )
+    .flat();
 
   let userOrderList = users.map((user, index) =>
     user.UserOrders.map((order, i) => (
@@ -165,9 +164,7 @@ export default function Admin(props) {
                     <b>More</b>
                   </p>
                 </div>
-                <div className={classes.orderTable}>
-                  {userOrderList}
-                  </div>
+                <div className={classes.orderTable}>{userOrderList}</div>
               </div>
             </div>
 
@@ -202,10 +199,14 @@ export default function Admin(props) {
           <div className={classes.productsContainer}>
             <AdminProductList
               products={products}
-              // deleteProduct={props.deleteProduct}
               updateProductPrice={props.updateProductPrice}
             />
-            <AddProduct addProduct={props.addProduct} products={products} />
+            <AddProduct
+              addProduct={props.addProduct}
+              products={products}
+              setProducts = {props.setProducts}
+              setBottomAlert={props.setBottomAlert}
+            />
           </div>
         </div>
       </Container>
@@ -214,7 +215,6 @@ export default function Admin(props) {
           open={open}
           setOpen={setOpen}
           data={data}
-          // orderInfo={orderInfo}
         />
       )}
     </div>

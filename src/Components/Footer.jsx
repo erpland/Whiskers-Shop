@@ -25,7 +25,6 @@ export default function Footer() {
         sx={{
           py: 3,
           px: 2,
-          // mt: 20,
           backgroundColor: (theme) =>
             theme.palette.mode === 'light'
               ? theme.palette.grey[200]

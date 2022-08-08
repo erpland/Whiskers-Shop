@@ -10,9 +10,7 @@ import useStyles from '../Styles/ProfileStyle';
 export default function Order(props) {
   const classes = useStyles();
   let {order} = props
-  console.log(order)
   let items = order.Items
-  console.log(items)
 
   let qtySum=items.reduce((prev, current) => { return prev + current.Qty },0)//סכימת כמות מוצרים בהזמנה
   let priceSum=items.reduce((prev, current) => { return (prev + (current.Price * current.Qty) ) },0) // סכימת מחיר כולל בהזמנה

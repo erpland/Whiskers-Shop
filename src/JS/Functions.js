@@ -1,6 +1,5 @@
 export const encpsulateBottle = (data, barcode) => {
-  console.log(barcode);
-  const regions  = getRegion(data.region,data.country)
+  const regions = getRegion(data.region, data.country);
   const object = {
     Brand: {
       BrandCode: 0,
@@ -20,7 +19,7 @@ export const encpsulateBottle = (data, barcode) => {
     Price: data.price,
     Type: {
       TypeCode: 1,
-      TypeDesc: data.type,
+      TypeDesc: "Single Malt",
     },
     Taste: {
       TasteCode: barcode,
@@ -40,7 +39,7 @@ export const encpsulateBottle = (data, barcode) => {
 };
 const getRegion = (region, country) => {
   switch (region) {
-    case "Highland":
+    case "Highlands":
       return { region: 1, country: 1 };
     case "Lowland":
       return { region: 2, country: 1 };
@@ -57,7 +56,7 @@ const getRegion = (region, country) => {
         case "Scotland":
           return { region: 7, country: 1 };
         case "USA":
-          return{ region: 8, country: 2 };
+          return { region: 8, country: 2 };
         case "Ireland":
           return { region: 9, country: 3 };
         case "Japan":
@@ -69,44 +68,3 @@ const getRegion = (region, country) => {
       break;
   }
 };
-
-// import { getTop5 } from "../Data/database";
-
-// export const getTop5Products = async (products) => {
-//   let data = await getTop5();
-//   let items = await data.map((code) => {
-//     let filterd = products.filter((prod) => prod.Barcode === code.Barcode);
-//     return {
-//       item: filterd,
-//       count: code.Amount,
-//     };
-
-//   });
-//   return items
-// };
-// export function mostPopular(users,num){
-//   let allOrders = users.map(u => u.orders).flat().flat()
-//   let ordersCount = allOrders.map(o => {
-//     return {
-//       item: o,
-//         count: allOrders.reduce((a, b) => { return o.brand === b.brand && o.name === b.name ? a + b.qty : a + 0 }, 0)
-//     }
-//   })
-//   let ordersNoDup = ordersCount.filter((v,i,a)=>a.findIndex(t=>(t.item.brand === v.item.brand && t.item.name === v.item.name ))===i)
-//   let mostPopularProducts = [];
-
-//   num = num > ordersNoDup.length ? ordersNoDup.length : num
-
-//   while(mostPopularProducts.length < num){
-//     let max = ordersNoDup.reduce((a,b)=>{return Math.max(a, b.count)},0)
-//     for(let i=0;i<ordersNoDup.length;i++){
-//       if(mostPopularProducts.length >= num)
-//         break;
-//       if(ordersNoDup[i].count === max){
-//         mostPopularProducts.push(ordersNoDup[i])
-//         ordersNoDup.splice(i,1)
-//       }
-//     }
-//   }
-//   return mostPopularProducts
-// }

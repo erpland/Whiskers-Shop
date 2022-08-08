@@ -48,11 +48,9 @@ export default function Router() {
   ); //סטייט בוליאני המציין האם אדמין מחובר/לא
   const [currentUser, setCurrentUser] = useState(); //משתמש נוכחי אם מחובר
   const [cart, setCart] = useState([]); //עגלה נוכחית
-  const [orders, setOrders] = useState([]); //הזמנה של יוזר מסויים
-  const [ordersInfo, setOrdersInfo] = useState([]); //פירוט על הזמנה של יוזר מסויים-תאריך וכו
   const [totalQty, setTotalQty] = useState(0); //סטייט של כמות כוללת של מוצרים בעגלה נוכחית
   const [totalPrice, setTotalPrice] = useState(0); //סטייט של סכום כולל של מוצרים בעגלה נוכחית
-  const [cartAlert, setCartAlert] = useState({
+  const [bottomAlert, setBottomAlert] = useState({
     isShowen: false,
     type: "",
     title:"",
@@ -62,18 +60,10 @@ export default function Router() {
   //פונקציה להוספת מוצר למערך קיים
   const addUser = (user) => {
     signup(user);
-    // setUsers([...users, user]);
   };
-  //מחיקת משתמש ממערך משתמשים על פי אינדקס שמגיע מלמטה
-  // const deleteUser = (index) => {
-  //   let newUserArr = [...users];
-  //   newUserArr.splice(index, 1);
-  //   setUsers(newUserArr);
-  // };
+
   //קניית עגלה נוכחית והוספת שדה תאריך נוכחי לקנייה
   const buyCart = async () => {
-    // let keys = cart.map(prod=>prod.Barcode)
-    // let values = cart.map(prod=>prod.qty)
     let order = {
       UserId: currentUser.Id,
       Items: cart.map((prod) => ({
@@ -95,24 +85,11 @@ export default function Router() {
         Password: currentUser.Password,
       });
       setCurrentUser(updatedUser);
-      setCartAlert({isShowen:true, type:'success', title:"Success",body:'Successfuly Ordered Your Cart!'})
+      setBottomAlert({isShowen:true, type:'success', title:"Success",body:'Successfuly Ordered Your Cart!'})
     } else {
-      setCartAlert({isShowen:true, type:'error', title:"Error",body:'There Was an Error Ordering Your Cart... Please Try Again Later.'})
+      setBottomAlert({isShowen:true, type:'error', title:"Error",body:'There Was an Error Ordering Your Cart... Please Try Again Later.'})
     }
   };
-
-  // const mapCart = (keys,values) => {
-  //   let obj = {}
-  //   for(let i = 0;i<keys.length;i++){
-  //     obj[keys[i]] = values[i]
-  //   }
-  //   return obj;
-  // };
-  // setOrders([...orders, order]);
-  // setOrdersInfo([
-  //   ...ordersInfo,
-  //   { date: new Date().toLocaleString() + "", totalPrice: totalPrice },
-  // ]);
 
   //עדכון מחיר על פי מוצר מסויים שמגיע מלמטה-ע"י מציאת אינדקס נוכחי של מוצר
   const updateProductPrice = async (product) => {
@@ -121,7 +98,8 @@ export default function Router() {
     setProducts([...products]);
     let res = await updateProduct(product);
     if (!res) {
-      alert("error");
+      setBottomAlert({isShowen:true, type:'error', title:"Error",body:'Error Updating Price'})
+
     }
   };
   //הוספת מוצר חדש למערך המוצרים הקיים
@@ -135,15 +113,12 @@ export default function Router() {
   };
   //פונקציה לטיפול בהתחברות משתמש-נעדכן את הסטייטים בהתאם
   const userLogin = (user) => {
-    // setOrders([...user.orders]);
-    // setOrdersInfo([...user.ordersInfo]);
     setCurrentUser(user);
   };
   //פונקציה להוספת מוצר לעגלה, מקבלת אינדקס וכמות
   const addToCart = (Barcode, qty = 1) => {
     let cartItems;
     let product = products.filter((prod) => prod.Barcode === Barcode)[0];
-    // let product = Object.assign({}, products[Barcode]); // העתקת הערך ולא הרפרנס של הפרודקט כדי לא לדרוס את הכמות המוקרית
     let cartProduct = cart.filter((item) => item.Barcode === Barcode); // תפיסת המוצר אם קיים בעגלה
 
     if (cartProduct.length === 0) {
@@ -161,13 +136,9 @@ export default function Router() {
   //מחיקת מוצר מן העגלה-על פי אינדקס נשלח
   const removeItemFromCart = (barcode) => {
     let newCart = cart.filter((item) => item.Barcode !== barcode);
-    // console.log(newCart);
     setCart(newCart);
   };
-  //כל שינוי במערך משתמשים יגרור עדכון בלוקאל
-  // useEffect(() => {
-  //   localStorage.setItem("users", JSON.stringify(users));
-  // }, [users]);
+
 
   //כל שינוי בעגלת הקניות יגרור עדכון סטייטים-כמות ומחיר כולל של העגלה
   useEffect(() => {
@@ -188,36 +159,7 @@ export default function Router() {
       setTotalPrice(0);
     }
   }, [cart]);
-  //כל שינוי בהזמנה נוכחית יגרור עדכון סטייטים-קניית עגלה
-  // useEffect(() => {
-  //   if (currentUser) {
-  //     //מוכרח להיות משתמש מחובר כדי לקנות
-  //     // localStorage.setItem("cart", JSON.stringify([]))
-  //     //עדכון ההזמנות במשתמש הנוכחי
-  //     //ההזמנה עצמה התעדכנה בסטייטים על ידי פונקצית קניית העגלה
-  //     let updatedUser = {
-  //       ...currentUser,
-  //       orders: [...orders],
-  //       ordersInfo: [...ordersInfo],
-  //     };
-  //     setCurrentUser(updatedUser);
-  //     //לאחר שעידכנו את היוזר הנוכחי נעדכן את מערך המשתמשים
-  //     let updatedUsers = users.map((user) =>
-  //       user.email === currentUser.email ? updatedUser : user
-  //     );
-  //     setUsers(updatedUsers);
-  //     //איפוס סטייטים
-  //     setCart([]);
-  //     setTotalQty(0);
-  //     setTotalPrice(0);
-  //     //עידכון המוצרים הפופולרים
-  //   }
-  // }, [orders]);
-  // עדכון מוצרים בלוקאל בכל שינוי במערך המוצרים המקורי
-  // useEffect(() => {
-  //   localStorage.setItem("products", JSON.stringify(products));
-  // }, [products]);
-
+  
   return (
     <BrowserRouter>
       {!isAdmin && (
@@ -254,7 +196,6 @@ export default function Router() {
           path="/login"
           element={
             <Login
-              // users={users}
               setUser={(user) => userLogin(user)}
               setIsAdmin={(value) => setIsAdmin(value)}
               isAdmin={isAdmin}
@@ -277,7 +218,8 @@ export default function Router() {
                 deleteProduct={(index) => deleteProduct(index)}
                 addProduct={addProduct}
                 updateProductPrice={(product) => updateProductPrice(product)}
-                // users={users}
+                setBottomAlert = {(alert) => setBottomAlert(alert)}
+                setProducts={prod=>setProducts([...products,prod])}
               />
             }
           />
@@ -286,13 +228,13 @@ export default function Router() {
       </Routes>
       <Footer />
 
-      {cartAlert.isShowen && (
+      {bottomAlert.isShowen && (
        <Alert style={{position:'sticky', bottom:0,zIndex:999}}
        variant="filled"
-       onClose={() => {setCartAlert({...cartAlert,isShowen:false})}}
-       severity={cartAlert.type}>
-       <AlertTitle>{cartAlert.title}</AlertTitle>
-       {cartAlert.body}
+       onClose={() => {setBottomAlert({...bottomAlert,isShowen:false})}}
+       severity={bottomAlert.type}>
+       <AlertTitle>{bottomAlert.title}</AlertTitle>
+       {bottomAlert.body}
      </Alert>
       )}
     </BrowserRouter>

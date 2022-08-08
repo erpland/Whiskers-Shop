@@ -7,7 +7,10 @@ const useStyles = makeStyles(theme =>({
     margin:'100px 0',
     gap:10,
   '& $img':{
-    width:'100%',
+    // width:'100%',
+    justifySelf:'center',
+    maxWidth: 421,
+    maxHeight:421,
     gridRow:'1/3',
     
   }

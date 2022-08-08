@@ -46,7 +46,10 @@ const useStyles = makeStyles(theme =>({
       gridTemplateColumns:'2fr 1fr 1fr 1fr',
       border:'1px solid #eee',
       '& $img':{
-        width:'90%',
+        // width:'90%',
+        maxWidth:228,
+        maxHeight:228,
+        justifySelf:'center',
     }
   },
   shipped:{

@@ -24,7 +24,6 @@ export default function Login(props) {
   } = useForm();
 
   const onSubmit = async (data) => {
-    // let userList = props.users;
     //בדיקה האם המשתמש הוא אדמין נעביר אותו לדף אדמין ישר
     if (data.email === "admin" && data.password === "admin123") {
       props.setIsAdmin(true); //מעדכנים את הסטייט אצל האבא שאדמין התחבר

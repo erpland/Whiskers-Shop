@@ -64,7 +64,6 @@ export const signup = async (user) => {
     body: JSON.stringify(user),
   };
   let res = await fetch(SERVER + "/api/User", requestOptions);
-  console.log(res);
 };
 
 export const login = async (user) => {
@@ -97,16 +96,13 @@ export const getAllUsers = async ()=>{
   const json = await data.json();
   return json
 }
-export const getAllUserOrders = async ()=>{
-  const data = await fetch(SERVER + "/api/Admin/userOrders");
-  const json = await data.json();
-  return json
-}
+
 export const addProduct = async (product)=>{
   const requestOptions = {
     method: "POST",
     headers: { "Content-type": "application/json; charset=UTF-8" },
     redirect: "follow",
+    body: JSON.stringify(product),
   };
   let data = await fetch(SERVER + "/api/admin/addbottle", requestOptions);
   if(data.ok)
@@ -121,7 +117,3 @@ export const updateProduct = async (product)=>{
   if(data.ok)
     return true;
 }
-
-
-export const deleteUser = async ()=>{}
-  export const removeProduct = async ()=>{}
