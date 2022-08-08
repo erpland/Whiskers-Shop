@@ -72,7 +72,8 @@ export default function Register(props) {
 
 
     return (
-        <Container maxWidth={false} className={classes.container}>
+        <Container maxWidth={false} className={classes.container}
+        style={{backgroundImage:'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("../images/background.jpg")',}}>
             <CssBaseline />
 
             <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>

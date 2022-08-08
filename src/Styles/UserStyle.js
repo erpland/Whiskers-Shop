@@ -6,7 +6,7 @@ const useStyles = makeStyles(theme => ({
     
     width:"100%",
     height:'100vh',
-    backgroundImage:'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("../images/background.jpg")',
+    // backgroundImage:'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("../images/background.jpg")',
     display:'flex !important',
     justifyContent:'center',
   },
