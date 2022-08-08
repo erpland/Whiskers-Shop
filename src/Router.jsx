@@ -9,7 +9,7 @@ import Register from "./Pages/Register";
 import Shop from "./Pages/Shop";
 import Footer from "./Components/Footer";
 import Alert from "@mui/material/Alert";
-import AlertTitle from '@mui/material/AlertTitle';
+import AlertTitle from "@mui/material/AlertTitle";
 import {
   getAllBottles,
   getTop5,
@@ -17,6 +17,7 @@ import {
   buyCart as saveOrder,
   login,
   updateProduct,
+  getUserOrders,
 } from "./Data/database";
 import "./App.css";
 
@@ -53,7 +54,7 @@ export default function Router() {
   const [bottomAlert, setBottomAlert] = useState({
     isShowen: false,
     type: "",
-    title:"",
+    title: "",
     body: "",
   });
 
@@ -77,17 +78,27 @@ export default function Router() {
       })),
     };
 
-
     if (await saveOrder(order)) {
       setCart([]);
-      let updatedUser = await login({
-        Email: currentUser.Email,
-        Password: currentUser.Password,
-      });
+      let orders = await getUserOrders(currentUser.Id)
+      let updatedUser = {
+        ...currentUser,
+        Orders: orders,
+      };
       setCurrentUser(updatedUser);
-      setBottomAlert({isShowen:true, type:'success', title:"Success",body:'Successfuly Ordered Your Cart!'})
+      setBottomAlert({
+        isShowen: true,
+        type: "success",
+        title: "Success",
+        body: "Successfuly Ordered Your Cart!",
+      });
     } else {
-      setBottomAlert({isShowen:true, type:'error', title:"Error",body:'There Was an Error Ordering Your Cart... Please Try Again Later.'})
+      setBottomAlert({
+        isShowen: true,
+        type: "error",
+        title: "Error",
+        body: "There Was an Error Ordering Your Cart... Please Try Again Later.",
+      });
     }
   };
 
@@ -98,8 +109,12 @@ export default function Router() {
     setProducts([...products]);
     let res = await updateProduct(product);
     if (!res) {
-      setBottomAlert({isShowen:true, type:'error', title:"Error",body:'Error Updating Price'})
-
+      setBottomAlert({
+        isShowen: true,
+        type: "error",
+        title: "Error",
+        body: "Error Updating Price",
+      });
     }
   };
   //הוספת מוצר חדש למערך המוצרים הקיים
@@ -139,7 +154,6 @@ export default function Router() {
     setCart(newCart);
   };
 
-
   //כל שינוי בעגלת הקניות יגרור עדכון סטייטים-כמות ומחיר כולל של העגלה
   useEffect(() => {
     if (cart.length !== 0) {
@@ -159,7 +173,7 @@ export default function Router() {
       setTotalPrice(0);
     }
   }, [cart]);
-  
+
   return (
     <BrowserRouter>
       {!isAdmin && (
@@ -218,8 +232,8 @@ export default function Router() {
                 deleteProduct={(index) => deleteProduct(index)}
                 addProduct={addProduct}
                 updateProductPrice={(product) => updateProductPrice(product)}
-                setBottomAlert = {(alert) => setBottomAlert(alert)}
-                setProducts={prod=>setProducts([...products,prod])}
+                setBottomAlert={(alert) => setBottomAlert(alert)}
+                setProducts={(prod) => setProducts([...products, prod])}
               />
             }
           />
@@ -229,13 +243,17 @@ export default function Router() {
       <Footer />
 
       {bottomAlert.isShowen && (
-       <Alert style={{position:'sticky', bottom:0,zIndex:999}}
-       variant="filled"
-       onClose={() => {setBottomAlert({...bottomAlert,isShowen:false})}}
-       severity={bottomAlert.type}>
-       <AlertTitle>{bottomAlert.title}</AlertTitle>
-       {bottomAlert.body}
-     </Alert>
+        <Alert
+          style={{ position: "sticky", bottom: 0, zIndex: 999 }}
+          variant="filled"
+          onClose={() => {
+            setBottomAlert({ ...bottomAlert, isShowen: false });
+          }}
+          severity={bottomAlert.type}
+        >
+          <AlertTitle>{bottomAlert.title}</AlertTitle>
+          {bottomAlert.body}
+        </Alert>
       )}
     </BrowserRouter>
   );

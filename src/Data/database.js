@@ -117,3 +117,14 @@ export const updateProduct = async (product)=>{
   if(data.ok)
     return true;
 }
+export const getUserOrders = async(id)=>{
+  try{
+  const data = await fetch(SERVER + "/api/user/" + id);
+  const json = await data.json()
+  if(data.ok){
+    return json
+  }
+  }catch{
+    throw new Error("Unable To Get User Orders....")
+  }
+}
