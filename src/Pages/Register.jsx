@@ -8,7 +8,7 @@ import useStyles from '../Styles/UserStyle';
 import Typography from '@mui/material/Typography';
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
-
+import background from './Assets/background.jpg'
 export default function Register(props) {
     const classes = useStyles();
     const navigate = useNavigate();
@@ -73,7 +73,7 @@ export default function Register(props) {
 
     return (
         <Container maxWidth={false} className={classes.container}
-        style={{backgroundImage:'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("/images/background.jpg")',}}>
+        style={{backgroundImage:`linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${background})`,}}>
             <CssBaseline />
 
             <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
