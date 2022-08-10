@@ -29,7 +29,7 @@ export default function Login(props) {
       props.setIsAdmin(true); //מעדכנים את הסטייט אצל האבא שאדמין התחבר
       localStorage.setItem("isAdmin", true); // שמירה בלוקל לטובת מניעת התנתקות בעת רענון
     } else {
-      //פילטור מערך המשתמשים לפי המשתמש שהוכנס
+      //התחברות על ידי בדיקה בבסיס הנתונים
       let currentUser = await login(data);
       if (currentUser) {
         props.setUser(currentUser);

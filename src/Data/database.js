@@ -64,6 +64,7 @@ export const signup = async (user) => {
     body: JSON.stringify(user),
   };
   let res = await fetch(SERVER + "/api/User", requestOptions);
+  return res.ok?true:false
 };
 
 export const login = async (user) => {

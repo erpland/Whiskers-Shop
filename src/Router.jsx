@@ -59,9 +59,25 @@ export default function Router() {
     body: "",
   });
 
-  //פונקציה להוספת מוצר למערך קיים
-  const addUser = (user) => {
-    signup(user);
+  //פונקציה להוספת משתמש למערך קיים
+  const addUser = async (user) => {
+    if (await signup(user)) {
+      setBottomAlert({
+        isShowen: true,
+        type: "success",
+        title: "Success",
+        body: "Successfuly Signed Up!",
+      });
+    } else {
+      setBottomAlert({
+        isShowen: true,
+        type: "error",
+        title: "Error",
+        body: "There Was an Error During Sign Up Proccess... Please Try Again Later.",
+      });
+    }
+
+
   };
 
   //קניית עגלה נוכחית והוספת שדה תאריך נוכחי לקנייה
