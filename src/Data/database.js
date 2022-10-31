@@ -1,4 +1,4 @@
-const SERVER = "https://Whiskers-site.somee.com";
+const SERVER = "https://whiskers3.bsite.net";
 
 export const getAllBottles = async () => {
   try {
