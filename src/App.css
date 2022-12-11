@@ -69,6 +69,18 @@
   -webkit-animation-delay: -0.32s;
   animation-delay: -0.32s;
 }
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+}
 .loader:after {
   left: 1.5em;
 }
