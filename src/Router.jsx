@@ -1,4 +1,4 @@
-//Ori Winboim and Kenar Ben Shitrit
+
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./Components/Navbar";
@@ -24,7 +24,7 @@ import "./App.css";
 
 export default function Router() {
   if (!JSON.parse(localStorage.getItem("isAdmin"))) {
-    // אם אין תכונת אדמין נאתחל אותו כשקר
+  
     localStorage.setItem("isAdmin", JSON.stringify(false));
   }
 
@@ -41,17 +41,17 @@ export default function Router() {
     getData();
   }, []);
   const [isLoader, setIsLoader] = useState(true);
-  // ); //סטייט של רשימת המשתשים
-  const [products, setProducts] = useState([]); //סטייט מוצרים
-  // ); //רשימת מוצרים פופולריים-מאותחל על ידי פונקציה
+
+  const [products, setProducts] = useState([]); 
+
   const [mostPopProducts, setMostPopProducts] = useState([]);
   const [isAdmin, setIsAdmin] = useState(
     JSON.parse(localStorage.getItem("isAdmin"))
-  ); //סטייט בוליאני המציין האם אדמין מחובר/לא
-  const [currentUser, setCurrentUser] = useState(); //משתמש נוכחי אם מחובר
-  const [cart, setCart] = useState([]); //עגלה נוכחית
-  const [totalQty, setTotalQty] = useState(0); //סטייט של כמות כוללת של מוצרים בעגלה נוכחית
-  const [totalPrice, setTotalPrice] = useState(0); //סטייט של סכום כולל של מוצרים בעגלה נוכחית
+  ); 
+  const [currentUser, setCurrentUser] = useState(); 
+  const [cart, setCart] = useState([]); 
+  const [totalQty, setTotalQty] = useState(0); 
+  const [totalPrice, setTotalPrice] = useState(0); 
   const [bottomAlert, setBottomAlert] = useState({
     isShowen: false,
     type: "",
@@ -59,7 +59,7 @@ export default function Router() {
     body: "",
   });
 
-  //פונקציה להוספת משתמש למערך קיים
+ 
   const addUser = async (user) => {
     if (await signup(user)) {
       setBottomAlert({
@@ -80,7 +80,7 @@ export default function Router() {
 
   };
 
-  //קניית עגלה נוכחית והוספת שדה תאריך נוכחי לקנייה
+ 
   const buyCart = async () => {
     let order = {
       UserId: currentUser.Id,
@@ -119,10 +119,10 @@ export default function Router() {
     }
   };
 
-  //עדכון מחיר על פי מוצר מסויים שמגיע מלמטה-ע"י מציאת אינדקס נוכחי של מוצר
+ 
   const updateProductPrice = async (product) => {
     let index = products.indexOf(product);
-    products[index] = product; // דריסת המוצר במוצר המעודכן שקבילנו מלמטה
+    products[index] = product; 
     setProducts([...products]);
     let res = await updateProduct(product);
     if (!res) {
@@ -134,47 +134,47 @@ export default function Router() {
       });
     }
   };
-  //הוספת מוצר חדש למערך המוצרים הקיים
+
   const addProduct = (product) => {
     setProducts([...products, product]);
   };
-  // מחיקת מוצר ממערך המוצרים-ע"י פילטור על פי אינדקס שמגיע מלמטה
+
   const deleteProduct = (index) => {
     let tempProducts = products.filter((prod) => prod.index !== index);
     setProducts(tempProducts);
   };
-  //פונקציה לטיפול בהתחברות משתמש-נעדכן את הסטייטים בהתאם
+  
   const userLogin = (user) => {
     setCurrentUser(user);
   };
-  //פונקציה להוספת מוצר לעגלה, מקבלת אינדקס וכמות
+
   const addToCart = (Barcode, qty = 1) => {
     let cartItems;
     let product = products.filter((prod) => prod.Barcode === Barcode)[0];
-    let cartProduct = cart.filter((item) => item.Barcode === Barcode); // תפיסת המוצר אם קיים בעגלה
+    let cartProduct = cart.filter((item) => item.Barcode === Barcode); 
 
     if (cartProduct.length === 0) {
-      // אם המערך ריק כלמר שהמוצר לא קיים בעגלה כבר ולכן נכניס ממנו את הכמות הרצוייה
+      
       product.qty = 1 * qty;
       cartItems = [...cart, product];
     } else {
-      //אחרת נעדכן את הכמות על פי הכמות שנשלחה למוצר הספציפי
+     
       cartProduct[0].qty = cartProduct[0].qty + qty;
       cartItems = [...cart];
     }
-    //לאחר כל הבדיקות והעידכונים הרלוונטים נעדכן את הסטייט
+    
     setCart(cartItems);
   };
-  //מחיקת מוצר מן העגלה-על פי אינדקס נשלח
+  
   const removeItemFromCart = (barcode) => {
     let newCart = cart.filter((item) => item.Barcode !== barcode);
     setCart(newCart);
   };
 
-  //כל שינוי בעגלת הקניות יגרור עדכון סטייטים-כמות ומחיר כולל של העגלה
+
   useEffect(() => {
     if (cart.length !== 0) {
-      //כדי שלא יכנס לכאן פעם הראשונה כשהעגלה ריקה
+     
       var total = cart.map((prod) => prod.Price * prod.qty);
       var qty = cart.map((prod) => prod.qty);
       qty = qty.reduce((prev, current) => {

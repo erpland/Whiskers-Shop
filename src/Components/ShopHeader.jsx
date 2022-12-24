@@ -5,24 +5,23 @@ import Carousel from './Carousel';
 
 export default function ShopHeader(props) {
   const classes = useStyles();
-  const [count, setCount] = useState(0) // המיקומים בקרוסלה
-  const timeout = useRef(null); // שמירת הסטייט כרפרנס כדי לא ליצור אותו שוב
-  let products = props.products //מערך המוצרים הפופולרים
+  const [count, setCount] = useState(0) 
+  const timeout = useRef(null); 
+  let products = props.products 
   
-  //יצירת הנקודות בתחתית הקרוסלה
-  //משמש לניווט ידני ויחליף צבע גם על כל שינוי אוטמטי של המוצר בקרוסלה
+  
   let indicators = products.map((indicators, index)=>
     <span key = {index} onClick={() => setCount(index)} style={count === index ? { backgroundColor: 'black' } : {}} 
     className={classes.carouselBtn}></span>
     )
 
   useEffect(() => {
-    resetTimeout();//ביטול טיימר ויצירת הטיימר למוצר הבא
+    resetTimeout();
     timeout.current = setTimeout(() =>
       setCount((prevCount) => prevCount === products.length - 1 ? 0 : prevCount + 1
       ), 6000
     )
-    return () => {//ביטול הטיימר כשהקומפוננטה מתה
+    return () => {
       resetTimeout();
     }
   }, [count,products.length])

@@ -9,28 +9,26 @@ import {
 } from "recharts";
 
 var d = new Date();
-//משתנה גלובלי לשמות ימות השבוע
+
 const daysNames = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"]
 
 export default function SalesChart(props) {
-//שימוש בספרייה חיצונית להצגת המידע כגרף  
+
   let {dates} = props
   
   const calcOrders = (day) => {
-    //שמירת התאריך של היום פחות היום המבוקש
+   
     let orderDate = new Date();
     orderDate.setDate(orderDate.getDate() - day);
-    //פילטור הזמנות לפי התאריך המבוקש כלמר שנה חודש ויום מבוקש
+    
     let orders = dates.filter(date =>
       new Date(date.date).getMonth() === orderDate.getMonth() && new Date(date.date).getDate() === orderDate.getDate() &&
       new Date(date.date).getFullYear() === orderDate.getFullYear())
-    //החזרת הסכימה של מחירי ההזמנות ליום הנוכחי מכל המשתמשים
+    
     return orders.reduce((prev, current) => { return prev + current.totalPrice }, 0)
   }
 
-  //גייסון לדאטה של הגרף מתחלק לפי הזמנות השבוע האחרון
-  //מתבצע חישוב מודולרי לקבלת ימי השבוע מהיום אחורה
-  //שמירת מחיר כולל של כל הזמנות ביום הרצוי על ידי קריאה לפונקצייה
+
   const data = [
     {
       name: daysNames[(d.getDay() + 1) % 7],
@@ -66,7 +64,7 @@ export default function SalesChart(props) {
       <AreaChart
         width={610}
         height={450}
-        data={data} // מקבל את גייסון ההזמנות לפי ימים
+        data={data} 
         margin={{
           top: 10,
           right: 0,

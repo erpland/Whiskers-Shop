@@ -15,7 +15,7 @@ export default function AddProduct(props) {
 
   let { products } = props;
 
-  //סטייטים לשינוי הבחירה
+
   const [region, setRegion] = useState("Other");
   const [type, setType] = useState("Single Malt");
   const [country, setCountry] = useState("Scotland");
@@ -34,10 +34,10 @@ export default function AddProduct(props) {
     formState: { errors },
   } = useForm();
   const onSubmit = async (data) => {
-    data.abv = Number(data.abv); //המרה ממחרוזת למספר
-    data.price = Number(data.price); //המרה ממחרוזת למספר
-    data.age += data.age !== "" ? "yo" : "No Age Statement"; // אם גיל לא סופק נספק את ערך ברירת המחדל
-    data = { ...data, index: products.length, qty: 0 }; // הוספת השדות אינדקס וכמות למוצר שיצרנו
+    data.abv = Number(data.abv); 
+    data.price = Number(data.price); 
+    data.age += data.age !== "" ? "yo" : "No Age Statement"; 
+    data = { ...data, index: products.length, qty: 0 }; 
     const bottleToAdd = encpsulateBottle(data, products.length + 1);
     let isAdded = await addProduct(bottleToAdd);
     if (isAdded) {
@@ -49,12 +49,12 @@ export default function AddProduct(props) {
 
     };
 
-    reset(); // איפוס השדות בטופס
+    reset(); 
   };
-  //פונקצייה לשינוי ערך בסלקטים
+  
   const handleChange = (event) => {
     switch (event.target.name) {
-      case "region": //שנוי הסלקט הזה יכול להיות רק אם המדינה היא סקוטלנד
+      case "region": 
         if (country !== "Scotland") {
           break;
         }
@@ -65,7 +65,7 @@ export default function AddProduct(props) {
         break;
       case "country":
         if (event.target.name !== "Scotland") {
-          setRegion("Other"); // אם המדינה אינה סקוטלנד נקבע את האזור כ'אחר
+          setRegion("Other"); 
         }
         setCountry(event.target.value);
         break;
@@ -94,7 +94,7 @@ export default function AddProduct(props) {
         break;
     }
   };
-  //גייסון לכל הטקסט פילדים כולל ולידציה במידת הצורך
+  
   const textFieldsJson = [
     {
       name: "brand",
@@ -235,7 +235,7 @@ export default function AddProduct(props) {
       error={!!input.error}
       helperText={input.error ? input.errors : null}
       {...register(input.name, {
-        required: input.name !== "age" ? "Required Field" : "", // השדה היחידי שאינו חובה הוא הגיל לכן הבדיקה
+        required: input.name !== "age" ? "Required Field" : "", 
         pattern: {
           value: input.pattern,
           message: input.message,
@@ -257,7 +257,7 @@ export default function AddProduct(props) {
         value={input.value}
         {...register(input.name, {
           setValueAs: (value) => (isNaN(Number(value)) ? value : Number(value)),
-        })} //התאמת ערך הבחירה למספר ולטקסט בהתאמה
+        })} 
         onChange={handleChange}
       >
         {input.menuItems.map((item, index) => (
@@ -310,6 +310,6 @@ export default function AddProduct(props) {
         </Button>
       </form>
     </div>
-    // </div>
+  
   );
 }

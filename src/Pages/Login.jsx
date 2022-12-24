@@ -15,7 +15,7 @@ import background from './Assets/background.jpg'
 export default function Login(props) {
   const classes = useStyles();
   const navigate = useNavigate();
-  const [isValid, setIsValid] = useState(true); //סטייט בולאני לטובת אימות אם המשתמש אינו קיים במערך נציג הודעה לפי הסטייט הזה
+  const [isValid, setIsValid] = useState(true); 
 
   const {
     register,
@@ -24,25 +24,24 @@ export default function Login(props) {
   } = useForm();
 
   const onSubmit = async (data) => {
-    //בדיקה האם המשתמש הוא אדמין נעביר אותו לדף אדמין ישר
+  
     if (data.email === "admin" && data.password === "admin123") {
-      props.setIsAdmin(true); //מעדכנים את הסטייט אצל האבא שאדמין התחבר
-      localStorage.setItem("isAdmin", true); // שמירה בלוקל לטובת מניעת התנתקות בעת רענון
+      props.setIsAdmin(true); 
+      localStorage.setItem("isAdmin", true); 
     } else {
-      //התחברות על ידי בדיקה בבסיס הנתונים
+   
       let currentUser = await login(data);
       if (currentUser) {
         props.setUser(currentUser);
-        navigate("/profile");
+        navigate("/");
       }
-      //אם הגענו לכאן כלמר שהמשתמש שהוכנס אינו קיים ולכן נשנה את הסטייט שיגרום להצגת הודעה בהתאם
+
       else {
         setIsValid(false);
       }
     }
   };
-  //אם לא השתמשנו ביוז אפקט להעביר לדף אדמין הוא צעק עלינו
-  //לשאול את ניר מדוע
+
   useEffect(() => {
     if (props.isAdmin) navigate("/admin");
   }, [props.isAdmin, navigate]);

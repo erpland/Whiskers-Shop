@@ -21,8 +21,8 @@ const style = {
 };
 
 export default function AdminModal(props) {
-  //המודל מציג או הזמנה בודדת או את כל ההזמנות של המשתמש
-  //תלוי מאיפה נקרא למודל
+
+
   const classes = useStyles();
   let { open, setOpen, data } = props;
 

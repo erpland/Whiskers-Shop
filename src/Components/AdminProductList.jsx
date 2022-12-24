@@ -10,19 +10,18 @@ export default function AdminProductList(props) {
   const ref = useRef([]);
   const updatePrice = (product, index) => {
     ref.current[index].style = "visibility: visible";
-    //אם הערך הדיפולטיבי כלמר המחיר לפני השינוי של המוצר והמחיר העדכני תקין
-    //נציג הודעה מתאימה בצבע ירוק ונעדכן את המוצר
+   
     if (Number(ref.current[index].dataset.price) !== product.Price && product.Price > 0) {
       ref.current[index].innerHTML = "Success";
       ref.current[index].style = "color:green";
       props.updateProductPrice(product);
     }
-    //כלמר שהמחיר העדכני לא תקין או לא השתנה מהנוכחי נציג הודעת כישלון
+  
     else {
       ref.current[index].innerHTML = "Failed";
       ref.current[index].style = "color:red";
     }
-    //טיימר להודעה כדי שלא תוצג כל הזמן
+    
     setTimeout(() => (ref.current[index].style = "visibility: hidden"), 3000);
   };
 
@@ -45,7 +44,7 @@ export default function AdminProductList(props) {
           InputProps={{ inputProps: { min: 1 } }}
           onChange={(e) => {
             product.Price = Number(e.target.value);
-          }} //תפיסת שינוי טקסט באינפוט עצמו
+          }} 
         />
         <small
           style={{ visibility: "hidden" }}

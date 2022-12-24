@@ -47,7 +47,7 @@ export default function TasteChart(props) {
       outerRadius={200}
       width={800}
       height={550}
-      data={data}//מקבל את הגייסון של פירוט הטעמים במוצר
+      data={data}
     >
       <PolarGrid />
       <PolarAngleAxis dataKey="subject"  />

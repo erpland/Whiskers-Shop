@@ -23,7 +23,7 @@ export default function Admin(props) {
   const navigate = useNavigate();
   let { products } = props;
   const [users, setUsers] = useState([]);
-  const [open, setOpen] = useState(false); // פתיחה/סגירה של מודל הזמנות
+  const [open, setOpen] = useState(false); 
   const [data, setData] = useState();
   const [totalOrdersAmount, setTotalOrdersAmount] = useState(0);
   const [totalProfits, setTotalProfits] = useState(0);

@@ -6,7 +6,7 @@ import Order from '../Components/Order';
 
 export default function Profile(props) {
     const classes = useStyles();
-    //כל הזמנה ממופה לאקורדיון נפרד
+   
     let hasOrders = props.currentUser.Orders[0].Items.length !==0
     let orders = props.currentUser.Orders.sort((a,b)=>{
         return new Date(a.DateTime) - new Date(b.DateTime)

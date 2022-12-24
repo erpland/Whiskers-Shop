@@ -14,7 +14,7 @@ export default function Register(props) {
     const navigate = useNavigate();
     
     const { register, handleSubmit, formState: { errors } } = useForm();
-    //שימוש ספרייה חיצונית לבדיקת תיקנות כאשר הטופס תקין נייצר אובייקט של משתמש נעלה אותו ונעבור לדף התחברות
+
     const onSubmit = data => {
         data={...data, Orders:[]}
         props.addUser(data)

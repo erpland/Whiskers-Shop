@@ -12,22 +12,15 @@ import Cart from './Cart';
 export default function Navbar(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [checked, setChecked] = React.useState(true);
+ 
 
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
-  };
-  //מתבצעת בדיקה האם המשתמש קיים משתמש מחובר או לא, הצגה של התחברות/התנקות בהתאם
   return (
+    
     <AppBar color='' position='static'>
       <CssBaseline />
       <Toolbar>
         <Typography variant='h4'>Whiskers</Typography>
-        <Switch
-      checked={checked}
-      onChange={handleChange}
-      inputProps={{ 'aria-label': 'controlled' }}
-    />
+
         <Grid container direction='row' alignItems='center' justifyContent='flex-end' spacing={1}>
 
        
@@ -59,5 +52,6 @@ export default function Navbar(props) {
         <Cart isLoggedIn={props.isLoggedIn} buyCart={props.buyCart} totalQty={props.totalQty} totalPrice={props.totalPrice} removeItemFromCart={props.removeItemFromCart} cart={props.cart} open={open} setOpen={setOpen} />
       </Toolbar>
     </AppBar>
+   
   )
 }

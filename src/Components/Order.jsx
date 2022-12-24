@@ -12,8 +12,8 @@ export default function Order(props) {
   let {order} = props
   let items = order.Items
 
-  let qtySum=items.reduce((prev, current) => { return prev + current.Qty },0)//סכימת כמות מוצרים בהזמנה
-  let priceSum=items.reduce((prev, current) => { return (prev + (current.Price * current.Qty) ) },0) // סכימת מחיר כולל בהזמנה
+  let qtySum=items.reduce((prev, current) => { return prev + current.Qty },0)
+  let priceSum=items.reduce((prev, current) => { return (prev + (current.Price * current.Qty) ) },0) 
 
   let orderProduct = items.map((product,index)=>           
   <div key={index} className={classes.product}>

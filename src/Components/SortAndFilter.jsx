@@ -20,7 +20,7 @@ export default function SortAndFilter(props) {
     const [brand, setBrand] = useState('All');
     const [abv, setAbv] = useState('All');
     const [country, setCountry] = useState('All');
-    //מכיוון שהבחירה של אחוז האלכוהול היא בטווח נשמור גם את המקסימום והמינימום לטובת פילטור
+    
     const [abvValues, setAbvValues] = useState(abvsJson[0]) 
 
     const setAbvs = (event) => {
@@ -28,14 +28,14 @@ export default function SortAndFilter(props) {
         setAbv(event.target.value)
     }
     
-    let orginalProducts = [...props.originalProducts] // מערך המוצרים המקורי
-    let sortedProducts = [...props.products] // מערך מוצרים ממוינים
-    //יצירת השדות בתוך הסלקטים לפי המוצרים הקיימים
-    //השדות דינמים לפי המוצרים הקיימים
+    let orginalProducts = [...props.originalProducts] 
+    let sortedProducts = [...props.products] 
+ 
+ 
     let typesMenu = [...new Set([...orginalProducts].map(prod => prod.TypeDesc))].map((type, index) => <MenuItem key={index} value={type}>{type}</MenuItem>)
     let brandsMenu = [...new Set([...orginalProducts].map(prod => prod.BrandName))].map((brand, index) => <MenuItem key={index} value={brand}>{brand}</MenuItem>)
     let countryMenu = [...new Set([...orginalProducts].map(prod => prod.CountryName))].map((country, index) => <MenuItem key={index} value={country}>{country}</MenuItem>)
-    //אין צורך בשדות דינמים לכן הוא קבוע לפי הגייסון
+  
     let abvMenu = abvsJson.map((abv, index) => <MenuItem key={index} value={abv.name}>{abv.name}</MenuItem>)
 
 

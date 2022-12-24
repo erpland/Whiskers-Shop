@@ -8,6 +8,7 @@ export default function Carousel(props) {
   const navigate = useNavigate();
     let { Image,BrandName, BottleName, Price } = props.product
   return (
+   
     <div style={{display:'contents'}}>
       <div className={classes.headerImg}>
         <img src={Image} alt="product" onClick={() => navigate('/item', { state: props.product })} />
@@ -24,5 +25,6 @@ export default function Carousel(props) {
         </div>
       </div>
     </div>
+   
   )
 }

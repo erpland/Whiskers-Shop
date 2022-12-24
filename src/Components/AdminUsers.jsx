@@ -14,18 +14,16 @@ export default function AdminUsers(props) {
     });
     props.setOpen(true);
   };
-  //מיפוי היוזרים, וסכימת כמות המוצרים והתשלומים של כל יוזר
-  //סוכמים כל הזמנה של יוזר בנפרד ומהמערך שיצא נסכום את כולו
+  
   let userRow = users.map((user, index) => (
     <div key={index} className={`${classes.userRow} ${classes.userRowGrid}`}>
       <p>
-        {/* <span onClick={() => props.deleteUser(index)}>X</span> */}
+        
       </p>
       <p>{user.UserEmail}</p>
       <p>{user.UserFirstName}</p>
       <p>{user.UserLastName}</p>
-      {/* <p>{user.UserOrders.map(a=>a.reduce((p, c)=>{return p + c.qty},0)).reduce((p, c)=>{return p + c},0)}</p>
-        <p>{user.UserOrders.map(a=>a.reduce((p, c)=>{return p + c.price * c.qty},0)).reduce((a,b)=>{return a+b},0).toFixed(2)}$</p> */}
+
       <p>{user.UserTotalItemsPurchased}</p>
       <p>{user.UserTotalSpent.toFixed(2)}$</p>
       <Button onClick={() => userClick(user)}>Show More</Button>
